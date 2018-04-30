@@ -530,3 +530,14 @@ Error:  >Mon Apr 30 14:14:05,193<    >RfcGetException rc (7) message: Name oder 
 Error:  >Mon Apr 30 14:17:23,708<    >RfcGetException rc (7) message: Name oder Kennwort ist nicht korrekt (Wiederholen Sie die Anmeldung)
 <RfcGetException
 
+
+**** Error file opened at 20180430 174325 Central European Summer Time Rel 3.0.12 (2014-11-21) [720.713]
+Error:  >Mon Apr 30 17:43:25,058<    >RfcGetException rc (7) message: Name oder Kennwort ist nicht korrekt (Wiederholen Sie die Anmeldung)
+<RfcGetException
+
+Error:  >Mon Apr 30 17:43:34,566<    >RfcGetException rc (7) message: Name oder Kennwort ist nicht korrekt (Wiederholen Sie die Anmeldung)
+<RfcGetException
+
+Error:  >Mon Apr 30 17:43:39,764<    >RfcGetException rc (7) message: Name oder Kennwort ist nicht korrekt (Wiederholen Sie die Anmeldung)
+<RfcGetException
+

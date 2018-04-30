@@ -1,3 +1,4 @@
+import com.sap.conn.jco.JCoDestination;
 import com.sap.conn.jco.JCoException;
 
 import javafx.application.Application;
@@ -39,11 +40,17 @@ public class Main extends Application implements EventHandler<KeyEvent>{
         statusLabel = new Label();
         button.setOnAction(new EventHandler<ActionEvent>() {
             @Override
-            public void handle(ActionEvent event) {
-            	boolean loginSuccess = sapController.tryLogin(nameField.getText(), passwordField.getText());
-    			if(loginSuccess){
+            public void handle(ActionEvent event){
+            	JCoDestination connection = sapController.tryLogin(nameField.getText(), passwordField.getText());
+    			if(connection != null){
     				statusLabel.setText("Login successful!");
     				statusLabel.setTextFill(Paint.valueOf("green"));
+    				try {
+						sapController.step3SimpleCall(connection);
+					} catch (JCoException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					}
     			} else {
     				statusLabel.setText("Login NOT successful!");
     				statusLabel.setTextFill(Paint.valueOf("red"));
@@ -63,10 +70,22 @@ public class Main extends Application implements EventHandler<KeyEvent>{
 	}
 
 	@Override
-	public void handle(KeyEvent event) {
+	public void handle(KeyEvent event){
 		if(event.getCode() == KeyCode.ENTER) {
-			boolean loginSuccess = sapController.tryLogin(nameField.getText(), passwordField.getText());
-			System.out.println(loginSuccess ? "Login successful!" : "Login NOT successful!");
+			JCoDestination connection = sapController.tryLogin(nameField.getText(), passwordField.getText());
+			if(connection != null){
+				statusLabel.setText("Login successful!");
+				statusLabel.setTextFill(Paint.valueOf("green"));
+				try {
+					sapController.step3SimpleCall(connection);
+				} catch (JCoException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+			} else {
+				statusLabel.setText("Login NOT successful!");
+				statusLabel.setTextFill(Paint.valueOf("red"));
+			}
 		}
 	}
 }
