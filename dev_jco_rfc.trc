@@ -1,0 +1,522 @@
+
+**** Error file opened at 20180427 233724 Central European Summer Time Rel 3.0.12 (2014-11-21) [720.713]
+Error:  >Fri Apr 27 23:37:24,337<    RfcException:
+    message: Connect to SAP gateway failed
+Connection parameters: TYPE=A DEST=ABAP_AS ASHOST=appserver SYSNR=00 PCS=1
+
+LOCATION    CPIC (TCP/IP) on local host with Unicode
+ERROR       hostname 'appserver' unknown
+TIME        Fri Apr 27 23:37:24 2018
+RELEASE     720
+COMPONENT   NI (network interface)
+VERSION     40
+RC          -2
+MODULE      ninti.c
+LINE        897
+DETAIL      NiPGetHostByName: 'appserver' not found
+SYSTEM CALL getaddrinfo
+COUNTER     2
+
+    return code: RFC_FAILURE (1)
+    error group: 102
+    key: RFC_ERROR_COMMUNICATION
+
+**** Error file opened at 20180427 233941 Central European Summer Time Rel 3.0.12 (2014-11-21) [720.713]
+Error:  >Fri Apr 27 23:39:41,257<    RfcException:
+    message: Connect to SAP gateway failed
+Connection parameters: TYPE=A DEST=ABAP_AS ASHOST=appserver SYSNR=00 PCS=1
+
+LOCATION    CPIC (TCP/IP) on local host with Unicode
+ERROR       hostname 'appserver' unknown
+TIME        Fri Apr 27 23:39:41 2018
+RELEASE     720
+COMPONENT   NI (network interface)
+VERSION     40
+RC          -2
+MODULE      ninti.c
+LINE        897
+DETAIL      NiPGetHostByName: 'appserver' not found
+SYSTEM CALL getaddrinfo
+COUNTER     2
+
+    return code: RFC_FAILURE (1)
+    error group: 102
+    key: RFC_ERROR_COMMUNICATION
+
+**** Error file opened at 20180427 234339 Central European Summer Time Rel 3.0.12 (2014-11-21) [720.713]
+Error:  >Fri Apr 27 23:43:39,236<    RfcException:
+    message: Connect to SAP gateway failed
+Connection parameters: TYPE=A DEST=ABAP_AS ASHOST=appserver SYSNR=00 PCS=1
+
+LOCATION    CPIC (TCP/IP) on local host with Unicode
+ERROR       hostname 'appserver' unknown
+TIME        Fri Apr 27 23:43:39 2018
+RELEASE     720
+COMPONENT   NI (network interface)
+VERSION     40
+RC          -2
+MODULE      ninti.c
+LINE        897
+DETAIL      NiPGetHostByName: 'appserver' not found
+SYSTEM CALL getaddrinfo
+COUNTER     2
+
+    return code: RFC_FAILURE (1)
+    error group: 102
+    key: RFC_ERROR_COMMUNICATION
+
+**** Error file opened at 20180428 001821 Central European Summer Time Rel 3.0.12 (2014-11-21) [720.713]
+Error:  >Sat Apr 28 00:18:21,583<    RfcException:
+    message: Connect to SAP gateway failed
+Connection parameters: TYPE=A DEST=ABAP_AS_WITHOUT_POOL ASHOST=ls4065 SYSNR=85 PCS=1
+
+LOCATION    CPIC (TCP/IP) on local host with Unicode
+ERROR       hostname 'ls4065' unknown
+TIME        Sat Apr 28 00:18:21 2018
+RELEASE     720
+COMPONENT   NI (network interface)
+VERSION     40
+RC          -2
+MODULE      ninti.c
+LINE        897
+DETAIL      NiPGetHostByName: 'ls4065' not found
+SYSTEM CALL getaddrinfo
+COUNTER     2
+
+    return code: RFC_FAILURE (1)
+    error group: 102
+    key: RFC_ERROR_COMMUNICATION
+
+**** Error file opened at 20180428 002548 Central European Summer Time Rel 3.0.12 (2014-11-21) [720.713]
+Error:  >Sat Apr 28 00:25:48,075<    RfcException:
+    message: Connect to SAP gateway failed
+Connection parameters: TYPE=A DEST=ABAP_AS_WITHOUT_POOL ASHOST=i49lp1 SYSNR=85 PCS=1
+
+LOCATION    CPIC (TCP/IP) on local host with Unicode
+ERROR       hostname 'i49lp1' unknown
+TIME        Sat Apr 28 00:25:48 2018
+RELEASE     720
+COMPONENT   NI (network interface)
+VERSION     40
+RC          -2
+MODULE      ninti.c
+LINE        897
+DETAIL      NiPGetHostByName: 'i49lp1' not found
+SYSTEM CALL getaddrinfo
+COUNTER     2
+
+    return code: RFC_FAILURE (1)
+    error group: 102
+    key: RFC_ERROR_COMMUNICATION
+
+**** Error file opened at 20180428 002742 Central European Summer Time Rel 3.0.12 (2014-11-21) [720.713]
+Error:  >Sat Apr 28 00:27:42,436<    RfcException:
+    message: Connect to SAP gateway failed
+Connection parameters: TYPE=A DEST=ABAP_AS_WITHOUT_POOL ASHOST=I49 SYSNR=85 PCS=1
+
+LOCATION    CPIC (TCP/IP) on local host with Unicode
+ERROR       hostname 'I49' unknown
+TIME        Sat Apr 28 00:27:42 2018
+RELEASE     720
+COMPONENT   NI (network interface)
+VERSION     40
+RC          -2
+MODULE      ninti.c
+LINE        897
+DETAIL      NiPGetHostByName: 'I49' not found
+SYSTEM CALL getaddrinfo
+COUNTER     2
+
+    return code: RFC_FAILURE (1)
+    error group: 102
+    key: RFC_ERROR_COMMUNICATION
+
+**** Error file opened at 20180428 003426 Central European Summer Time Rel 3.0.12 (2014-11-21) [720.713]
+Error:  >Sat Apr 28 00:34:26,912<    RfcException:
+    message: Connect to SAP gateway failed
+Connection parameters: TYPE=A DEST=ABAP_AS_WITHOUT_POOL ASHOST=/H/saprouter.hcc.in.tum.de/S/3299 SYSNR=00 PCS=1
+
+LOCATION    SAProuter 40.4 on 'uccsaprouter'
+ERROR       internal error
+TIME        Sat Apr 28 00:34:31 2018
+RELEASE     720
+COMPONENT   NI (network interface)
+VERSION     40
+RC          -93
+MODULE      gwxx.c
+LINE        646
+DETAIL      NiRClientHandle: route expected
+SYSTEM CALL GwRead
+COUNTER     532546
+
+    return code: RFC_FAILURE (1)
+    error group: 102
+    key: RFC_ERROR_COMMUNICATION
+
+**** Error file opened at 20180428 003502 Central European Summer Time Rel 3.0.12 (2014-11-21) [720.713]
+Error:  >Sat Apr 28 00:35:02,070<    RfcException:
+    message: Connect to SAP gateway failed
+Connection parameters: TYPE=A DEST=ABAP_AS_WITHOUT_POOL ASHOST=/H/saprouter.hcc.in.tum.de/S/3299 SYSNR=49 PCS=1
+
+LOCATION    SAProuter 40.4 on 'uccsaprouter'
+ERROR       internal error
+TIME        Sat Apr 28 00:35:06 2018
+RELEASE     720
+COMPONENT   NI (network interface)
+VERSION     40
+RC          -93
+MODULE      gwxx.c
+LINE        646
+DETAIL      NiRClientHandle: route expected
+SYSTEM CALL GwRead
+COUNTER     532551
+
+    return code: RFC_FAILURE (1)
+    error group: 102
+    key: RFC_ERROR_COMMUNICATION
+
+**** Error file opened at 20180428 004036 Central European Summer Time Rel 3.0.12 (2014-11-21) [720.713]
+Error:  >Sat Apr 28 00:40:36,454<    RfcException:
+    message: Connect to SAP gateway failed
+Connection parameters: TYPE=A DEST=ABAP_AS_WITHOUT_POOL ASHOST=/H/saprouter.hcc.in.tum.de/S/3299 SYSNR=49 PCS=1
+
+LOCATION    SAProuter 40.4 on 'uccsaprouter'
+ERROR       internal error
+TIME        Sat Apr 28 00:40:40 2018
+RELEASE     720
+COMPONENT   NI (network interface)
+VERSION     40
+RC          -93
+MODULE      gwxx.c
+LINE        646
+DETAIL      NiRClientHandle: route expected
+SYSTEM CALL GwRead
+COUNTER     532641
+
+    return code: RFC_FAILURE (1)
+    error group: 102
+    key: RFC_ERROR_COMMUNICATION
+
+**** Error file opened at 20180428 004127 Central European Summer Time Rel 3.0.12 (2014-11-21) [720.713]
+Error:  >Sat Apr 28 00:41:27,627<    RfcException:
+    message: Connect to SAP gateway failed
+Connection parameters: TYPE=A DEST=ABAP_AS_WITH_POOL ASHOST=/H/saprouter.hcc.in.tum.de/S/3299 SYSNR=49 PCS=1
+
+LOCATION    SAProuter 40.4 on 'uccsaprouter'
+ERROR       internal error
+TIME        Sat Apr 28 00:41:32 2018
+RELEASE     720
+COMPONENT   NI (network interface)
+VERSION     40
+RC          -93
+MODULE      gwxx.c
+LINE        646
+DETAIL      NiRClientHandle: route expected
+SYSTEM CALL GwRead
+COUNTER     532648
+
+    return code: RFC_FAILURE (1)
+    error group: 102
+    key: RFC_ERROR_COMMUNICATION
+
+**** Error file opened at 20180428 005703 Central European Summer Time Rel 3.0.12 (2014-11-21) [720.713]
+Error:  >Sat Apr 28 00:57:03,582<    RfcException:
+    message: Connect to SAP gateway failed
+Connection parameters: TYPE=A DEST=ABAP_AS_WITH_POOL ASHOST=/H/saprouter.hcc.in.tum.de/S/3299 SYSNR=49 PCS=1
+
+LOCATION    SAProuter 40.4 on 'uccsaprouter'
+ERROR       internal error
+TIME        Sat Apr 28 00:57:07 2018
+RELEASE     720
+COMPONENT   NI (network interface)
+VERSION     40
+RC          -93
+MODULE      gwxx.c
+LINE        646
+DETAIL      NiRClientHandle: route expected
+SYSTEM CALL GwRead
+COUNTER     532839
+
+    return code: RFC_FAILURE (1)
+    error group: 102
+    key: RFC_ERROR_COMMUNICATION
+
+**** Error file opened at 20180428 122230 Central European Summer Time Rel 3.0.12 (2014-11-21) [720.713]
+Error:  >Sat Apr 28 12:22:30,365<    RfcException:
+    message: Connect to SAP gateway failed
+Connection parameters: TYPE=A DEST=ABAP_AS_WITHOUT_POOL ASHOST=/H/saprouter.hcc.in.tum.de/S/3299 SYSNR=49 PCS=1
+
+LOCATION    SAProuter 40.4 on 'uccsaprouter'
+ERROR       internal error
+TIME        Sat Apr 28 12:22:36 2018
+RELEASE     720
+COMPONENT   NI (network interface)
+VERSION     40
+RC          -93
+MODULE      gwxx.c
+LINE        646
+DETAIL      NiRClientHandle: route expected
+SYSTEM CALL GwRead
+COUNTER     543071
+
+    return code: RFC_FAILURE (1)
+    error group: 102
+    key: RFC_ERROR_COMMUNICATION
+
+**** Error file opened at 20180429 151530 Central European Summer Time Rel 3.0.12 (2014-11-21) [720.713]
+Error:  >Sun Apr 29 15:15:30,951<    RfcException:
+    message: Connect to SAP gateway failed
+Connection parameters: TYPE=A DEST=ABAP_AS_WITHOUT_POOL ASHOST=/H/saprouter.hcc.in.tum.de/S/3299 SYSNR=00 PCS=1
+
+LOCATION    SAProuter 40.4 on 'uccsaprouter'
+ERROR       internal error
+TIME        Sun Apr 29 15:15:30 2018
+RELEASE     720
+COMPONENT   NI (network interface)
+VERSION     40
+RC          -93
+MODULE      gwxx.c
+LINE        646
+DETAIL      NiRClientHandle: route expected
+SYSTEM CALL GwRead
+COUNTER     579770
+
+    return code: RFC_FAILURE (1)
+    error group: 102
+    key: RFC_ERROR_COMMUNICATION
+
+**** Error file opened at 20180429 151547 Central European Summer Time Rel 3.0.12 (2014-11-21) [720.713]
+Error:  >Sun Apr 29 15:15:47,707<    RfcException:
+    message: Connect to SAP gateway failed
+Connection parameters: TYPE=A DEST=ABAP_AS_WITHOUT_POOL ASHOST=/H/saprouter.hcc.in.tum.de/S/3299 SYSNR=00 PCS=1
+
+LOCATION    SAProuter 40.4 on 'uccsaprouter'
+ERROR       internal error
+TIME        Sun Apr 29 15:15:47 2018
+RELEASE     720
+COMPONENT   NI (network interface)
+VERSION     40
+RC          -93
+MODULE      gwxx.c
+LINE        646
+DETAIL      NiRClientHandle: route expected
+SYSTEM CALL GwRead
+COUNTER     579773
+
+    return code: RFC_FAILURE (1)
+    error group: 102
+    key: RFC_ERROR_COMMUNICATION
+
+**** Error file opened at 20180429 151621 Central European Summer Time Rel 3.0.12 (2014-11-21) [720.713]
+Error:  >Sun Apr 29 15:16:21,738<    RfcException:
+    message: Connect to SAP gateway failed
+Connection parameters: TYPE=A DEST=ABAP_AS ASHOST=/H/saprouter.hcc.in.tum.de/S/3299 SYSNR=00 PCS=1
+
+LOCATION    SAProuter 40.4 on 'uccsaprouter'
+ERROR       internal error
+TIME        Sun Apr 29 15:16:21 2018
+RELEASE     720
+COMPONENT   NI (network interface)
+VERSION     40
+RC          -93
+MODULE      gwxx.c
+LINE        646
+DETAIL      NiRClientHandle: route expected
+SYSTEM CALL GwRead
+COUNTER     579781
+
+    return code: RFC_FAILURE (1)
+    error group: 102
+    key: RFC_ERROR_COMMUNICATION
+
+**** Error file opened at 20180430 021239 Central European Summer Time Rel 3.0.12 (2014-11-21) [720.713]
+Error:  >Mon Apr 30 02:12:39,174<    RfcException:
+    message: Parameter containing a user ID is missing: neither user nor user alias nor external ID nor SSO ticket nor X.509 certificate is specified
+    return code: RFC_INVALID_PARAMETER (19)
+    error group: 101
+    key: RFC_ERROR_PROGRAM
+	at com.sap.conn.rfc.api.RfcOptions.checkLogonData(RfcOptions.java:252)
+	at com.sap.conn.rfc.api.RfcOptions.checkParameters(RfcOptions.java:348)
+	at com.sap.conn.jco.rt.MiddlewareJavaRfc$JavaRfcClient.initialize(MiddlewareJavaRfc.java:1378)
+	at com.sap.conn.jco.rt.MiddlewareJavaRfc$JavaRfcClient.connect(MiddlewareJavaRfc.java:1408)
+	at com.sap.conn.jco.rt.ClientConnection.connect(ClientConnection.java:723)
+	at com.sap.conn.jco.rt.PoolingFactory.init(PoolingFactory.java:115)
+	at com.sap.conn.jco.rt.ConnectionManager.createFactory(ConnectionManager.java:349)
+	at com.sap.conn.jco.rt.DefaultConnectionManager.createFactory(DefaultConnectionManager.java:46)
+	at com.sap.conn.jco.rt.ConnectionManager.getFactory(ConnectionManager.java:323)
+	at com.sap.conn.jco.rt.RfcDestination.initialize(RfcDestination.java:893)
+	at com.sap.conn.jco.rt.RfcDestination.getAttributes(RfcDestination.java:601)
+	at com.sap.conn.jco.rt.RfcDestination.getAttributes(RfcDestination.java:34)
+	at SAPController.step1Connect(SAPController.java:41)
+	at SAPController.tryLogin(SAPController.java:17)
+	at Main.handle(Main.java:54)
+	at Main.handle(Main.java:1)
+	at com.sun.javafx.event.CompositeEventHandler.dispatchBubblingEvent(CompositeEventHandler.java:86)
+	at com.sun.javafx.event.EventHandlerManager.dispatchBubblingEvent(EventHandlerManager.java:238)
+	at com.sun.javafx.event.EventHandlerManager.dispatchBubblingEvent(EventHandlerManager.java:191)
+	at com.sun.javafx.event.CompositeEventDispatcher.dispatchBubblingEvent(CompositeEventDispatcher.java:59)
+	at com.sun.javafx.event.BasicEventDispatcher.dispatchEvent(BasicEventDispatcher.java:58)
+	at com.sun.javafx.event.EventDispatchChainImpl.dispatchEvent(EventDispatchChainImpl.java:114)
+	at com.sun.javafx.event.BasicEventDispatcher.dispatchEvent(BasicEventDispatcher.java:56)
+	at com.sun.javafx.event.EventDispatchChainImpl.dispatchEvent(EventDispatchChainImpl.java:114)
+	at com.sun.javafx.event.EventUtil.fireEventImpl(EventUtil.java:74)
+	at com.sun.javafx.event.EventUtil.fireEvent(EventUtil.java:49)
+	at javafx.event.Event.fireEvent(Event.java:198)
+	at javafx.scene.Node.fireEvent(Node.java:8413)
+	at com.sun.javafx.scene.control.behavior.TextInputControlBehavior.forwardToParent(TextInputControlBehavior.java:432)
+	at com.sun.javafx.scene.control.behavior.TextFieldBehavior.fire(TextFieldBehavior.java:183)
+	at com.sun.javafx.scene.control.behavior.TextInputControlBehavior.callAction(TextInputControlBehavior.java:178)
+	at com.sun.javafx.scene.control.behavior.BehaviorBase.callActionForEvent(BehaviorBase.java:218)
+	at com.sun.javafx.scene.control.behavior.TextInputControlBehavior.callActionForEvent(TextInputControlBehavior.java:127)
+	at com.sun.javafx.scene.control.behavior.BehaviorBase.lambda$new$74(BehaviorBase.java:135)
+	at com.sun.javafx.event.CompositeEventHandler$NormalEventHandlerRecord.handleBubblingEvent(CompositeEventHandler.java:218)
+	at com.sun.javafx.event.CompositeEventHandler.dispatchBubblingEvent(CompositeEventHandler.java:80)
+	at com.sun.javafx.event.EventHandlerManager.dispatchBubblingEvent(EventHandlerManager.java:238)
+	at com.sun.javafx.event.EventHandlerManager.dispatchBubblingEvent(EventHandlerManager.java:191)
+	at com.sun.javafx.event.CompositeEventDispatcher.dispatchBubblingEvent(CompositeEventDispatcher.java:59)
+	at com.sun.javafx.event.BasicEventDispatcher.dispatchEvent(BasicEventDispatcher.java:58)
+	at com.sun.javafx.event.EventDispatchChainImpl.dispatchEvent(EventDispatchChainImpl.java:114)
+	at com.sun.javafx.event.BasicEventDispatcher.dispatchEvent(BasicEventDispatcher.java:56)
+	at com.sun.javafx.event.EventDispatchChainImpl.dispatchEvent(EventDispatchChainImpl.java:114)
+	at com.sun.javafx.event.BasicEventDispatcher.dispatchEvent(BasicEventDispatcher.java:56)
+	at com.sun.javafx.event.EventDispatchChainImpl.dispatchEvent(EventDispatchChainImpl.java:114)
+	at com.sun.javafx.event.EventUtil.fireEventImpl(EventUtil.java:74)
+	at com.sun.javafx.event.EventUtil.fireEvent(EventUtil.java:54)
+	at javafx.event.Event.fireEvent(Event.java:198)
+	at javafx.scene.Scene$KeyHandler.process(Scene.java:3964)
+	at javafx.scene.Scene$KeyHandler.access$1800(Scene.java:3910)
+	at javafx.scene.Scene.impl_processKeyEvent(Scene.java:2040)
+	at javafx.scene.Scene$ScenePeerListener.keyEvent(Scene.java:2501)
+	at com.sun.javafx.tk.quantum.GlassViewEventHandler$KeyEventNotification.run(GlassViewEventHandler.java:217)
+	at com.sun.javafx.tk.quantum.GlassViewEventHandler$KeyEventNotification.run(GlassViewEventHandler.java:149)
+	at java.security.AccessController.doPrivileged(Native Method)
+	at com.sun.javafx.tk.quantum.GlassViewEventHandler.lambda$handleKeyEvent$353(GlassViewEventHandler.java:248)
+	at com.sun.javafx.tk.quantum.QuantumToolkit.runWithoutRenderLock(QuantumToolkit.java:389)
+	at com.sun.javafx.tk.quantum.GlassViewEventHandler.handleKeyEvent(GlassViewEventHandler.java:247)
+	at com.sun.glass.ui.View.handleKeyEvent(View.java:546)
+	at com.sun.glass.ui.View.notifyKey(View.java:966)
+	at com.sun.glass.ui.win.WinApplication._runLoop(Native Method)
+	at com.sun.glass.ui.win.WinApplication.lambda$null$148(WinApplication.java:191)
+	at java.lang.Thread.run(Thread.java:748)
+
+
+**** Error file opened at 20180430 021404 Central European Summer Time Rel 3.0.12 (2014-11-21) [720.713]
+Error:  >Mon Apr 30 02:14:04,852<    RfcException:
+    message: Parameter containing a user ID is missing: neither user nor user alias nor external ID nor SSO ticket nor X.509 certificate is specified
+    return code: RFC_INVALID_PARAMETER (19)
+    error group: 101
+    key: RFC_ERROR_PROGRAM
+	at com.sap.conn.rfc.api.RfcOptions.checkLogonData(RfcOptions.java:252)
+	at com.sap.conn.rfc.api.RfcOptions.checkParameters(RfcOptions.java:348)
+	at com.sap.conn.jco.rt.MiddlewareJavaRfc$JavaRfcClient.initialize(MiddlewareJavaRfc.java:1378)
+	at com.sap.conn.jco.rt.MiddlewareJavaRfc$JavaRfcClient.connect(MiddlewareJavaRfc.java:1408)
+	at com.sap.conn.jco.rt.ClientConnection.connect(ClientConnection.java:723)
+	at com.sap.conn.jco.rt.PoolingFactory.init(PoolingFactory.java:115)
+	at com.sap.conn.jco.rt.ConnectionManager.createFactory(ConnectionManager.java:349)
+	at com.sap.conn.jco.rt.DefaultConnectionManager.createFactory(DefaultConnectionManager.java:46)
+	at com.sap.conn.jco.rt.ConnectionManager.getFactory(ConnectionManager.java:323)
+	at com.sap.conn.jco.rt.RfcDestination.initialize(RfcDestination.java:893)
+	at com.sap.conn.jco.rt.RfcDestination.getAttributes(RfcDestination.java:601)
+	at com.sap.conn.jco.rt.RfcDestination.getAttributes(RfcDestination.java:34)
+	at SAPController.step1Connect(SAPController.java:41)
+	at SAPController.tryLogin(SAPController.java:17)
+	at Main.handle(Main.java:54)
+	at Main.handle(Main.java:1)
+	at com.sun.javafx.event.CompositeEventHandler.dispatchBubblingEvent(CompositeEventHandler.java:86)
+	at com.sun.javafx.event.EventHandlerManager.dispatchBubblingEvent(EventHandlerManager.java:238)
+	at com.sun.javafx.event.EventHandlerManager.dispatchBubblingEvent(EventHandlerManager.java:191)
+	at com.sun.javafx.event.CompositeEventDispatcher.dispatchBubblingEvent(CompositeEventDispatcher.java:59)
+	at com.sun.javafx.event.BasicEventDispatcher.dispatchEvent(BasicEventDispatcher.java:58)
+	at com.sun.javafx.event.EventDispatchChainImpl.dispatchEvent(EventDispatchChainImpl.java:114)
+	at com.sun.javafx.event.BasicEventDispatcher.dispatchEvent(BasicEventDispatcher.java:56)
+	at com.sun.javafx.event.EventDispatchChainImpl.dispatchEvent(EventDispatchChainImpl.java:114)
+	at com.sun.javafx.event.EventUtil.fireEventImpl(EventUtil.java:74)
+	at com.sun.javafx.event.EventUtil.fireEvent(EventUtil.java:54)
+	at javafx.event.Event.fireEvent(Event.java:198)
+	at javafx.scene.Scene$KeyHandler.process(Scene.java:3964)
+	at javafx.scene.Scene$KeyHandler.access$1800(Scene.java:3910)
+	at javafx.scene.Scene.impl_processKeyEvent(Scene.java:2040)
+	at javafx.scene.Scene$ScenePeerListener.keyEvent(Scene.java:2501)
+	at com.sun.javafx.tk.quantum.GlassViewEventHandler$KeyEventNotification.run(GlassViewEventHandler.java:217)
+	at com.sun.javafx.tk.quantum.GlassViewEventHandler$KeyEventNotification.run(GlassViewEventHandler.java:149)
+	at java.security.AccessController.doPrivileged(Native Method)
+	at com.sun.javafx.tk.quantum.GlassViewEventHandler.lambda$handleKeyEvent$353(GlassViewEventHandler.java:248)
+	at com.sun.javafx.tk.quantum.QuantumToolkit.runWithoutRenderLock(QuantumToolkit.java:389)
+	at com.sun.javafx.tk.quantum.GlassViewEventHandler.handleKeyEvent(GlassViewEventHandler.java:247)
+	at com.sun.glass.ui.View.handleKeyEvent(View.java:546)
+	at com.sun.glass.ui.View.notifyKey(View.java:966)
+	at com.sun.glass.ui.win.WinApplication._runLoop(Native Method)
+	at com.sun.glass.ui.win.WinApplication.lambda$null$148(WinApplication.java:191)
+	at java.lang.Thread.run(Thread.java:748)
+
+
+**** Error file opened at 20180430 021819 Central European Summer Time Rel 3.0.12 (2014-11-21) [720.713]
+Error:  >Mon Apr 30 02:18:19,881<    RfcException:
+    message: Parameter containing a user ID is missing: neither user nor user alias nor external ID nor SSO ticket nor X.509 certificate is specified
+    return code: RFC_INVALID_PARAMETER (19)
+    error group: 101
+    key: RFC_ERROR_PROGRAM
+	at com.sap.conn.rfc.api.RfcOptions.checkLogonData(RfcOptions.java:252)
+	at com.sap.conn.rfc.api.RfcOptions.checkParameters(RfcOptions.java:348)
+	at com.sap.conn.jco.rt.MiddlewareJavaRfc$JavaRfcClient.initialize(MiddlewareJavaRfc.java:1378)
+	at com.sap.conn.jco.rt.MiddlewareJavaRfc$JavaRfcClient.connect(MiddlewareJavaRfc.java:1408)
+	at com.sap.conn.jco.rt.ClientConnection.connect(ClientConnection.java:723)
+	at com.sap.conn.jco.rt.PoolingFactory.init(PoolingFactory.java:115)
+	at com.sap.conn.jco.rt.ConnectionManager.createFactory(ConnectionManager.java:349)
+	at com.sap.conn.jco.rt.DefaultConnectionManager.createFactory(DefaultConnectionManager.java:46)
+	at com.sap.conn.jco.rt.ConnectionManager.getFactory(ConnectionManager.java:323)
+	at com.sap.conn.jco.rt.RfcDestination.initialize(RfcDestination.java:893)
+	at com.sap.conn.jco.rt.RfcDestination.getAttributes(RfcDestination.java:601)
+	at com.sap.conn.jco.rt.RfcDestination.getAttributes(RfcDestination.java:34)
+	at SAPController.step1Connect(SAPController.java:41)
+	at SAPController.tryLogin(SAPController.java:17)
+	at Main$1.handle(Main.java:41)
+	at Main$1.handle(Main.java:1)
+	at com.sun.javafx.event.CompositeEventHandler.dispatchBubblingEvent(CompositeEventHandler.java:86)
+	at com.sun.javafx.event.EventHandlerManager.dispatchBubblingEvent(EventHandlerManager.java:238)
+	at com.sun.javafx.event.EventHandlerManager.dispatchBubblingEvent(EventHandlerManager.java:191)
+	at com.sun.javafx.event.CompositeEventDispatcher.dispatchBubblingEvent(CompositeEventDispatcher.java:59)
+	at com.sun.javafx.event.BasicEventDispatcher.dispatchEvent(BasicEventDispatcher.java:58)
+	at com.sun.javafx.event.EventDispatchChainImpl.dispatchEvent(EventDispatchChainImpl.java:114)
+	at com.sun.javafx.event.BasicEventDispatcher.dispatchEvent(BasicEventDispatcher.java:56)
+	at com.sun.javafx.event.EventDispatchChainImpl.dispatchEvent(EventDispatchChainImpl.java:114)
+	at com.sun.javafx.event.BasicEventDispatcher.dispatchEvent(BasicEventDispatcher.java:56)
+	at com.sun.javafx.event.EventDispatchChainImpl.dispatchEvent(EventDispatchChainImpl.java:114)
+	at com.sun.javafx.event.EventUtil.fireEventImpl(EventUtil.java:74)
+	at com.sun.javafx.event.EventUtil.fireEvent(EventUtil.java:49)
+	at javafx.event.Event.fireEvent(Event.java:198)
+	at javafx.scene.Node.fireEvent(Node.java:8413)
+	at javafx.scene.control.Button.fire(Button.java:185)
+	at com.sun.javafx.scene.control.behavior.ButtonBehavior.mouseReleased(ButtonBehavior.java:182)
+	at com.sun.javafx.scene.control.skin.BehaviorSkinBase$1.handle(BehaviorSkinBase.java:96)
+	at com.sun.javafx.scene.control.skin.BehaviorSkinBase$1.handle(BehaviorSkinBase.java:89)
+	at com.sun.javafx.event.CompositeEventHandler$NormalEventHandlerRecord.handleBubblingEvent(CompositeEventHandler.java:218)
+	at com.sun.javafx.event.CompositeEventHandler.dispatchBubblingEvent(CompositeEventHandler.java:80)
+	at com.sun.javafx.event.EventHandlerManager.dispatchBubblingEvent(EventHandlerManager.java:238)
+	at com.sun.javafx.event.EventHandlerManager.dispatchBubblingEvent(EventHandlerManager.java:191)
+	at com.sun.javafx.event.CompositeEventDispatcher.dispatchBubblingEvent(CompositeEventDispatcher.java:59)
+	at com.sun.javafx.event.BasicEventDispatcher.dispatchEvent(BasicEventDispatcher.java:58)
+	at com.sun.javafx.event.EventDispatchChainImpl.dispatchEvent(EventDispatchChainImpl.java:114)
+	at com.sun.javafx.event.BasicEventDispatcher.dispatchEvent(BasicEventDispatcher.java:56)
+	at com.sun.javafx.event.EventDispatchChainImpl.dispatchEvent(EventDispatchChainImpl.java:114)
+	at com.sun.javafx.event.BasicEventDispatcher.dispatchEvent(BasicEventDispatcher.java:56)
+	at com.sun.javafx.event.EventDispatchChainImpl.dispatchEvent(EventDispatchChainImpl.java:114)
+	at com.sun.javafx.event.EventUtil.fireEventImpl(EventUtil.java:74)
+	at com.sun.javafx.event.EventUtil.fireEvent(EventUtil.java:54)
+	at javafx.event.Event.fireEvent(Event.java:198)
+	at javafx.scene.Scene$MouseHandler.process(Scene.java:3757)
+	at javafx.scene.Scene$MouseHandler.access$1500(Scene.java:3485)
+	at javafx.scene.Scene.impl_processMouseEvent(Scene.java:1762)
+	at javafx.scene.Scene$ScenePeerListener.mouseEvent(Scene.java:2494)
+	at com.sun.javafx.tk.quantum.GlassViewEventHandler$MouseEventNotification.run(GlassViewEventHandler.java:381)
+	at com.sun.javafx.tk.quantum.GlassViewEventHandler$MouseEventNotification.run(GlassViewEventHandler.java:295)
+	at java.security.AccessController.doPrivileged(Native Method)
+	at com.sun.javafx.tk.quantum.GlassViewEventHandler.lambda$handleMouseEvent$354(GlassViewEventHandler.java:417)
+	at com.sun.javafx.tk.quantum.QuantumToolkit.runWithoutRenderLock(QuantumToolkit.java:389)
+	at com.sun.javafx.tk.quantum.GlassViewEventHandler.handleMouseEvent(GlassViewEventHandler.java:416)
+	at com.sun.glass.ui.View.handleMouseEvent(View.java:555)
+	at com.sun.glass.ui.View.notifyMouse(View.java:937)
+	at com.sun.glass.ui.win.WinApplication._runLoop(Native Method)
+	at com.sun.glass.ui.win.WinApplication.lambda$null$148(WinApplication.java:191)
+	at java.lang.Thread.run(Thread.java:748)
+
