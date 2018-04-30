@@ -10,16 +10,14 @@ import com.sap.conn.jco.JCoFunction;
 
 public class SAPController {
 	
-	private static final String DESTINATION_NAME1 = "ABAP_AS";
-	
 	public JCoDestination tryLogin(String name, String password) {
-		Properties properties = ConnectionBuilder.BuildConnection(name, password);
+		Properties properties = ConnectionBuilder.buildConnection(name, password);
 		boolean dataFileSuccess = createDestinationDataFile(properties);
 		if(!dataFileSuccess){
 			return null;
 		}
 		try {			
-	        JCoDestination destination = JCoDestinationManager.getDestination(DESTINATION_NAME1);
+	        JCoDestination destination = JCoDestinationManager.getDestination(AppSettings.getProperty("destinationName"));
 	        System.out.println("Attributes:");
 	        System.out.println(destination.getAttributes());
 	        System.out.println();
@@ -31,7 +29,7 @@ public class SAPController {
 	}	
 
 	private boolean createDestinationDataFile(Properties connectProperties) {
-		File destCfg = new File(DESTINATION_NAME1 + ".jcoDestination");
+		File destCfg = new File(AppSettings.getProperty("destinationName") + ".jcoDestination");
 		try {
 			FileOutputStream fos = new FileOutputStream(destCfg, false);
 			connectProperties.store(fos, "for tests only !");
@@ -42,7 +40,7 @@ public class SAPController {
 		}
 	}
 	
-    public static void step3SimpleCall(JCoDestination destination) throws JCoException {
+    public void step3SimpleCall(JCoDestination destination) throws JCoException {
         JCoFunction function = destination.getRepository().getFunction("BAPI_MATERIAL_EXISTENCECHECK");
         if(function == null)
             throw new RuntimeException("STFC_CONNECTION not found in SAP.");
