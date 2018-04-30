@@ -16,7 +16,6 @@ public class AppSettings {
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
-		System.out.println(appSettings.toString());
 	}
 	
 	public static Properties getAppSettings() {
@@ -24,8 +23,6 @@ public class AppSettings {
 	}
 	
 	public static String getProperty(String key) {
-		System.out.println(key);
-		System.out.println(appSettings.getProperty(key));
 		return appSettings.getProperty(key);
 	}
 
