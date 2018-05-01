@@ -46,7 +46,7 @@ public class SAPController {
         JCoFunction function = destination.getRepository().getFunction("BAPI_MATERIAL_GETLIST");
         if(function == null)
             throw new RuntimeException("BAPI_MATERIAL_GETLIST not found in SAP.");
- 
+        
         System.out.println(function.getImportParameterList().toString());
         
         try
@@ -67,37 +67,40 @@ public class SAPController {
         
     }
     
-    public void workWithTable(JCoDestination destination) throws JCoException{
-        JCoFunction function = destination.getRepository().getFunction("BAPI_MATERIAL_GETLIST");
-        if(function == null)
-            throw new RuntimeException("BAPI_MATERIAL_GETLIST not found in SAP.");
+    public void callFunction(JCoDestination destination, String materialName){
+    	System.out.println();
+    	System.out.println();
+    	System.out.println();
+    	System.out.println(materialName);
+    	System.out.println();
+    	System.out.println();
+    	System.out.println();
+        JCoFunction function;
+        JCoStructure structure;
+		try {
+			function = destination.getRepository().getFunction("BAPI_MATERIAL_GET_DETAIL");
+			
+	        // The Parameters for searching (we are searching for a material (METALLROHR M))
+			System.out.println(function.getImportParameterList().toString());
+			function.getImportParameterList().setValue("MATERIAL", materialName.toUpperCase());
 
-        try
-        {
-            function.execute(destination);
-        }
-        catch(AbapException e)
-        {
-            System.out.println(e.toString());
-            return;
-        }
-        
-        System.out.println(function.toString());
-        
-        JCoTable table3 = function.getTableParameterList().getTable(3);
-        System.out.println(table3.toString());
-        
-        for (int i = 0; i < table3.getNumRows(); i++) 
-        {
-            table3.setRow(i);
-            System.out.println(table3.getString("MATERIAL") + '\t' + table3.getString("MATL_DESC"));
-        }
-        
-        function = destination.getRepository().getFunction("BAPI_MATERIAL_GET_DETAIL");
-        function.getImportParameterList().setValue("MATERIAL", "METALLROHR M");
-        //System.out.println(function.toString());
-        function.execute(destination);
-        System.out.println(function.getExportParameterList().getValue(2));
+			function.execute(destination);
+			structure = (JCoStructure) function.getExportParameterList().getValue(2);
+			//System.out.println(structure.toString());
+			
+			for(int i = 0; i < structure.getMetaData().getFieldCount(); i++){
+				/*
+				*	getName returns the column name, for example "MATL_DESC"
+				*	getString returns the value for this column, for example "Metallrohr fuer Blieblablub"
+				*/
+	            System.out.println(structure.getMetaData().getName(i) + ":\t" + structure.getString(i));
+	        }
+
+	        System.out.println();
+			
+		} catch (JCoException e) {
+			System.out.println(e.toString());
+		}
         
         // TODO: DIESER TEIL BRINGT UNS UNSER MATERIAL
     }

@@ -67,13 +67,8 @@ public class Main extends Application {
 	public static void handleSearch(Label statusLabel) {
 		//TODO: Send BAPI request here
 		boolean success = true;
-		try {
-			//sapController.callFunction(connection);
-			sapController.workWithTable(connection);
-		} catch (JCoException e) {
-			e.printStackTrace();
-			success = false;
-		}
+		//sapController.callFunction(connection);
+		sapController.callFunction(connection, guiBuilder.getSearchField().getText());
 		
 		if(!success) {
 			statusLabel.setText("ID konnte nicht gefunden werden");

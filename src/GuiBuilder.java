@@ -11,6 +11,8 @@ import javafx.scene.layout.VBox;
 
 public class GuiBuilder {
 
+	private TextField searchField;
+	
 	public Pane buildLoginScreen() {		
 		TextField nameField = new TextField();
 		nameField.setPromptText("Name");
@@ -48,7 +50,7 @@ public class GuiBuilder {
 	public Pane buildSearchScreen() {
 		VBox root = new VBox(10);
 		Label statusLabel = new Label();
-		TextField searchField = new TextField();
+		searchField = new TextField();
 		searchField.setPromptText("Artikel ID");
 		
 		EventHandler<KeyEvent> keyboardHandler = new EventHandler<KeyEvent>() {
@@ -107,6 +109,10 @@ public class GuiBuilder {
 		root.getChildren().add(searchButton);
 		root.getChildren().add(label);
 		return root;
+	}
+	
+	public TextField getSearchField(){
+		return this.searchField;
 	}
 	
 }
