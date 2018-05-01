@@ -14,6 +14,7 @@ public class Main extends Application {
 	private static SAPController sapController;
 	private static GuiBuilder guiBuilder;
 	private static Scene scene;
+	private static JCoDestination connection;
 
 	public static void main(String[] args) throws JCoException {
 		AppSettings.loadAppSettings();
@@ -32,7 +33,7 @@ public class Main extends Application {
 		}
 		
 		if(mockLogin) {
-			JCoDestination connection = sapController.tryLogin(AppSettings.getProperty("username"), AppSettings.getProperty("password"));
+			connection = sapController.tryLogin(AppSettings.getProperty("username"), AppSettings.getProperty("password"));
 			if (connection != null) {
 				scene = new Scene(guiBuilder.buildSearchScreen(), 400, 400);
 			} else {
@@ -48,7 +49,7 @@ public class Main extends Application {
 	}
 	
 	public static void handleLogin(TextField nameField, PasswordField passwordField, Label statusLabel) {
-		JCoDestination connection = sapController.tryLogin(nameField.getText(), passwordField.getText());
+		connection = sapController.tryLogin(nameField.getText(), passwordField.getText());
 		if (connection != null) {
 			scene.setRoot(guiBuilder.buildSearchScreen());
 	/*		try {
@@ -66,7 +67,14 @@ public class Main extends Application {
 	public static void handleSearch(Label statusLabel) {
 		//TODO: Send BAPI request here
 		boolean success = true;
-//		boolean success = false;
+		try {
+			//sapController.callFunction(connection);
+			sapController.workWithTable(connection);
+		} catch (JCoException e) {
+			e.printStackTrace();
+			success = false;
+		}
+		
 		if(!success) {
 			statusLabel.setText("ID konnte nicht gefunden werden");
 			statusLabel.setTextFill(Paint.valueOf("red"));
