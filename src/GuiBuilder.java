@@ -79,9 +79,13 @@ public class GuiBuilder {
 		return root;
 	}
 	
-	public Pane buildInfoScreen() {
+	public Pane buildInfoScreen(String materialName, SAPController sapController) {
 		VBox root = new VBox(10);
-		Label label = new Label("Ich diene zur Unterscheidung :))))");
+		Label matNameLabel = new Label("Material: " + materialName.toUpperCase());
+		Label matDescLabel = new Label("Material Description: " + sapController.getDataMap().get("MATL_DESC"));
+		Label matTypeLabel = new Label("Material Type: " + sapController.getDataMap().get("MATL_TYPE"));
+		Label matWtLabel = new Label("Material Weight: " + sapController.getDataMap().get("GROSS_WT") + " " + sapController.getDataMap().get("UNIT_OF_WT"));
+		Label matVolLabel = new Label("Material Volume: " + sapController.getDataMap().get("VOLUME") + " " + sapController.getDataMap().get("VOLUMEUNIT"));
 		TextField searchField = new TextField();
 		searchField.setPromptText("Artikel ID");
 		
@@ -107,7 +111,11 @@ public class GuiBuilder {
 		
 		root.getChildren().add(searchField);
 		root.getChildren().add(searchButton);
-		root.getChildren().add(label);
+		root.getChildren().add(matNameLabel);
+		root.getChildren().add(matDescLabel);
+		root.getChildren().add(matTypeLabel);
+		root.getChildren().add(matWtLabel);
+		root.getChildren().add(matVolLabel);
 		return root;
 	}
 	

@@ -65,7 +65,7 @@ public class Main extends Application {
 	}
 	
 	public static void handleSearch(Label statusLabel) {
-		//TODO: Send BAPI request here
+		//TODO: Check for success
 		boolean success = true;
 		//sapController.callFunction(connection);
 		sapController.callFunction(connection, guiBuilder.getSearchField().getText());
@@ -74,7 +74,7 @@ public class Main extends Application {
 			statusLabel.setText("ID konnte nicht gefunden werden");
 			statusLabel.setTextFill(Paint.valueOf("red"));
 		} else {			
-			scene.setRoot(guiBuilder.buildInfoScreen());
+			scene.setRoot(guiBuilder.buildInfoScreen(guiBuilder.getSearchField().getText(), sapController));
 		}
 	}
 	

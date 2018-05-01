@@ -1,5 +1,6 @@
 import java.io.File;
 import java.io.FileOutputStream;
+import java.util.HashMap;
 import java.util.Properties;
 
 import com.sap.conn.jco.AbapException;
@@ -11,6 +12,12 @@ import com.sap.conn.jco.JCoStructure;
 import com.sap.conn.jco.JCoTable;
 
 public class SAPController {
+	
+	private HashMap<String, String> dataMap;
+	
+	public SAPController() {
+		this.dataMap = new HashMap<String, String>();
+	}
 	
 	public JCoDestination tryLogin(String name, String password) {
 		Properties properties = ConnectionBuilder.buildConnection(name, password);
@@ -92,9 +99,17 @@ public class SAPController {
 				/*
 				*	getName returns the column name, for example "MATL_DESC"
 				*	getString returns the value for this column, for example "Metallrohr fuer Blieblablub"
+				*
+				*	TODO: 	find a better solution for the shit underneath this comment
 				*/
-	            System.out.println(structure.getMetaData().getName(i) + ":\t" + structure.getString(i));
+	            //System.out.println(structure.getMetaData().getName(i) + ":\t" + structure.getString(i));
+	            if(structure.getMetaData().getName(i).equals("MATL_DESC") || structure.getMetaData().getName(i).equals("MATL_TYPE") ||
+	            		structure.getMetaData().getName(i).equals("GROSS_WT") || structure.getMetaData().getName(i).equals("UNIT_OF_WT") ||
+	            		structure.getMetaData().getName(i).equals("VOLUME") || structure.getMetaData().getName(i).equals("VOLUMEUNIT")){
+	            	this.dataMap.put(structure.getMetaData().getName(i), structure.getString(i));
+	            }
 	        }
+            System.out.println(this.dataMap.toString());
 
 	        System.out.println();
 			
@@ -103,6 +118,11 @@ public class SAPController {
 		}
         
         // TODO: DIESER TEIL BRINGT UNS UNSER MATERIAL
+    }
+    
+    public HashMap<String, String> getDataMap(){
+		return this.dataMap;
+    	
     }
 	
 }
