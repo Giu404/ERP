@@ -52,12 +52,6 @@ public class Main extends Application {
 		connection = sapController.tryLogin(nameField.getText(), passwordField.getText());
 		if (connection != null) {
 			scene.setRoot(guiBuilder.buildSearchScreen());
-	/*		try {
-				sapController.step3SimpleCall(connection);
-			} catch (JCoException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}*/
 		} else {
 			statusLabel.setText("Login NOT successful!");
 			statusLabel.setTextFill(Paint.valueOf("red"));
@@ -68,11 +62,16 @@ public class Main extends Application {
 		sapController.callFunction(connection, guiBuilder.getSearchField().getText());
 		
 		if(!sapController.getMaterialExistence()) {
-			statusLabel.setText("Material konnte nicht gefunden werden");
+			statusLabel.setVisible(true);
+			statusLabel.setText("Material '" + guiBuilder.getSearchField().getText() + "' konnte nicht gefunden werden");
 			statusLabel.setTextFill(Paint.valueOf("red"));
+			guiBuilder.setInfoVisible("", sapController, false);
 		} else {			
-			scene.setRoot(guiBuilder.buildInfoScreen(guiBuilder.getSearchField().getText(), sapController));
+			guiBuilder.setInfoVisible(guiBuilder.getSearchField().getText(), sapController, true);
+			statusLabel.setVisible(false);
+			
 		}
+		guiBuilder.getSearchField().setText("");
 	}
 	
 }
