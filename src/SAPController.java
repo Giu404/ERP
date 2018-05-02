@@ -14,9 +14,11 @@ import com.sap.conn.jco.JCoTable;
 public class SAPController {
 	
 	private HashMap<String, String> dataMap;
+	private boolean materialExists;
 	
 	public SAPController() {
 		this.dataMap = new HashMap<String, String>();
+		this.materialExists = false;
 	}
 	
 	public JCoDestination tryLogin(String name, String password) {
@@ -75,40 +77,28 @@ public class SAPController {
     }
     
     public void callFunction(JCoDestination destination, String materialName){
-    	System.out.println();
-    	System.out.println();
-    	System.out.println();
-    	System.out.println(materialName);
-    	System.out.println();
-    	System.out.println();
-    	System.out.println();
         JCoFunction function;
         JCoStructure structure;
 		try {
 			function = destination.getRepository().getFunction("BAPI_MATERIAL_GET_DETAIL");
-			
-	        // The Parameters for searching (we are searching for a material (METALLROHR M))
-			System.out.println(function.getImportParameterList().toString());
 			function.getImportParameterList().setValue("MATERIAL", materialName.toUpperCase());
-
 			function.execute(destination);
 			structure = (JCoStructure) function.getExportParameterList().getValue(2);
 			//System.out.println(structure.toString());
 			
 			for(int i = 0; i < structure.getMetaData().getFieldCount(); i++){
-				/*
-				*	getName returns the column name, for example "MATL_DESC"
-				*	getString returns the value for this column, for example "Metallrohr fuer Blieblablub"
-				*
-				*	TODO: 	find a better solution for the shit underneath this comment
-				*/
-	            //System.out.println(structure.getMetaData().getName(i) + ":\t" + structure.getString(i));
 	            if(structure.getMetaData().getName(i).equals("MATL_DESC") || structure.getMetaData().getName(i).equals("MATL_TYPE") ||
 	            		structure.getMetaData().getName(i).equals("GROSS_WT") || structure.getMetaData().getName(i).equals("UNIT_OF_WT") ||
 	            		structure.getMetaData().getName(i).equals("VOLUME") || structure.getMetaData().getName(i).equals("VOLUMEUNIT")){
-	            	this.dataMap.put(structure.getMetaData().getName(i), structure.getString(i));
+	            	if(structure.getString(i) == ""){
+	            		this.materialExists = false;
+	            		return;
+	            	} else {
+	            		this.dataMap.put(structure.getMetaData().getName(i), structure.getString(i));
+	            	}
 	            }
 	        }
+			this.materialExists = true;
             System.out.println(this.dataMap.toString());
 
 	        System.out.println();
@@ -116,13 +106,15 @@ public class SAPController {
 		} catch (JCoException e) {
 			System.out.println(e.toString());
 		}
-        
-        // TODO: DIESER TEIL BRINGT UNS UNSER MATERIAL
     }
     
     public HashMap<String, String> getDataMap(){
 		return this.dataMap;
     	
+    }
+    
+    public boolean getMaterialExistence(){
+    	return this.materialExists;
     }
 	
 }

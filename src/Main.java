@@ -65,13 +65,10 @@ public class Main extends Application {
 	}
 	
 	public static void handleSearch(Label statusLabel) {
-		//TODO: Check for success
-		boolean success = true;
-		//sapController.callFunction(connection);
 		sapController.callFunction(connection, guiBuilder.getSearchField().getText());
 		
-		if(!success) {
-			statusLabel.setText("ID konnte nicht gefunden werden");
+		if(!sapController.getMaterialExistence()) {
+			statusLabel.setText("Material konnte nicht gefunden werden");
 			statusLabel.setTextFill(Paint.valueOf("red"));
 		} else {			
 			scene.setRoot(guiBuilder.buildInfoScreen(guiBuilder.getSearchField().getText(), sapController));
