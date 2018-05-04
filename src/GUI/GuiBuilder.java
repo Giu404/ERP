@@ -1,3 +1,10 @@
+package GUI;
+import java.io.IOException;
+import java.util.InvalidPropertiesFormatException;
+import java.util.Map;
+
+import Languages.Translations;
+import Startup.Main;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.geometry.Insets;
@@ -21,20 +28,26 @@ public class GuiBuilder {
 	private Label matWtLabel;
 	private Label matVolLabel;
 	
-	public Pane buildLoginScreen() {		
+	//TODO: Improve all the GUI Stuff. Split the labels into a material attribute label and a material value label
+	public Pane buildLoginScreen() throws InvalidPropertiesFormatException, IOException {		
 		TextField nameField = new TextField();
-		nameField.setPromptText("Name");
+		nameField.setPromptText(Translations.get("user_name"));
 		PasswordField passwordField = new PasswordField();
-		passwordField.setPromptText("Passwort");
+		passwordField.setPromptText(Translations.get("user_password"));
 		Button loginButton = new Button();
-		loginButton.setText("Login");
+		loginButton.setText(Translations.get("login"));
 		Label statusLabel = new Label();
 		VBox root = new VBox(10);
 		EventHandler<KeyEvent> keyboardHandler = new EventHandler<KeyEvent>() {
 			@Override
-			public void handle(KeyEvent event) {
+			public void handle(KeyEvent event){
 				if (event.getCode() == KeyCode.ENTER) {
-					Main.handleLogin(nameField, passwordField, statusLabel);
+					try {
+						Main.handleLogin(nameField, passwordField, statusLabel);
+					} catch (IOException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					}
 				}
 			}
 		};
@@ -44,7 +57,12 @@ public class GuiBuilder {
 		loginButton.setOnAction(new EventHandler<ActionEvent>() {
 			@Override
 			public void handle(ActionEvent event) {
-				Main.handleLogin(nameField, passwordField, statusLabel);
+				try {
+					Main.handleLogin(nameField, passwordField, statusLabel);
+				} catch (IOException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
 			}
 		});
 		root.setPadding(new Insets(10, 10, 10, 10));
@@ -55,7 +73,7 @@ public class GuiBuilder {
 		return root;
 	}
 	
-	public Pane buildSearchScreen() {
+	public Pane buildSearchScreen() throws InvalidPropertiesFormatException, IOException {
 		VBox root = new VBox(10);
 		this.searchField = new TextField();
 		Label statusLabel = new Label();
@@ -72,8 +90,10 @@ public class GuiBuilder {
 		this.matTypeLabel.setPrefWidth(400);
 		this.matWtLabel.setPrefWidth(400);
 		this.matVolLabel.setPrefWidth(400);
-		this.searchField.setPrefWidth(332);
-		this.searchField.setPromptText("Artikelname");
+		this.matNameLabel.setStyle("-fx-border-color: black; -fx-border-width: 1px 0px 1px 0px");
+		this.matVolLabel.setStyle("-fx-border-color: black; -fx-border-width: 0px 0px 1px 0px");
+		this.searchField.setPrefWidth(352);
+		searchField.setPromptText(Translations.get("article_name") + " / " + Translations.get("article_id"));
 		this.matNameLabel.setVisible(false);
 		this.matDescLabel.setVisible(false);
 		this.matTypeLabel.setVisible(false);
@@ -86,17 +106,27 @@ public class GuiBuilder {
 			public void handle(KeyEvent event) {
 				//TODO: Maybe input validation (compare with given set of characters)
 				if(event.getCode() == KeyCode.ENTER) {
-					Main.handleSearch(statusLabel);
+					try {
+						Main.handleSearch(statusLabel);
+					} catch (IOException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					}
 				}
 			}
 		};
 		this.searchField.addEventHandler(KeyEvent.KEY_RELEASED, keyboardHandler);
 		
-		Button searchButton = new Button("Suche");
+		Button searchButton = new Button(Translations.get("search"));
 		searchButton.setOnAction(new EventHandler<ActionEvent>() {
 			@Override
 			public void handle(ActionEvent event) {
-				Main.handleSearch(statusLabel);
+				try {
+					Main.handleSearch(statusLabel);
+				} catch (IOException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
 			}
 		});
 		
@@ -113,13 +143,14 @@ public class GuiBuilder {
 		return root;
 	}
 	
-	public void setInfoVisible(String materialName, SAPController sapController, boolean visible) {
+	public void setInfoVisible(String materialName, Map<String, String> dataMap, boolean visible) throws InvalidPropertiesFormatException, IOException {
 		if(visible){
-			this.matNameLabel.setText(materialName.toUpperCase());
-			this.matDescLabel.setText("Material Description:\t" + sapController.getDataMap().get("MATL_DESC"));
-			this.matTypeLabel.setText("Material Type:\t\t\t" + sapController.getDataMap().get("MATL_TYPE"));
-			this.matWtLabel.setText("Material Weight:\t\t" + sapController.getDataMap().get("GROSS_WT")+ " " +sapController.getDataMap().get("UNIT_OF_WT"));
-			this.matVolLabel.setText("Material Volume:\t\t" + sapController.getDataMap().get("VOLUME")+ " " +sapController.getDataMap().get("VOLUMEUNIT"));
+
+			this.matNameLabel.setText(Translations.get("material") + ":\t\t\t\t" + materialName.toUpperCase());
+			this.matDescLabel.setText(Translations.get("material_description") + ":\t" + dataMap.get("MATL_DESC"));
+			this.matTypeLabel.setText(Translations.get("material_type") + ":\t\t\t" + dataMap.get("MATL_TYPE"));
+			this.matWtLabel.setText(Translations.get("material_weight") + ":\t\t" + dataMap.get("GROSS_WT")+ " " + dataMap.get("UNIT_OF_WT"));
+			this.matVolLabel.setText(Translations.get("material_volume") + ":\t\t" + dataMap.get("VOLUME")+ " " + dataMap.get("VOLUMEUNIT"));
 			
 			this.matNameLabel.setVisible(true);
 			this.matDescLabel.setVisible(true);

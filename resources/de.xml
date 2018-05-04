@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!DOCTYPE properties SYSTEM "http://java.sun.com/dtd/properties.dtd">
+<properties>
+	<entry key="app_name">SAP Logistik Tool</entry>
+	<entry key="user_name">Name</entry>
+	<entry key="user_password">Passwort</entry>
+	<entry key="login">Login</entry>
+	<entry key="login_fail">Login fehlgeschlagen</entry>
+	<entry key="article_name">Name des Artikels</entry>
+	<entry key="article_id">Artikel ID</entry>
+	<entry key="search">Suche</entry>
+	<entry key="material">Material</entry>
+	<entry key="material_description">Materialbeschreibung</entry>
+	<entry key="material_type">Materialart</entry>
+	<entry key="material_weight">Materialgewicht</entry>	
+	<entry key="material_volume">Materialvolumen</entry>
+	<entry key="id_not_found">ID konnte nicht gefunden werden</entry>
+</properties>

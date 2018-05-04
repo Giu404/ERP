@@ -1,6 +1,13 @@
+package Startup;
+import java.io.IOException;
+import java.util.InvalidPropertiesFormatException;
+
 import com.sap.conn.jco.JCoDestination;
 import com.sap.conn.jco.JCoException;
 
+import Controllers.SAPController;
+import GUI.GuiBuilder;
+import Languages.Translations;
 import javafx.application.Application;
 import javafx.scene.Scene;
 import javafx.scene.control.Label;
@@ -25,14 +32,14 @@ public class Main extends Application {
 
 	@Override
 	public void start(Stage stage) throws Exception {
-		boolean mockLogin;
+		boolean quickLogin;
 		try {
-			mockLogin = Boolean.parseBoolean(AppSettings.getProperty("mockLogin"));
+			quickLogin = Boolean.parseBoolean(AppSettings.getProperty("quickLogin"));
 		} catch (Exception e) {
-			mockLogin = false;
+			quickLogin = false;
 		}
 		
-		if(mockLogin) {
+		if(quickLogin) {
 			connection = sapController.tryLogin(AppSettings.getProperty("username"), AppSettings.getProperty("password"));
 			if (connection != null) {
 				scene = new Scene(guiBuilder.buildSearchScreen(), 400, 400);
@@ -43,31 +50,31 @@ public class Main extends Application {
 			scene = new Scene(guiBuilder.buildLoginScreen(), 400, 400);
 		}
 		
-		stage.setTitle("Logistik SAP Tool");
+		stage.setTitle(Translations.get("app_name"));
 		stage.setScene(scene);
 		stage.show();
 	}
 	
-	public static void handleLogin(TextField nameField, PasswordField passwordField, Label statusLabel) {
+	public static void handleLogin(TextField nameField, PasswordField passwordField, Label statusLabel) throws InvalidPropertiesFormatException, IOException {
 		connection = sapController.tryLogin(nameField.getText(), passwordField.getText());
 		if (connection != null) {
 			scene.setRoot(guiBuilder.buildSearchScreen());
 		} else {
-			statusLabel.setText("Login NOT successful!");
+			statusLabel.setText(Translations.get("login_fail"));
 			statusLabel.setTextFill(Paint.valueOf("red"));
 		}
 	}
 	
-	public static void handleSearch(Label statusLabel) {
-		sapController.callFunction(connection, guiBuilder.getSearchField().getText());
+	public static void handleSearch(Label statusLabel) throws InvalidPropertiesFormatException, IOException {
+		sapController.getMaterialData(connection, guiBuilder.getSearchField().getText());
 		
 		if(!sapController.getMaterialExistence()) {
 			statusLabel.setVisible(true);
-			statusLabel.setText("Material '" + guiBuilder.getSearchField().getText() + "' konnte nicht gefunden werden");
+			statusLabel.setText(Translations.get("id_not_found"));
 			statusLabel.setTextFill(Paint.valueOf("red"));
-			guiBuilder.setInfoVisible("", sapController, false);
+			guiBuilder.setInfoVisible("", sapController.getDataMap(), false);
 		} else {			
-			guiBuilder.setInfoVisible(guiBuilder.getSearchField().getText(), sapController, true);
+			guiBuilder.setInfoVisible(guiBuilder.getSearchField().getText(), sapController.getDataMap(), true);
 			statusLabel.setVisible(false);
 			
 		}

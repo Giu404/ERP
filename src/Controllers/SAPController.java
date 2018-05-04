@@ -1,18 +1,33 @@
+package Controllers;
 import java.io.File;
 import java.io.FileOutputStream;
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Properties;
 
-import com.sap.conn.jco.AbapException;
 import com.sap.conn.jco.JCoDestination;
 import com.sap.conn.jco.JCoDestinationManager;
 import com.sap.conn.jco.JCoException;
 import com.sap.conn.jco.JCoFunction;
 import com.sap.conn.jco.JCoStructure;
 
+import Startup.AppSettings;
+import Startup.ConnectionBuilder;
+
 public class SAPController {
 	
 	private HashMap<String, String> dataMap;
+	private static final List<String> displayData = new ArrayList<String>() {
+		private static final long serialVersionUID = 1L;
+	{
+		add("MATL_DESC");
+		add("MATL_TYPE");
+		add("GROSS_WT");
+		add("UNIT_OF_WT");
+		add("VOLUME");
+		add("VOLUMEUNIT");
+	}};
 	private boolean materialExists;
 	
 	public SAPController() {
@@ -42,54 +57,25 @@ public class SAPController {
 		File destCfg = new File(AppSettings.getProperty("destinationName") + ".jcoDestination");
 		try {
 			FileOutputStream fos = new FileOutputStream(destCfg, false);
-			connectProperties.store(fos, "for tests only !");
+			connectProperties.store(fos, "");
 			fos.close();
 			return true;
 		} catch (Exception e) {
 			return false;
 		}
 	}
-	
-    public void callFunction(JCoDestination destination) throws JCoException {
-        JCoFunction function = destination.getRepository().getFunction("BAPI_MATERIAL_GETLIST");
-        if(function == null)
-            throw new RuntimeException("BAPI_MATERIAL_GETLIST not found in SAP.");
-        
-        System.out.println(function.getImportParameterList().toString());
-        
-        try
-        {
-            function.execute(destination);
-            System.out.println(function.getName());
-        }
-        catch(AbapException e)
-        {
-            System.out.println(e.toString());
-            return;
-        }
-       
-        System.out.println("BAPI_MATERIAL_GETLIST finished:");
-        //System.out.println(function.getExportParameterList().toString());
-        //System.out.println(function.getTableParameterList().toString());
-        System.out.println();
-        
-    }
     
-    public void callFunction(JCoDestination destination, String materialName){
+    public void getMaterialData(JCoDestination destination, String materialName){
         JCoFunction function;
         JCoStructure structure;
-		try {
+		try {	
 			function = destination.getRepository().getFunction("BAPI_MATERIAL_GET_DETAIL");
 			function.getImportParameterList().setValue("MATERIAL", materialName.toUpperCase());
 			function.execute(destination);
-			structure = (JCoStructure) function.getExportParameterList().getValue(2);
-			//System.out.println(structure.toString());
-			
+			structure = (JCoStructure) function.getExportParameterList().getValue(2);			
 			for(int i = 0; i < structure.getMetaData().getFieldCount(); i++){
-	            if(structure.getMetaData().getName(i).equals("MATL_DESC") || structure.getMetaData().getName(i).equals("MATL_TYPE") ||
-	            		structure.getMetaData().getName(i).equals("GROSS_WT") || structure.getMetaData().getName(i).equals("UNIT_OF_WT") ||
-	            		structure.getMetaData().getName(i).equals("VOLUME") || structure.getMetaData().getName(i).equals("VOLUMEUNIT")){
-	            	if(structure.getString(i) == ""){
+	            if(displayData.contains(structure.getMetaData().getName(i))) {
+					if(structure.getString(i) == ""){
 	            		this.materialExists = false;
 	            		return;
 	            	} else {
@@ -99,8 +85,6 @@ public class SAPController {
 	        }
 			this.materialExists = true;
             System.out.println(this.dataMap.toString());
-
-	        System.out.println();
 			
 		} catch (JCoException e) {
 			System.out.println(e.toString());
