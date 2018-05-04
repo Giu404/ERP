@@ -1,3 +1,4 @@
+package Startup;
 import java.io.FileInputStream;
 import java.nio.file.Paths;
 import java.util.Properties;
@@ -6,6 +7,7 @@ public class AppSettings {
 	
 	private static Properties appSettings;
 	private static final String APP_SETTINGS_FILE_NAME = "app.config";
+	public static String CLIENT_LANGUAGE = "DE";
 	
 	public static void loadAppSettings() {
 		appSettings = new Properties();
@@ -16,6 +18,7 @@ public class AppSettings {
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
+		CLIENT_LANGUAGE = appSettings.getProperty("clientLanguage");
 	}
 	
 	public static Properties getAppSettings() {
