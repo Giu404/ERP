@@ -28,9 +28,11 @@ public class SAPController {
 		add("VOLUME");
 		add("VOLUMEUNIT");
 	}};
+	private boolean materialExists;
 	
 	public SAPController() {
 		this.dataMap = new HashMap<String, String>();
+		this.materialExists = false;
 	}
 	
 	public JCoDestination tryLogin(String name, String password) {
@@ -69,15 +71,19 @@ public class SAPController {
 		try {	
 			function = destination.getRepository().getFunction("BAPI_MATERIAL_GET_DETAIL");
 			function.getImportParameterList().setValue("MATERIAL", materialName.toUpperCase());
-//			function.getImportParameterList().setValue("MATERIAL", "METALLROHR M");
 			function.execute(destination);
 			structure = (JCoStructure) function.getExportParameterList().getValue(2);			
 			for(int i = 0; i < structure.getMetaData().getFieldCount(); i++){
-	            if(displayData.contains(structure.getMetaData().getName(i))){
-	            	System.out.println(structure.getString(i));
-	            	this.dataMap.put(structure.getMetaData().getName(i), structure.getString(i));
+	            if(displayData.contains(structure.getMetaData().getName(i))) {
+					if(structure.getString(i) == ""){
+	            		this.materialExists = false;
+	            		return;
+	            	} else {
+	            		this.dataMap.put(structure.getMetaData().getName(i), structure.getString(i));
+	            	}
 	            }
 	        }
+			this.materialExists = true;
             System.out.println(this.dataMap.toString());
 			
 		} catch (JCoException e) {
@@ -88,6 +94,10 @@ public class SAPController {
     public HashMap<String, String> getDataMap(){
 		return this.dataMap;
     	
+    }
+    
+    public boolean getMaterialExistence(){
+    	return this.materialExists;
     }
 	
 }
