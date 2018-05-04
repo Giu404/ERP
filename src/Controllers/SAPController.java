@@ -57,7 +57,7 @@ public class SAPController {
 		File destCfg = new File(AppSettings.getProperty("destinationName") + ".jcoDestination");
 		try {
 			FileOutputStream fos = new FileOutputStream(destCfg, false);
-			connectProperties.store(fos, "for tests only !");
+			connectProperties.store(fos, "");
 			fos.close();
 			return true;
 		} catch (Exception e) {
@@ -65,7 +65,7 @@ public class SAPController {
 		}
 	}
     
-    public void callFunction(JCoDestination destination, String materialName){
+    public void getMaterialData(JCoDestination destination, String materialName){
         JCoFunction function;
         JCoStructure structure;
 		try {	

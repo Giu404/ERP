@@ -1,6 +1,5 @@
 package Languages;
 import java.io.FileInputStream;
-import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.nio.file.Paths;
 import java.util.ArrayList;
@@ -11,8 +10,6 @@ import java.util.Properties;
 import Startup.AppSettings;
 
 public class Translations {
-
-	public static final String APP_TITLE = "";
 
 	private static Properties translations;
 
@@ -26,7 +23,7 @@ public class Translations {
 	};
 
 	public static String getClientLanguage(String appSettingsLanguage) {
-		return SUPPORTED_LANGUAGES.contains(appSettingsLanguage) ? appSettingsLanguage : DEFAULT_LANGUAGE;
+		return SUPPORTED_LANGUAGES.contains(appSettingsLanguage.toUpperCase()) ? appSettingsLanguage.toUpperCase() : DEFAULT_LANGUAGE;
 	}
 
 	public static void loadTranslations() throws InvalidPropertiesFormatException, IOException {

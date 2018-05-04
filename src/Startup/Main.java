@@ -66,15 +66,15 @@ public class Main extends Application {
 	}
 	
 	public static void handleSearch(Label statusLabel) throws InvalidPropertiesFormatException, IOException {
-		sapController.callFunction(connection, guiBuilder.getSearchField().getText());
+		sapController.getMaterialData(connection, guiBuilder.getSearchField().getText());
 		
 		if(!sapController.getMaterialExistence()) {
 			statusLabel.setVisible(true);
 			statusLabel.setText(Translations.get("id_not_found"));
 			statusLabel.setTextFill(Paint.valueOf("red"));
-			guiBuilder.setInfoVisible("", sapController, false);
+			guiBuilder.setInfoVisible("", sapController.getDataMap(), false);
 		} else {			
-			guiBuilder.setInfoVisible(guiBuilder.getSearchField().getText(), sapController, true);
+			guiBuilder.setInfoVisible(guiBuilder.getSearchField().getText(), sapController.getDataMap(), true);
 			statusLabel.setVisible(false);
 			
 		}

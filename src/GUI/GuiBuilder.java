@@ -3,7 +3,6 @@ import java.io.IOException;
 import java.util.InvalidPropertiesFormatException;
 import java.util.Map;
 
-import Controllers.SAPController;
 import Languages.Translations;
 import Startup.Main;
 import javafx.event.ActionEvent;
@@ -14,8 +13,6 @@ import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
-import javafx.scene.layout.Background;
-import javafx.scene.layout.BackgroundFill;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
@@ -29,6 +26,7 @@ public class GuiBuilder {
 	private Label matWtLabel;
 	private Label matVolLabel;
 	
+	//TODO: Improve all the GUI Stuff. Split the labels into a material attribute label and a material value label
 	public Pane buildLoginScreen() throws InvalidPropertiesFormatException, IOException {		
 		TextField nameField = new TextField();
 		nameField.setPromptText(Translations.get("user_name"));
@@ -138,13 +136,13 @@ public class GuiBuilder {
 		return root;
 	}
 	
-	public void setInfoVisible(String materialName, SAPController sapController, boolean visible) {
+	public void setInfoVisible(String materialName, Map<String, String> dataMap, boolean visible) throws InvalidPropertiesFormatException, IOException {
 		if(visible){
-			this.matNameLabel.setText("Material:\t\t\t\t" + materialName.toUpperCase());
-			this.matDescLabel.setText("Material Description:\t" + sapController.getDataMap().get("MATL_DESC"));
-			this.matTypeLabel.setText("Material Type:\t\t\t" + sapController.getDataMap().get("MATL_TYPE"));
-			this.matWtLabel.setText("Material Weight:\t\t" + sapController.getDataMap().get("GROSS_WT")+ " " +sapController.getDataMap().get("UNIT_OF_WT"));
-			this.matVolLabel.setText("Material Volume:\t\t" + sapController.getDataMap().get("VOLUME")+ " " +sapController.getDataMap().get("VOLUMEUNIT"));
+			this.matNameLabel.setText(Translations.get("material") + ":\t\t\t\t" + materialName.toUpperCase());
+			this.matDescLabel.setText(Translations.get("material_description") + ":\t" + dataMap.get("MATL_DESC"));
+			this.matTypeLabel.setText(Translations.get("material_type") + ":\t\t\t" + dataMap.get("MATL_TYPE"));
+			this.matWtLabel.setText(Translations.get("material_weight") + ":\t\t" + dataMap.get("GROSS_WT")+ " " + dataMap.get("UNIT_OF_WT"));
+			this.matVolLabel.setText(Translations.get("material_volume") + ":\t\t" + dataMap.get("VOLUME")+ " " + dataMap.get("VOLUMEUNIT"));
 			
 			this.matNameLabel.setVisible(true);
 			this.matDescLabel.setVisible(true);
