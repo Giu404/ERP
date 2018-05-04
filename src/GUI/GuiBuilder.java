@@ -11,7 +11,6 @@ import javafx.geometry.Insets;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.PasswordField;
-import javafx.scene.control.ProgressIndicator;
 import javafx.scene.control.TextField;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
@@ -45,7 +44,6 @@ public class GuiBuilder {
 					try {
 						Main.handleLogin(nameField, passwordField, statusLabel);
 					} catch (IOException e) {
-						// TODO Auto-generated catch block
 						e.printStackTrace();
 					}
 				}
@@ -60,7 +58,6 @@ public class GuiBuilder {
 				try {
 					Main.handleLogin(nameField, passwordField, statusLabel);
 				} catch (IOException e) {
-					// TODO Auto-generated catch block
 					e.printStackTrace();
 				}
 			}
@@ -92,7 +89,7 @@ public class GuiBuilder {
 		this.matVolLabel.setPrefWidth(400);
 		this.matNameLabel.setStyle("-fx-border-color: black; -fx-border-width: 1px 0px 1px 0px");
 		this.matVolLabel.setStyle("-fx-border-color: black; -fx-border-width: 0px 0px 1px 0px");
-		this.searchField.setPrefWidth(352);
+		this.searchField.setPrefWidth(332);
 		searchField.setPromptText(Translations.get("article_name") + " / " + Translations.get("article_id"));
 		this.matNameLabel.setVisible(false);
 		this.matDescLabel.setVisible(false);
@@ -109,7 +106,6 @@ public class GuiBuilder {
 					try {
 						Main.handleSearch(statusLabel);
 					} catch (IOException e) {
-						// TODO Auto-generated catch block
 						e.printStackTrace();
 					}
 				}
@@ -124,7 +120,6 @@ public class GuiBuilder {
 				try {
 					Main.handleSearch(statusLabel);
 				} catch (IOException e) {
-					// TODO Auto-generated catch block
 					e.printStackTrace();
 				}
 			}
