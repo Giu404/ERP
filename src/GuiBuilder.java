@@ -1,13 +1,13 @@
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
+import javafx.geometry.Insets;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.PasswordField;
+import javafx.scene.control.ProgressIndicator;
 import javafx.scene.control.TextField;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
-import javafx.scene.layout.Background;
-import javafx.scene.layout.BackgroundFill;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
@@ -47,7 +47,7 @@ public class GuiBuilder {
 				Main.handleLogin(nameField, passwordField, statusLabel);
 			}
 		});
-
+		root.setPadding(new Insets(10, 10, 10, 10));
 		root.getChildren().add(nameField);
 		root.getChildren().add(passwordField);
 		root.getChildren().add(loginButton);
@@ -66,14 +66,14 @@ public class GuiBuilder {
 		this.matVolLabel = new Label();
 		
 		this.matNameLabel.setPrefWidth(400);
+		this.matNameLabel.setStyle("-fx-border-color: black;-fx-border-width: 0 0 1 0");
+		this.matDescLabel.setPadding(new Insets(10, 0, 0, 0));
 		this.matDescLabel.setPrefWidth(400);
 		this.matTypeLabel.setPrefWidth(400);
 		this.matWtLabel.setPrefWidth(400);
 		this.matVolLabel.setPrefWidth(400);
-		this.matNameLabel.setStyle("-fx-border-color: black; -fx-border-width: 1px 0px 1px 0px");
-		this.matVolLabel.setStyle("-fx-border-color: black; -fx-border-width: 0px 0px 1px 0px");
-		this.searchField.setPrefWidth(352);
-		this.searchField.setPromptText("Artikel ID");
+		this.searchField.setPrefWidth(332);
+		this.searchField.setPromptText("Artikelname");
 		this.matNameLabel.setVisible(false);
 		this.matDescLabel.setVisible(false);
 		this.matTypeLabel.setVisible(false);
@@ -99,20 +99,23 @@ public class GuiBuilder {
 				Main.handleSearch(statusLabel);
 			}
 		});
+		
 		HBox searchPane = new HBox(searchField, searchButton);
+		VBox materialPane = new VBox(this.matNameLabel, this.matDescLabel, 
+									this.matTypeLabel, this.matWtLabel, this.matVolLabel);
+		searchPane.setPadding(new Insets(10, 10, 10, 10));
+		statusLabel.setPadding(new Insets(0, 10, 0, 10));
+		materialPane.setPadding(new Insets(0, 10, 0, 10));
+		
 		root.getChildren().add(searchPane);
 		root.getChildren().add(statusLabel);
-		root.getChildren().add(this.matNameLabel);
-		root.getChildren().add(this.matDescLabel);
-		root.getChildren().add(this.matTypeLabel);
-		root.getChildren().add(this.matWtLabel);
-		root.getChildren().add(this.matVolLabel);
+		root.getChildren().add(materialPane);
 		return root;
 	}
 	
 	public void setInfoVisible(String materialName, SAPController sapController, boolean visible) {
 		if(visible){
-			this.matNameLabel.setText("Material:\t\t\t\t" + materialName.toUpperCase());
+			this.matNameLabel.setText(materialName.toUpperCase());
 			this.matDescLabel.setText("Material Description:\t" + sapController.getDataMap().get("MATL_DESC"));
 			this.matTypeLabel.setText("Material Type:\t\t\t" + sapController.getDataMap().get("MATL_TYPE"));
 			this.matWtLabel.setText("Material Weight:\t\t" + sapController.getDataMap().get("GROSS_WT")+ " " +sapController.getDataMap().get("UNIT_OF_WT"));
