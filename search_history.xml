@@ -1,9 +1,0 @@
-<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-<material>
-    <description>Metallrohr für Blieblablub</description>
-    <type>ROH</type>
-    <unitOfWeight>KG</unitOfWeight>
-    <volume>3.000</volume>
-    <volumeUnit>CCM</volumeUnit>
-    <weight>3.000</weight>
-</material>

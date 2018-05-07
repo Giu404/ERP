@@ -57,3 +57,4 @@ pom.xml.tag
 *.jcoDestination
 /bin/
 *.trc
+search_history.xml
