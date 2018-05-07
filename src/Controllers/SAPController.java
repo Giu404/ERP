@@ -1,9 +1,7 @@
 package Controllers;
 import java.io.File;
 import java.io.FileOutputStream;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
+import java.util.Map;
 import java.util.Properties;
 
 import com.sap.conn.jco.JCoDestination;
@@ -12,28 +10,11 @@ import com.sap.conn.jco.JCoException;
 import com.sap.conn.jco.JCoFunction;
 import com.sap.conn.jco.JCoStructure;
 
+import Models.Material;
 import Startup.AppSettings;
-import Startup.ConnectionBuilder;
+import Utils.ConnectionBuilder;
 
 public class SAPController {
-	
-	private HashMap<String, String> dataMap;
-	private static final List<String> displayData = new ArrayList<String>() {
-		private static final long serialVersionUID = 1L;
-	{
-		add("MATL_DESC");
-		add("MATL_TYPE");
-		add("GROSS_WT");
-		add("UNIT_OF_WT");
-		add("VOLUME");
-		add("VOLUMEUNIT");
-	}};
-	private boolean materialExists;
-	
-	public SAPController() {
-		this.dataMap = new HashMap<String, String>();
-		this.materialExists = false;
-	}
 	
 	public JCoDestination tryLogin(String name, String password) {
 		Properties properties = ConnectionBuilder.buildConnection(name, password);
@@ -43,11 +24,8 @@ public class SAPController {
 		}
 		try {			
 	        JCoDestination destination = JCoDestinationManager.getDestination(AppSettings.getProperty("destinationName"));
-	        System.out.println("Attributes:");
-	        System.out.println(destination.getAttributes());
-	        System.out.println();
 	        return destination;
-		} catch (Exception e) {
+		} catch (java.lang.Exception e) {
 			return null;
 		}
 		
@@ -60,44 +38,36 @@ public class SAPController {
 			connectProperties.store(fos, "");
 			fos.close();
 			return true;
-		} catch (Exception e) {
+		} catch (java.lang.Exception e) {
 			return false;
 		}
 	}
     
-    public void getMaterialData(JCoDestination destination, String materialName){
+    public Material getMaterialData(JCoDestination destination, String materialName){
         JCoFunction function;
         JCoStructure structure;
+        Material material = new Material();
+        Map<String, String> validAttributes = Material.validAttributes();
 		try {	
 			function = destination.getRepository().getFunction("BAPI_MATERIAL_GET_DETAIL");
 			function.getImportParameterList().setValue("MATERIAL", materialName.toUpperCase());
 			function.execute(destination);
 			structure = (JCoStructure) function.getExportParameterList().getValue(2);			
 			for(int i = 0; i < structure.getMetaData().getFieldCount(); i++){
-	            if(displayData.contains(structure.getMetaData().getName(i))) {
+	            if(validAttributes.containsKey(structure.getMetaData().getName(i))) {
 					if(structure.getString(i) == ""){
-	            		this.materialExists = false;
-	            		return;
+	            		return material;
 	            	} else {
-	            		this.dataMap.put(structure.getMetaData().getName(i), structure.getString(i));
+	            		material.setValueForAttribute(structure.getString(i), structure.getMetaData().getName(i));
 	            	}
 	            }
 	        }
-			this.materialExists = true;
-            System.out.println(this.dataMap.toString());
 			
 		} catch (JCoException e) {
 			System.out.println(e.toString());
 		}
-    }
-    
-    public HashMap<String, String> getDataMap(){
-		return this.dataMap;
-    	
-    }
-    
-    public boolean getMaterialExistence(){
-    	return this.materialExists;
+		material.setInitialized();
+		return material;
     }
 	
 }

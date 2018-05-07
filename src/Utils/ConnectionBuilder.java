@@ -1,7 +1,9 @@
-package Startup;
+package Utils;
 import java.util.Properties;
 
 import com.sap.conn.jco.ext.DestinationDataProvider;
+
+import Startup.AppSettings;
 
 public class ConnectionBuilder {
 	

@@ -1,9 +1,9 @@
 package GUI;
 import java.io.IOException;
 import java.util.InvalidPropertiesFormatException;
-import java.util.Map;
 
 import Languages.Translations;
+import Models.Material;
 import Startup.Main;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
@@ -138,14 +138,14 @@ public class GuiBuilder {
 		return root;
 	}
 	
-	public void setInfoVisible(String materialName, Map<String, String> dataMap, boolean visible) throws InvalidPropertiesFormatException, IOException {
+	public void setInfoVisible(String materialName, Material material, boolean visible) throws InvalidPropertiesFormatException, IOException {
 		if(visible){
 
 			this.matNameLabel.setText(Translations.get("material") + ":\t\t\t\t" + materialName.toUpperCase());
-			this.matDescLabel.setText(Translations.get("material_description") + ":\t" + dataMap.get("MATL_DESC"));
-			this.matTypeLabel.setText(Translations.get("material_type") + ":\t\t\t" + dataMap.get("MATL_TYPE"));
-			this.matWtLabel.setText(Translations.get("material_weight") + ":\t\t" + dataMap.get("GROSS_WT")+ " " + dataMap.get("UNIT_OF_WT"));
-			this.matVolLabel.setText(Translations.get("material_volume") + ":\t\t" + dataMap.get("VOLUME")+ " " + dataMap.get("VOLUMEUNIT"));
+			this.matDescLabel.setText(Translations.get("material_description") + ":\t" + material.getDescription());
+			this.matTypeLabel.setText(Translations.get("material_type") + ":\t\t\t" + material.getType());
+			this.matWtLabel.setText(Translations.get("material_weight") + ":\t\t" + material.getWeight() + " " + material.getUnitOfWeight());
+			this.matVolLabel.setText(Translations.get("material_volume") + ":\t\t" + material.getVolume() + " " + material.getVolumeUnit());
 			
 			this.matNameLabel.setVisible(true);
 			this.matDescLabel.setVisible(true);

@@ -8,6 +8,8 @@ import com.sap.conn.jco.JCoException;
 import Controllers.SAPController;
 import GUI.GuiBuilder;
 import Languages.Translations;
+import Models.Material;
+import Utils.SearchHistorySerializer;
 import javafx.application.Application;
 import javafx.scene.Scene;
 import javafx.scene.control.Label;
@@ -19,6 +21,7 @@ import javafx.stage.Stage;
 public class Main extends Application {
 
 	private static SAPController sapController;
+	private static SearchHistorySerializer searchHistorySerializer;
 	private static GuiBuilder guiBuilder;
 	private static Scene scene;
 	private static JCoDestination connection;
@@ -26,6 +29,7 @@ public class Main extends Application {
 	public static void main(String[] args) throws JCoException {
 		AppSettings.loadAppSettings();
 		sapController = new SAPController();
+		searchHistorySerializer = new SearchHistorySerializer();
 		guiBuilder = new GuiBuilder();
 		launch(args);
 	}
@@ -66,17 +70,16 @@ public class Main extends Application {
 	}
 	
 	public static void handleSearch(Label statusLabel) throws InvalidPropertiesFormatException, IOException {
-		sapController.getMaterialData(connection, guiBuilder.getSearchField().getText());
-		
-		if(!sapController.getMaterialExistence()) {
+		Material material = sapController.getMaterialData(connection, guiBuilder.getSearchField().getText());
+		if(material.hasUninitializedAttributes()) {
 			statusLabel.setVisible(true);
 			statusLabel.setText(Translations.get("id_not_found"));
 			statusLabel.setTextFill(Paint.valueOf("red"));
-			guiBuilder.setInfoVisible("", sapController.getDataMap(), false);
+			guiBuilder.setInfoVisible("", material, false);
+			searchHistorySerializer.addToHistory(material);
 		} else {			
-			guiBuilder.setInfoVisible(guiBuilder.getSearchField().getText(), sapController.getDataMap(), true);
-			statusLabel.setVisible(false);
-			
+			guiBuilder.setInfoVisible(guiBuilder.getSearchField().getText(), material, true);
+			statusLabel.setVisible(false);			
 		}
 		guiBuilder.getSearchField().setText("");
 	}
