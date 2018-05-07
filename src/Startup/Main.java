@@ -76,10 +76,10 @@ public class Main extends Application {
 			statusLabel.setText(Translations.get("id_not_found"));
 			statusLabel.setTextFill(Paint.valueOf("red"));
 			guiBuilder.setInfoVisible("", material, false);
-			searchHistorySerializer.addToHistory(material);
 		} else {			
 			guiBuilder.setInfoVisible(guiBuilder.getSearchField().getText(), material, true);
-			statusLabel.setVisible(false);			
+			statusLabel.setVisible(false);	
+			searchHistorySerializer.addToHistory(material);
 		}
 		guiBuilder.getSearchField().setText("");
 	}
