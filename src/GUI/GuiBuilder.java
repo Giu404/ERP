@@ -2,7 +2,7 @@ package GUI;
 import java.io.IOException;
 import java.util.InvalidPropertiesFormatException;
 
-import Languages.Translations;
+import Languages.Language;
 import Models.Material;
 import Startup.Main;
 import javafx.event.ActionEvent;
@@ -30,11 +30,11 @@ public class GuiBuilder {
 	//TODO: Improve all the GUI Stuff. Split the labels into a material attribute label and a material value label
 	public Pane buildLoginScreen() throws InvalidPropertiesFormatException, IOException {		
 		TextField nameField = new TextField();
-		nameField.setPromptText(Translations.get("user_name"));
+		nameField.setPromptText(Language.get("user_name"));
 		PasswordField passwordField = new PasswordField();
-		passwordField.setPromptText(Translations.get("user_password"));
+		passwordField.setPromptText(Language.get("user_password"));
 		Button loginButton = new Button();
-		loginButton.setText(Translations.get("login"));
+		loginButton.setText(Language.get("login"));
 		Label statusLabel = new Label();
 		VBox root = new VBox(10);
 		EventHandler<KeyEvent> keyboardHandler = new EventHandler<KeyEvent>() {
@@ -90,7 +90,7 @@ public class GuiBuilder {
 		this.matNameLabel.setStyle("-fx-border-color: black; -fx-border-width: 1px 0px 1px 0px");
 		this.matVolLabel.setStyle("-fx-border-color: black; -fx-border-width: 0px 0px 1px 0px");
 		this.searchField.setPrefWidth(332);
-		searchField.setPromptText(Translations.get("article_name") + " / " + Translations.get("article_id"));
+		searchField.setPromptText(Language.get("article_name") + " / " + Language.get("article_id"));
 		this.matNameLabel.setVisible(false);
 		this.matDescLabel.setVisible(false);
 		this.matTypeLabel.setVisible(false);
@@ -113,7 +113,7 @@ public class GuiBuilder {
 		};
 		this.searchField.addEventHandler(KeyEvent.KEY_RELEASED, keyboardHandler);
 		
-		Button searchButton = new Button(Translations.get("search"));
+		Button searchButton = new Button(Language.get("search"));
 		searchButton.setOnAction(new EventHandler<ActionEvent>() {
 			@Override
 			public void handle(ActionEvent event) {
@@ -141,11 +141,11 @@ public class GuiBuilder {
 	public void setInfoVisible(String materialName, Material material, boolean visible) throws InvalidPropertiesFormatException, IOException {
 		if(visible){
 
-			this.matNameLabel.setText(Translations.get("material") + ":\t\t\t\t" + materialName.toUpperCase());
-			this.matDescLabel.setText(Translations.get("material_description") + ":\t" + material.getDescription());
-			this.matTypeLabel.setText(Translations.get("material_type") + ":\t\t\t" + material.getType());
-			this.matWtLabel.setText(Translations.get("material_weight") + ":\t\t" + material.getWeight() + " " + material.getUnitOfWeight());
-			this.matVolLabel.setText(Translations.get("material_volume") + ":\t\t" + material.getVolume() + " " + material.getVolumeUnit());
+			this.matNameLabel.setText(Language.get("material") + ":\t\t\t\t" + materialName.toUpperCase());
+			this.matDescLabel.setText(Language.get("material_description") + ":\t" + material.getDescription());
+			this.matTypeLabel.setText(Language.get("material_type") + ":\t\t\t" + material.getType());
+			this.matWtLabel.setText(Language.get("material_weight") + ":\t\t" + material.getWeight() + " " + material.getUnitOfWeight());
+			this.matVolLabel.setText(Language.get("material_volume") + ":\t\t" + material.getVolume() + " " + material.getVolumeUnit());
 			
 			this.matNameLabel.setVisible(true);
 			this.matDescLabel.setVisible(true);

@@ -11,41 +11,54 @@ import javax.xml.bind.Marshaller;
 import javax.xml.bind.Unmarshaller;
 
 import Models.Material;
+import Models.SearchHistory;
 
 public class SearchHistorySerializer {
 
 	private static final String SEARCH_HISTORY_FILE_NAME = "search_history.xml";
 	private static String filePath;
+	private static SearchHistory searchHistory;
 	
 	public SearchHistorySerializer() {
-		filePath = Paths.get("").toAbsolutePath().toString() + "\\" + SEARCH_HISTORY_FILE_NAME;
+		filePath = Paths.get("").toAbsolutePath().toString() + "\\resources\\" + SEARCH_HISTORY_FILE_NAME;
+		searchHistory = loadOrCreateHistory();
 	}
 
 	public void addToHistory(Material material) {
+		searchHistory.add(material);
 		try {
 			File file = new File(filePath);
-			JAXBContext jaxbContext = JAXBContext.newInstance(Material.class);
+			JAXBContext jaxbContext = JAXBContext.newInstance(SearchHistory.class);
 			Marshaller jaxbMarshaller = jaxbContext.createMarshaller();
 			jaxbMarshaller.setProperty(Marshaller.JAXB_FORMATTED_OUTPUT, true);
-			jaxbMarshaller.marshal(material, file);
-			jaxbMarshaller.marshal(material, System.out);
+			jaxbMarshaller.marshal(searchHistory, file);
+			jaxbMarshaller.marshal(searchHistory, System.out);
 		} catch (JAXBException e) {
 			e.printStackTrace();
 		}
 	}
 	
-	public void loadHistory() {
-		try {
-
-			File file = new File(filePath);
-			JAXBContext jaxbContext = JAXBContext.newInstance(Material.class);
-
+	@SuppressWarnings("finally")
+	public SearchHistory loadOrCreateHistory() {
+		File file = new File(filePath);	
+		if(!file.exists()) {
+			try {
+				file.createNewFile();
+			} catch (IOException e) {
+				e.printStackTrace();
+			} finally {
+				return new SearchHistory();
+			}
+		}
+		try {			
+			JAXBContext jaxbContext = JAXBContext.newInstance(SearchHistory.class);
 			Unmarshaller jaxbUnmarshaller = jaxbContext.createUnmarshaller();
-			Material customer = (Material) jaxbUnmarshaller.unmarshal(file);
-			System.out.println(customer);
+			SearchHistory searchHistory = (SearchHistory) jaxbUnmarshaller.unmarshal(file);
+			System.out.println("Successfully loaded the search history");
+			return searchHistory;
 
 		  } catch (JAXBException e) {
-			e.printStackTrace();
+			return new SearchHistory();
 		  }
 
 	}

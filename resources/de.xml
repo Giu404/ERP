@@ -15,4 +15,5 @@
 	<entry key="material_weight">Materialgewicht</entry>	
 	<entry key="material_volume">Materialvolumen</entry>
 	<entry key="id_not_found">ID konnte nicht gefunden werden</entry>
+	<entry key="dateTimeFormatation">dd.MM.yyyy HH:mm:ss</entry>
 </properties>

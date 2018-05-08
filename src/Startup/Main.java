@@ -7,7 +7,7 @@ import com.sap.conn.jco.JCoException;
 
 import Controllers.SAPController;
 import GUI.GuiBuilder;
-import Languages.Translations;
+import Languages.Language;
 import Models.Material;
 import Utils.SearchHistorySerializer;
 import javafx.application.Application;
@@ -54,7 +54,7 @@ public class Main extends Application {
 			scene = new Scene(guiBuilder.buildLoginScreen(), 400, 400);
 		}
 		
-		stage.setTitle(Translations.get("app_name"));
+		stage.setTitle(Language.get("app_name"));
 		stage.setScene(scene);
 		stage.show();
 	}
@@ -64,7 +64,7 @@ public class Main extends Application {
 		if (connection != null) {
 			scene.setRoot(guiBuilder.buildSearchScreen());
 		} else {
-			statusLabel.setText(Translations.get("login_fail"));
+			statusLabel.setText(Language.get("login_fail"));
 			statusLabel.setTextFill(Paint.valueOf("red"));
 		}
 	}
@@ -73,7 +73,7 @@ public class Main extends Application {
 		Material material = sapController.getMaterialData(connection, guiBuilder.getSearchField().getText());
 		if(material.hasUninitializedAttributes()) {
 			statusLabel.setVisible(true);
-			statusLabel.setText(Translations.get("id_not_found"));
+			statusLabel.setText(Language.get("id_not_found"));
 			statusLabel.setTextFill(Paint.valueOf("red"));
 			guiBuilder.setInfoVisible("", material, false);
 		} else {			

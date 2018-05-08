@@ -1,12 +1,15 @@
 package Models;
 
 import java.lang.reflect.Field;
+import java.time.LocalDateTime;
 import java.util.Map;
 
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
 
-@XmlRootElement
+import Utils.DateTimeUtils;
+
+@XmlRootElement(name="Material")
 public class Material {
 	
 	private static final Map<String, String> validAttributes = Map.ofEntries(
@@ -20,6 +23,7 @@ public class Material {
 
 	private boolean hasUninitializedAttributes;
 	
+	private String lookupDateTime;
 	private String description;
 	private String type;
 	private String weight;
@@ -28,6 +32,12 @@ public class Material {
 	private String volumeUnit;
 	
 	public Material() {
+		
+	}
+	
+	public Material(LocalDateTime lookupDateTime) {
+		this.lookupDateTime = DateTimeUtils.toUtc(lookupDateTime);
+		System.out.println(lookupDateTime);
 		hasUninitializedAttributes = true;
 	}
 	
@@ -37,12 +47,10 @@ public class Material {
 	
 	public void setValueForAttribute(String value, String sapAttribute) {
 		String materialAttributeName = validAttributes.get(sapAttribute);
-		
 		try {
 			Field field = getClass().getDeclaredField(materialAttributeName);
 			field.set(this, value);
 		} catch (IllegalArgumentException | IllegalAccessException | NoSuchFieldException | SecurityException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 	}
@@ -53,6 +61,12 @@ public class Material {
 	
 	public void setInitialized() {
 		hasUninitializedAttributes = false;
+	}
+	
+	//ATTENTION! BEWARE USING THIS METHOD BECAUSE OF DATETIMES!
+	@XmlElement
+	public void setLookupDateTime(String lookupDateTime) {
+		this.lookupDateTime = lookupDateTime;
 	}
 	
 	@XmlElement
@@ -83,6 +97,14 @@ public class Material {
 	@XmlElement
 	public void setVolumeUnit(String volumeUnit) {
 		this.volumeUnit = volumeUnit;
+	}
+	
+	public String getLookupDateTime() {
+		return lookupDateTime;
+	}
+	
+	public String getLocalLookupDateTime() {
+		return DateTimeUtils.toLocal(DateTimeUtils.utcStringToDateTime(lookupDateTime));
 	}
 
 	public String getDescription() {

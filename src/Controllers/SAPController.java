@@ -1,6 +1,10 @@
 package Controllers;
 import java.io.File;
 import java.io.FileOutputStream;
+import java.io.IOException;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
+import java.util.InvalidPropertiesFormatException;
 import java.util.Map;
 import java.util.Properties;
 
@@ -10,6 +14,7 @@ import com.sap.conn.jco.JCoException;
 import com.sap.conn.jco.JCoFunction;
 import com.sap.conn.jco.JCoStructure;
 
+import Languages.Language;
 import Models.Material;
 import Startup.AppSettings;
 import Utils.ConnectionBuilder;
@@ -43,10 +48,11 @@ public class SAPController {
 		}
 	}
     
-    public Material getMaterialData(JCoDestination destination, String materialName){
+    public Material getMaterialData(JCoDestination destination, String materialName) throws InvalidPropertiesFormatException, IOException{
         JCoFunction function;
         JCoStructure structure;
-        Material material = new Material();
+        //Material material = new Material(LocalDateTime.now().format(DateTimeFormatter.ofPattern(Translations.getDatTimeFormatation())));
+        Material material = new Material(LocalDateTime.now());
         Map<String, String> validAttributes = Material.validAttributes();
 		try {	
 			function = destination.getRepository().getFunction("BAPI_MATERIAL_GET_DETAIL");
