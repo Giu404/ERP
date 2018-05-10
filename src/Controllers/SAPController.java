@@ -3,7 +3,6 @@ import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.time.LocalDateTime;
-import java.time.format.DateTimeFormatter;
 import java.util.InvalidPropertiesFormatException;
 import java.util.Map;
 import java.util.Properties;
@@ -14,7 +13,6 @@ import com.sap.conn.jco.JCoException;
 import com.sap.conn.jco.JCoFunction;
 import com.sap.conn.jco.JCoStructure;
 
-import Languages.Language;
 import Models.Material;
 import Startup.AppSettings;
 import Utils.ConnectionBuilder;
@@ -68,8 +66,7 @@ public class SAPController {
 	            		material.setValueForAttribute(structure.getString(i), structure.getMetaData().getName(i));
 	            	}
 	            }
-	        }
-			
+	        }			
 		} catch (JCoException e) {
 			System.out.println(e.toString());
 		}

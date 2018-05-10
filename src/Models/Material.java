@@ -99,10 +99,12 @@ public class Material {
 		this.volumeUnit = volumeUnit;
 	}
 	
+	//Only for JAXB
 	public String getLookupDateTime() {
 		return lookupDateTime;
 	}
 	
+	//Always use this
 	public String getLocalLookupDateTime() {
 		return DateTimeUtils.toLocal(DateTimeUtils.utcStringToDateTime(lookupDateTime));
 	}
@@ -129,6 +131,10 @@ public class Material {
 
 	public String getVolumeUnit() {
 		return volumeUnit;
+	}
+	
+	public LocalDateTime localLookupDateTime() {
+		return DateTimeUtils.utcStringToDateTime(lookupDateTime);
 	}
 	
 	@Override

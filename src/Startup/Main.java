@@ -25,11 +25,19 @@ public class Main extends Application {
 	private static GuiBuilder guiBuilder;
 	private static Scene scene;
 	private static JCoDestination connection;
+	private static boolean useSearchHistory;
 
 	public static void main(String[] args) throws JCoException {
 		AppSettings.loadAppSettings();
 		sapController = new SAPController();
-		searchHistorySerializer = new SearchHistorySerializer();
+		try {
+			useSearchHistory = Boolean.parseBoolean(AppSettings.getProperty("useSearchHistory"));
+		} catch(Exception e) {
+			useSearchHistory = false;
+		}
+		if(useSearchHistory) {
+			searchHistorySerializer = new SearchHistorySerializer();
+		}
 		guiBuilder = new GuiBuilder();
 		launch(args);
 	}
@@ -62,6 +70,7 @@ public class Main extends Application {
 	public static void handleLogin(TextField nameField, PasswordField passwordField, Label statusLabel) throws InvalidPropertiesFormatException, IOException {
 		connection = sapController.tryLogin(nameField.getText(), passwordField.getText());
 		if (connection != null) {
+			searchHistorySerializer.getAccumulatedMaterialList();
 			scene.setRoot(guiBuilder.buildSearchScreen());
 		} else {
 			statusLabel.setText(Language.get("login_fail"));
@@ -77,9 +86,11 @@ public class Main extends Application {
 			statusLabel.setTextFill(Paint.valueOf("red"));
 			guiBuilder.setInfoVisible("", material, false);
 		} else {			
+			if(useSearchHistory) {				
+				searchHistorySerializer.addToHistory(material);
+			}
 			guiBuilder.setInfoVisible(guiBuilder.getSearchField().getText(), material, true);
-			statusLabel.setVisible(false);	
-			searchHistorySerializer.addToHistory(material);
+			statusLabel.setVisible(false);
 		}
 		guiBuilder.getSearchField().setText("");
 	}

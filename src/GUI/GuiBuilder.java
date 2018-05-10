@@ -1,7 +1,9 @@
 package GUI;
 import java.io.IOException;
 import java.util.InvalidPropertiesFormatException;
+import java.util.List;
 
+import Exceptions.AppSettingsException;
 import Languages.Language;
 import Models.Material;
 import Startup.Main;
@@ -136,6 +138,11 @@ public class GuiBuilder {
 		root.getChildren().add(statusLabel);
 		root.getChildren().add(materialPane);
 		return root;
+	}
+	
+	//TODO: Maybe use this to display the user that the app.config file is corrupted.
+	public Pane buildErrorScreen(List<AppSettingsException> exceptions) {
+		return new Pane();
 	}
 	
 	public void setInfoVisible(String materialName, Material material, boolean visible) throws InvalidPropertiesFormatException, IOException {

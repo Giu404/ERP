@@ -7,6 +7,8 @@ import java.time.format.DateTimeFormatter;
 import Languages.Language;
 
 public class DateTimeUtils {
+	
+	//TODO: Didn't think about time zones yet... Should be implemented soon!
 
 	public static LocalDateTime utcStringToDateTime(String dateTime) {
 		return LocalDateTime.parse(dateTime, DateTimeFormatter.ofPattern(Language.UTC_DATE_TIME_FORMATATION));
@@ -22,6 +24,15 @@ public class DateTimeUtils {
 		} catch (IOException e) {
 			e.printStackTrace();
 			return "";
+		}
+	}
+	
+	public static LocalDateTime stringToUtcDateTime(String dateTime) {
+		try {
+			return LocalDateTime.parse(dateTime, DateTimeFormatter.ofPattern(Language.getDatTimeFormatation()));
+		} catch (IOException e) {
+			e.printStackTrace();
+			return null;
 		}
 	}
 	

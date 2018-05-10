@@ -15,10 +15,10 @@ public class AppSettings {
 		try {
 			FileInputStream inputStream = new FileInputStream(absolutePath);
 			appSettings.loadFromXML(inputStream);
+			CLIENT_LANGUAGE = appSettings.getProperty("clientLanguage");
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
-		CLIENT_LANGUAGE = appSettings.getProperty("clientLanguage");
 	}
 	
 	public static Properties getAppSettings() {
