@@ -100,12 +100,16 @@ public class Material {
 	}
 	
 	//Only for JAXB
+	public LocalDateTime getLookupDateTimeUtc() {
+		return DateTimeUtils.utcStringToDateTime(lookupDateTime);
+	}
+	
 	public String getLookupDateTime() {
 		return lookupDateTime;
 	}
 	
 	//Always use this
-	public String getLocalLookupDateTime() {
+	public String getLookupDateTimeLocalizedString() {
 		return DateTimeUtils.toLocal(DateTimeUtils.utcStringToDateTime(lookupDateTime));
 	}
 
@@ -139,7 +143,13 @@ public class Material {
 	
 	@Override
 	public String toString() {
-		return description + " " + " " + type + " " + weight + " " + unitOfWeight + " " + volume + " " +volumeUnit;
+		return description + " " + " " + type + " " + weight + " " + unitOfWeight + " " + volume + " " +volumeUnit + " " + lookupDateTime;
+	}
+
+	public Material mostCurrentDate(Material material) {
+		LocalDateTime m1DateTime = this.getLookupDateTimeUtc();
+		LocalDateTime m2DateTime = material.getLookupDateTimeUtc();
+		return m1DateTime.compareTo(m2DateTime) > 0 ? this : material;
 	}
 	
 }

@@ -4,7 +4,6 @@ import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Paths;
-import java.time.LocalDateTime;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -82,17 +81,19 @@ public class SearchHistorySerializer {
 		  }
 	}
 	
-	public Map<String, String> getAccumulatedMaterialList() {
-		Map<String, String> materials = new HashMap<String, String>();
+	public Map<String, Material> getAccumulatedMaterialList() {
+		Map<String, Material> materials = new HashMap<String, Material>();
 		for(Material material : searchHistory.getSearchHistory()) {
 			if(!materials.containsKey(material.getDescription())) {
-				materials.put(material.getDescription(), material.getLocalLookupDateTime());
+				materials.put(material.getDescription(), material);
 			} else {
-				String x = materials.get(material.getDescription());
-				LocalDateTime cur = DateTimeUtils.stringToUtcDateTime(x);
-				if(cur.compareTo(DateTimeUtils.stringToUtcDateTime(material.getLocalLookupDateTime())) > 0) {
-					materials.replace(material.getDescription(), DateTimeUtils.toLocal(cur));
-				}
+				Material z = material.mostCurrentDate(materials.get(material.getDescription()));
+		//		String x = materials.get(material.getDescription());
+		//		LocalDateTime cur = DateTimeUtils.stringToUtcDateTime(x);
+		//		if(cur.compareTo(DateTimeUtils.stringToUtcDateTime(material.getLocalLookupDateTime())) > 0) {
+			//		materials.replace(material.getDescription(), DateTimeUtils.toLocal(cur));
+				//}
+				materials.replace(material.getDescription(), z);
 			}
 		}
 		System.out.println(materials.toString());

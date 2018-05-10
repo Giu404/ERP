@@ -54,7 +54,7 @@ public class Main extends Application {
 		if(quickLogin) {
 			connection = sapController.tryLogin(AppSettings.getProperty("username"), AppSettings.getProperty("password"));
 			if (connection != null) {
-				scene = new Scene(guiBuilder.buildSearchScreen(), 400, 400);
+				scene = new Scene(guiBuilder.buildSearchScreen(searchHistorySerializer.getAccumulatedMaterialList()), 400, 400);
 			} else {
 				scene = new Scene(guiBuilder.buildLoginScreen(), 400, 400);
 			}
@@ -70,8 +70,7 @@ public class Main extends Application {
 	public static void handleLogin(TextField nameField, PasswordField passwordField, Label statusLabel) throws InvalidPropertiesFormatException, IOException {
 		connection = sapController.tryLogin(nameField.getText(), passwordField.getText());
 		if (connection != null) {
-			searchHistorySerializer.getAccumulatedMaterialList();
-			scene.setRoot(guiBuilder.buildSearchScreen());
+			scene.setRoot(guiBuilder.buildSearchScreen(searchHistorySerializer.getAccumulatedMaterialList()));
 		} else {
 			statusLabel.setText(Language.get("login_fail"));
 			statusLabel.setTextFill(Paint.valueOf("red"));

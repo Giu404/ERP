@@ -1,7 +1,10 @@
 package GUI;
 import java.io.IOException;
 import java.util.InvalidPropertiesFormatException;
+import java.util.Iterator;
 import java.util.List;
+import java.util.Map;
+import java.util.Map.Entry;
 
 import Exceptions.AppSettingsException;
 import Languages.Language;
@@ -11,6 +14,7 @@ import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.geometry.Insets;
 import javafx.scene.control.Button;
+import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
@@ -72,8 +76,16 @@ public class GuiBuilder {
 		return root;
 	}
 	
-	public Pane buildSearchScreen() throws InvalidPropertiesFormatException, IOException {
+	public Pane buildSearchScreen(Map<String, Material> searchHistory) throws InvalidPropertiesFormatException, IOException {
 		VBox root = new VBox(10);
+		ComboBox<String> combo = new ComboBox<String>();
+		Iterator<Entry<String, Material>> it = searchHistory.entrySet().iterator();
+	    while (it.hasNext()) {
+	        Map.Entry<String, Material> pair = (Map.Entry<String, Material>)it.next();
+	        combo.getItems().add(pair.getKey());
+	        it.remove(); // avoids a ConcurrentModificationException
+	    }
+	    combo.setPromptText("Search history");
 		this.searchField = new TextField();
 		Label statusLabel = new Label();
 		this.matNameLabel = new Label();
@@ -137,6 +149,7 @@ public class GuiBuilder {
 		root.getChildren().add(searchPane);
 		root.getChildren().add(statusLabel);
 		root.getChildren().add(materialPane);
+		root.getChildren().add(combo);
 		return root;
 	}
 	
