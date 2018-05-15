@@ -9,12 +9,10 @@ import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.InvalidPropertiesFormatException;
 import java.util.List;
-import java.util.Map;
 import java.util.Properties;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
-import com.google.gson.reflect.TypeToken;
 
 import Startup.AppSettings;
 
@@ -36,14 +34,12 @@ public class Translations {
 	}
 
 	public static void loadTranslations() throws InvalidPropertiesFormatException, IOException {
-		translations = new Properties();
 		Gson gson = new GsonBuilder().create();
 		String absolutePath = (Paths.get("").toAbsolutePath().toString() + "\\resources\\" + AppSettings.CLIENT_LANGUAGE.toLowerCase() + ".json");
 		InputStream inputStream = new FileInputStream(absolutePath);
 		Reader reader = new InputStreamReader(inputStream, "UTF-8");
-		Map<String, String> jsonMap = gson.fromJson(reader, new TypeToken<Map<String, String>>(){}.getType());
-		System.out.println(jsonMap.toString());
-		translations.putAll(jsonMap);
+		translations = gson.fromJson(reader, Properties.class);
+		System.out.println(translations.toString());
 	}
 	
 	public static Properties getAll() throws InvalidPropertiesFormatException, IOException {
