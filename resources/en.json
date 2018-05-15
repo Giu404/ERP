@@ -1,0 +1,16 @@
+{
+	"app_name" : "SAP Logistics Tool",
+	"user_name" : "Name",
+	"user_password" : "Password",
+	"login" : "Login",
+	"login_fail" : "Login failed",
+	"article_name" : "Article name",
+	"article_id" : "Article ID",
+	"search" : "Search",
+	"material" : "Material",
+	"material_description" : "Material description",
+	"material_type" : "Material type",
+	"material_weight" : "Material weight",
+	"material_volume" : "Material volume",
+	"id_not_found" : "ID could not be found"
+}

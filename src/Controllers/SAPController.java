@@ -24,6 +24,7 @@ public class SAPController {
 		}
 		try {			
 	        JCoDestination destination = JCoDestinationManager.getDestination(AppSettings.getProperty("destinationName"));
+	        destination.ping();
 	        return destination;
 		} catch (java.lang.Exception e) {
 			return null;
