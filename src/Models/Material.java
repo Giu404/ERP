@@ -4,12 +4,8 @@ import java.lang.reflect.Field;
 import java.time.LocalDateTime;
 import java.util.Map;
 
-import javax.xml.bind.annotation.XmlElement;
-import javax.xml.bind.annotation.XmlRootElement;
-
 import Utils.DateTimeUtils;
 
-@XmlRootElement(name="Material")
 public class Material {
 	
 	private static final Map<String, String> validAttributes = Map.ofEntries(
@@ -37,7 +33,6 @@ public class Material {
 	
 	public Material(LocalDateTime lookupDateTime) {
 		this.lookupDateTime = DateTimeUtils.toUtc(lookupDateTime);
-		System.out.println(lookupDateTime);
 		hasUninitializedAttributes = true;
 	}
 	
@@ -64,37 +59,30 @@ public class Material {
 	}
 	
 	//ATTENTION! BEWARE USING THIS METHOD BECAUSE OF DATETIMES!
-	@XmlElement
 	public void setLookupDateTime(String lookupDateTime) {
 		this.lookupDateTime = lookupDateTime;
 	}
 	
-	@XmlElement
 	public void setDescription(String description) {
 		this.description = description;
 	}
 	
-	@XmlElement
 	public void setType(String type) {
 		this.type = type;
 	}
 	
-	@XmlElement
 	public void setWeight(String weight) {
 		this.weight = weight;
 	}
 	
-	@XmlElement
 	public void setUnitOfWeight(String unitOfWeight) {
 		this.unitOfWeight = unitOfWeight;
 	}
 	
-	@XmlElement
 	public void setVolume(String volume) {
 		this.volume = volume;
 	}
 	
-	@XmlElement
 	public void setVolumeUnit(String volumeUnit) {
 		this.volumeUnit = volumeUnit;
 	}

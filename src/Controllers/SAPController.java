@@ -48,7 +48,7 @@ public class SAPController {
 	}
     
     public Material getMaterialData(JCoDestination destination, String materialName) throws InvalidPropertiesFormatException, IOException{
-        JCoFunction function;
+    	JCoFunction function;
         JCoStructure structure;
         //Material material = new Material(LocalDateTime.now().format(DateTimeFormatter.ofPattern(Translations.getDatTimeFormatation())));
         Material material = new Material(LocalDateTime.now());
