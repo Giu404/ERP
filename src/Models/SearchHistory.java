@@ -35,7 +35,6 @@ public class SearchHistory {
 	        public int compare(Material m1, Material m2) {
 	        	return m1.localLookupDateTime().compareTo(m2.localLookupDateTime());
 	        }
-	       });
-	}
-	
+	    });
+	}	
 }

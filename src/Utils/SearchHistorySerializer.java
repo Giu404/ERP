@@ -88,11 +88,6 @@ public class SearchHistorySerializer {
 				materials.put(material.getDescription(), material);
 			} else {
 				Material z = material.mostCurrentDate(materials.get(material.getDescription()));
-		//		String x = materials.get(material.getDescription());
-		//		LocalDateTime cur = DateTimeUtils.stringToUtcDateTime(x);
-		//		if(cur.compareTo(DateTimeUtils.stringToUtcDateTime(material.getLocalLookupDateTime())) > 0) {
-			//		materials.replace(material.getDescription(), DateTimeUtils.toLocal(cur));
-				//}
 				materials.replace(material.getDescription(), z);
 			}
 		}
