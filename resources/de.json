@@ -1,0 +1,17 @@
+{
+	"app_name" : "SAP Logistik Tool",
+	"user_name" : "Name",
+	"user_password" : "Passwort",
+	"login" : "Login",
+	"login_fail" : "Login fehlgeschlagen",
+	"article_name" : "Name des Artikels",
+	"article_id" : "Artikel ID",
+	"search" : "Suche",
+	"material" : "Material",
+	"material_description" : "Materialbeschreibung",
+	"material_type" : "Materialart",
+	"material_weight" : "Materialgewicht",
+	"material_volume" : "Materialvolumen",
+	"id_not_found" : "ID konnte nicht gefunden werden",
+	"dateTimeFormatation" : "dd.MM.yyyy HH:mm:ss"
+}
