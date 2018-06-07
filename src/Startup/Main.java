@@ -1,6 +1,7 @@
 package Startup;
 import java.io.IOException;
 import java.util.InvalidPropertiesFormatException;
+import java.util.concurrent.ExecutionException;
 
 import com.sap.conn.jco.JCoDestination;
 import com.sap.conn.jco.JCoException;
@@ -77,7 +78,7 @@ public class Main extends Application {
 		}
 	}
 	
-	public static void handleSearch(Label statusLabel) throws InvalidPropertiesFormatException, IOException {
+	public static void handleSearch(Label statusLabel) throws InvalidPropertiesFormatException, IOException, InterruptedException, ExecutionException {
 		Material material = sapController.getMaterialData(connection, guiBuilder.getSearchField().getText());
 		if(material.hasUninitializedAttributes()) {
 			statusLabel.setVisible(true);

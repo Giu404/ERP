@@ -5,6 +5,7 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
+import java.util.concurrent.ExecutionException;
 
 import Exceptions.AppSettingsException;
 import Languages.Language;
@@ -119,7 +120,7 @@ public class GuiBuilder {
 				if(event.getCode() == KeyCode.ENTER) {
 					try {
 						Main.handleSearch(statusLabel);
-					} catch (IOException e) {
+					} catch (IOException | InterruptedException | ExecutionException e) {
 						e.printStackTrace();
 					}
 				}
@@ -133,7 +134,7 @@ public class GuiBuilder {
 			public void handle(ActionEvent event) {
 				try {
 					Main.handleSearch(statusLabel);
-				} catch (IOException e) {
+				} catch (IOException | InterruptedException | ExecutionException e) {
 					e.printStackTrace();
 				}
 			}
