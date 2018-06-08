@@ -33,6 +33,12 @@ public class GuiBuilder {
 	private Label matWtLabel;
 	private Label matVolLabel;
 	
+	private Label matName;
+	private Label matDesc;
+	private Label matType;
+	private Label matWt;
+	private Label matVol;
+	
 	private TextField nameField;
 	PasswordField passwordField;
 	Button loginButton;
@@ -52,7 +58,13 @@ public class GuiBuilder {
 		matTypeLabel = new Label();
 		matWtLabel = new Label();
 		matVolLabel = new Label();
-		searchButton = new Button(Language.get("search"));
+		searchButton = new Button();
+		
+		matName = new Label();
+		matDesc = new Label();
+		matType = new Label();
+		matWt = new Label();
+		matVol = new Label();
 		
 		reloadTranslations();
 	}
