@@ -27,7 +27,7 @@ public class Main extends Application {
 	private static JCoDestination connection;
 	private static boolean useSearchHistory;
 
-	public static void main(String[] args) throws JCoException {
+	public static void main(String[] args) throws JCoException, InvalidPropertiesFormatException, IOException {
 		AppSettings.loadAppSettings();
 		sapController = new SAPController();
 		try {

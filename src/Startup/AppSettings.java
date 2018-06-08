@@ -1,13 +1,17 @@
 package Startup;
 
 import java.io.FileInputStream;
+import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.Reader;
 import java.nio.file.Paths;
+import java.util.InvalidPropertiesFormatException;
 import java.util.Properties;
 
 import com.google.gson.*;
+
+import Languages.Language;
 
 public class AppSettings {
 	
@@ -25,6 +29,13 @@ public class AppSettings {
 			CLIENT_LANGUAGE = appSettings.getProperty("clientLanguage");
 		} catch (Exception e) {
 			e.printStackTrace();
+		}
+	}
+	
+	public static void setClientLanguage(String language) throws InvalidPropertiesFormatException, IOException {
+		if(Language.isLanguageSupported(language)) {
+			CLIENT_LANGUAGE = language;
+			Language.loadResources();
 		}
 	}
 	

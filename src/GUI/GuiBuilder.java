@@ -33,15 +33,32 @@ public class GuiBuilder {
 	private Label matWtLabel;
 	private Label matVolLabel;
 	
+	private TextField nameField;
+	PasswordField passwordField;
+	Button loginButton;
+	Label statusLabel;
+	ComboBox<String> combo;
+	Label searchStatusLabel;
+	Button searchButton;
+	
+	public GuiBuilder() throws InvalidPropertiesFormatException, IOException {
+		nameField = new TextField();
+		passwordField = new PasswordField();
+		loginButton = new Button();
+		combo = new ComboBox<String>();
+		searchStatusLabel = new Label();
+		matNameLabel = new Label();
+		matDescLabel = new Label();
+		matTypeLabel = new Label();
+		matWtLabel = new Label();
+		matVolLabel = new Label();
+		searchButton = new Button(Language.get("search"));
+		
+		reloadTranslations();
+	}
+	
 	//TODO: Improve all the GUI Stuff. Split the labels into a material attribute label and a material value label
 	public Pane buildLoginScreen() throws InvalidPropertiesFormatException, IOException {		
-		TextField nameField = new TextField();
-		nameField.setPromptText(Language.get("user_name"));
-		PasswordField passwordField = new PasswordField();
-		passwordField.setPromptText(Language.get("user_password"));
-		Button loginButton = new Button();
-		loginButton.setText(Language.get("login"));
-		Label statusLabel = new Label();
 		VBox root = new VBox(10);
 		EventHandler<KeyEvent> keyboardHandler = new EventHandler<KeyEvent>() {
 			@Override
@@ -78,21 +95,16 @@ public class GuiBuilder {
 	
 	public Pane buildSearchScreen(Map<String, Material> searchHistory) throws InvalidPropertiesFormatException, IOException {
 		VBox root = new VBox(10);
-		ComboBox<String> combo = new ComboBox<String>();
+		
 		Iterator<Entry<String, Material>> it = searchHistory.entrySet().iterator();
 	    while (it.hasNext()) {
 	        Map.Entry<String, Material> pair = (Map.Entry<String, Material>)it.next();
 	        combo.getItems().add(pair.getKey());
 	        it.remove(); // avoids a ConcurrentModificationException
 	    }
-	    combo.setPromptText("Search history");
+	    
 		this.searchField = new TextField();
-		Label statusLabel = new Label();
-		this.matNameLabel = new Label();
-		this.matDescLabel = new Label();
-		this.matTypeLabel = new Label();
-		this.matWtLabel = new Label();
-		this.matVolLabel = new Label();
+		
 		
 		this.matNameLabel.setPrefWidth(400);
 		this.matNameLabel.setStyle("-fx-border-color: black;-fx-border-width: 0 0 1 0");
@@ -104,7 +116,7 @@ public class GuiBuilder {
 		this.matNameLabel.setStyle("-fx-border-color: black; -fx-border-width: 1px 0px 1px 0px");
 		this.matVolLabel.setStyle("-fx-border-color: black; -fx-border-width: 0px 0px 1px 0px");
 		this.searchField.setPrefWidth(332);
-		searchField.setPromptText(Language.get("article_name") + " / " + Language.get("article_id"));
+		
 		this.matNameLabel.setVisible(false);
 		this.matDescLabel.setVisible(false);
 		this.matTypeLabel.setVisible(false);
@@ -127,7 +139,7 @@ public class GuiBuilder {
 		};
 		this.searchField.addEventHandler(KeyEvent.KEY_RELEASED, keyboardHandler);
 		
-		Button searchButton = new Button(Language.get("search"));
+
 		searchButton.setOnAction(new EventHandler<ActionEvent>() {
 			@Override
 			public void handle(ActionEvent event) {
@@ -143,7 +155,7 @@ public class GuiBuilder {
 		VBox materialPane = new VBox(this.matNameLabel, this.matDescLabel, 
 									this.matTypeLabel, this.matWtLabel, this.matVolLabel);
 		searchPane.setPadding(new Insets(10, 10, 10, 10));
-		statusLabel.setPadding(new Insets(0, 10, 0, 10));
+		searchStatusLabel.setPadding(new Insets(0, 10, 0, 10));
 		materialPane.setPadding(new Insets(0, 10, 0, 10));
 		
 		root.getChildren().add(searchPane);
@@ -183,6 +195,16 @@ public class GuiBuilder {
 	
 	public TextField getSearchField(){
 		return this.searchField;
+	}
+	
+	//TODO: Might also need a thread
+	public void reloadTranslations() throws InvalidPropertiesFormatException, IOException {
+		nameField.setPromptText(Language.get("user_name"));
+		passwordField.setPromptText(Language.get("user_password"));
+		loginButton.setText(Language.get("login"));
+		searchField.setPromptText(Language.get("article_name") + " / " + Language.get("article_id"));
+		combo.setPromptText("Search history");
+		searchButton.setText(Language.get("search"));
 	}
 	
 }

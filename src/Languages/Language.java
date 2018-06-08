@@ -6,9 +6,8 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.Reader;
 import java.nio.file.Paths;
-import java.util.ArrayList;
 import java.util.InvalidPropertiesFormatException;
-import java.util.List;
+import java.util.Map;
 import java.util.Properties;
 
 import com.google.gson.Gson;
@@ -19,21 +18,26 @@ import Startup.AppSettings;
 public class Language {
 
 	private static Properties translations;
-
+	
 	private static final String DEFAULT_LANGUAGE = "DE";
-	private static final List<String> SUPPORTED_LANGUAGES = new ArrayList<String>() {
-		private static final long serialVersionUID = 1L;
-		{
-			add("DE");
-			add("EN");
-		}
-	};
+	private static final Map<String, String> SUPPORTED_LANGUAGES = Map.ofEntries(
+			Map.entry("DE", "Deutsch"),
+			Map.entry("EN", "English")
+	);
 	public static final String UTC_DATE_TIME_FORMATATION = "yyyy-MM-dd HH:mm:ss";
 	private static final String DEFAULT_DATE_TIME_FORMATATION = "dd.MM.yyyy HH:mm:ss";
 	private static String dateTimeFormatation;
 	
+	public static boolean isLanguageSupported(String language) {
+		return SUPPORTED_LANGUAGES.containsKey(language);
+	}
+	
 	public static String getClientLanguage(String appSettingsLanguage) {
-		return SUPPORTED_LANGUAGES.contains(appSettingsLanguage.toUpperCase()) ? appSettingsLanguage.toUpperCase() : DEFAULT_LANGUAGE;
+		return SUPPORTED_LANGUAGES.containsKey(appSettingsLanguage.toUpperCase()) ? appSettingsLanguage.toUpperCase() : DEFAULT_LANGUAGE;
+	}
+	
+	public static Map<String, String> languagesAsMap() {
+		return SUPPORTED_LANGUAGES;
 	}
 
 	public static void loadResources() throws InvalidPropertiesFormatException, IOException {
