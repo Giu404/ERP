@@ -20,6 +20,8 @@ import javafx.stage.Stage;
 
 public class Main extends Application {
 
+	public static boolean isReady = false;
+	
 	private static SAPController sapController;
 	private static SearchHistorySerializer searchHistorySerializer;
 	private static GuiBuilder guiBuilder;
@@ -64,6 +66,7 @@ public class Main extends Application {
 		
 		stage.setTitle(Language.get("app_name"));
 		stage.setScene(scene);
+		Main.isReady = true;
 		stage.show();
 	}
 	
@@ -90,6 +93,12 @@ public class Main extends Application {
 			statusLabel.setVisible(false);
 		}
 		guiBuilder.getSearchField().setText("");
+	}
+	
+	public static void setTitle() throws InvalidPropertiesFormatException, IOException {
+		if(Main.isReady) {
+			((Stage)scene.getWindow()).setTitle(Language.get("app_name"));
+		}
 	}
 	
 }

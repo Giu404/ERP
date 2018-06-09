@@ -283,6 +283,7 @@ public class GuiBuilder {
 		matWtLabel.setText(Language.get("material_weight"));
 		matVolLabel.setText(Language.get("material_volume"));
 		searchStatusLabel.setText(Language.get("id_not_found"));
+		Main.setTitle();
 	}
 	
 	public void updateSearchHistory() {
