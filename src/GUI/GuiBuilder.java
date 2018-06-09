@@ -135,11 +135,10 @@ public class GuiBuilder {
 		matVol = new Label();	
 		logoutButton = new Button();
 		//TODO: Add action to button
-		loginButton.setOnAction(new EventHandler<ActionEvent>() {
+		logoutButton.setOnAction(new EventHandler<ActionEvent>() {
 			@Override
 			public void handle(ActionEvent event) {
-				// TODO Auto-generated method stub
-				System.out.println("log me out");
+				Main.handleLogout();
 			}
 		});
 		reloadTranslations();
@@ -163,7 +162,6 @@ public class GuiBuilder {
 		loginStatusLabel.setPadding(new Insets(10, 10, 10, 10));
 		loginStatusLabel.setTextFill(Paint.valueOf("red"));
 		loginStatusLabel.setVisible(false);
-		stayLoggedInLabel = new Label();
 		stayLoggedIn = new CheckBox();
 		//TODO: Add event to checkbox
 		EventHandler<KeyEvent> keyboardHandler = new EventHandler<KeyEvent>() {
@@ -253,6 +251,7 @@ public class GuiBuilder {
 		searchScreenRoot.getChildren().add(materialPane);
 		searchScreenRoot.getChildren().add(this.searchHistory);
 		searchScreenRoot.getChildren().add(languageDropdownSearch);
+		searchScreenRoot.getChildren().add(logoutButton);
 	}
 	
 	//TODO: Maybe use this to display the user that the app.config file is corrupted.
@@ -295,7 +294,7 @@ public class GuiBuilder {
 		passwordField.setPromptText(Language.get("user_password"));
 		loginButton.setText(Language.get("login"));
 		loginStatusLabel.setText(Language.get("login_fail"));
-		stayLoggedIn.setText(Language.get("stay_logged_in"));
+		stayLoggedInLabel.setText(Language.get("stay_logged_in"));
 		searchField.setPromptText(Language.get("article_name") + " / " + Language.get("article_id"));
 		searchHistory.setPromptText(Language.get("search_history"));
 		languageDropdownLogin.setPromptText(AppSettings.CLIENT_LANGUAGE);
@@ -307,6 +306,7 @@ public class GuiBuilder {
 		matWtLabel.setText(Language.get("material_weight"));
 		matVolLabel.setText(Language.get("material_volume"));
 		searchStatusLabel.setText(Language.get("id_not_found"));
+		logoutButton.setText(Language.get("logout"));
 		Main.setTitle();
 	}
 	
@@ -318,6 +318,15 @@ public class GuiBuilder {
 	        this.searchHistory.getItems().add(pair.getKey());
 	        it.remove(); // avoids a ConcurrentModificationException
 	    }
+	}
+	
+	public void emptyUserInputFields(boolean emptyFields) {
+		stayLoggedIn.setSelected(!emptyFields);
+		if(emptyFields) {
+			loginStatusLabel.setVisible(false);
+			nameField.setText("");
+			passwordField.setText("");
+		}
 	}
 	
 }

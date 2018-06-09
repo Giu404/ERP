@@ -15,5 +15,6 @@
 	"id_not_found": "ID could not be found",
 	"dateTimeFormatation": "MM/dd/yyyy HH:mm:ss",
 	"search_history": "Search history",
-	"stay_logged_in": "Stay logged in"
+	"stay_logged_in": "Stay logged in",
+	"logout": "Log out"
 }

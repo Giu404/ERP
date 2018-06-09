@@ -69,9 +69,31 @@ public class CredentialController {
 	}
 	
 	public void storeCredentials() throws FileNotFoundException, IOException {
+		File file = new File(absolutePath);	
+		if(!file.exists()) {
+			try {
+				file.createNewFile();
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
+		}
 		try (Writer writer = new OutputStreamWriter(new FileOutputStream(absolutePath), StandardCharsets.UTF_8)) {
 		    Gson gson = new GsonBuilder().create();
 		    gson.toJson(credentials, writer);
+		}
+	}
+	
+	public void deleteCredentials() throws FileNotFoundException, IOException {
+		credentials = new Credentials();
+		credentials.setName("");
+		credentials.setEncryptedPassword("");
+		deleteCredentialFile();
+	}
+	
+	public void deleteCredentialFile() {
+		File file = new File(absolutePath);	
+		if(file.exists()) {
+			file.delete();
 		}
 	}
 }

@@ -1,4 +1,5 @@
 package Startup;
+import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.InvalidPropertiesFormatException;
 import java.util.concurrent.ExecutionException;
@@ -11,13 +12,10 @@ import Controllers.SAPController;
 import GUI.GuiBuilder;
 import Languages.Language;
 import Models.Material;
-import Utils.EncryptionUtils;
 import Utils.SearchHistorySerializer;
 import javafx.application.Application;
 import javafx.scene.Scene;
 import javafx.scene.control.Label;
-import javafx.scene.control.PasswordField;
-import javafx.scene.control.TextField;
 import javafx.stage.Stage;
 
 public class Main extends Application {
@@ -87,6 +85,7 @@ public class Main extends Application {
 		if (connection != null) {
 			if(stayLoggedIn) {
 				credentialController.setCredentials(name, plainPassword);
+				AppSettings.setStayLoggedIn(true);
 				credentialController.storeCredentials();
 			}
 			scene.setRoot(guiBuilder.getSearchScreen());
@@ -94,6 +93,26 @@ public class Main extends Application {
 		} else {
 			statusLabel.setVisible(true);
 		}
+	}
+	
+	public static void handleLogout() {
+		try {
+			credentialController.deleteCredentials();
+		} catch (FileNotFoundException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		} catch (IOException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		}
+		guiBuilder.emptyUserInputFields(true);
+		try {
+			AppSettings.setStayLoggedIn(false);
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		scene.setRoot(guiBuilder.getLoginScreen());
 	}
 	
 	public static void handleSearch(Label statusLabel) throws InvalidPropertiesFormatException, IOException, InterruptedException, ExecutionException {
