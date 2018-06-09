@@ -40,16 +40,22 @@ public class AppSettings {
 	
 	public static void setStayLoggedIn(boolean stayLoggedIn) throws FileNotFoundException, IOException {
 		appSettings.replace("stay_logged_in", stayLoggedIn);
-		try (Writer writer = new OutputStreamWriter(new FileOutputStream(absolutePath), StandardCharsets.UTF_8)) {
-		    Gson gson = new GsonBuilder().create();
-		    gson.toJson(appSettings, writer);
-		}
+		updateAppSettingsFile();
 	}
 	
 	public static void setClientLanguage(String language) throws InvalidPropertiesFormatException, IOException {
 		if(Language.isLanguageSupported(language)) {
 			CLIENT_LANGUAGE = language;
+			appSettings.replace("clientLanguage", language);
 			Language.loadResources();
+			updateAppSettingsFile();
+		}
+	}
+	
+	public static void updateAppSettingsFile() throws FileNotFoundException, IOException {
+		try (Writer writer = new OutputStreamWriter(new FileOutputStream(absolutePath), StandardCharsets.UTF_8)) {
+		    Gson gson = new GsonBuilder().create();
+		    gson.toJson(appSettings, writer);
 		}
 	}
 	
