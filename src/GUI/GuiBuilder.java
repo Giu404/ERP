@@ -12,6 +12,7 @@ import Languages.Language;
 import Models.Material;
 import Startup.AppSettings;
 import Startup.Main;
+import Utils.SearchHistorySerializer;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.event.ActionEvent;
@@ -58,9 +59,12 @@ public class GuiBuilder {
 	private Pane loginScreenRoot;
 	private Pane searchScreenRoot;
 	
-	public GuiBuilder(Map<String, Material> map) throws InvalidPropertiesFormatException, IOException {
+	private SearchHistorySerializer searchHistorySerializer;
+	
+	public GuiBuilder(SearchHistorySerializer searchHistorySerializer) throws InvalidPropertiesFormatException, IOException {
+		this.searchHistorySerializer = searchHistorySerializer;
 		initializeAttributes();
-		buildScreens(map);
+		buildScreens();
 	}
 	
 	public void initializeAttributes() throws InvalidPropertiesFormatException, IOException {
@@ -72,7 +76,12 @@ public class GuiBuilder {
 		searchHistory.valueProperty().addListener(new ChangeListener<String>() {
 			@Override
 			public void changed(ObservableValue<? extends String> observable, String oldValue, String newValue) {
-				System.out.println(newValue);
+				try {
+					setInfoVisible(newValue, searchHistorySerializer.getAccumulatedMaterialList().get(newValue), true);
+				} catch (IOException e) {
+					e.printStackTrace();
+				}
+				searchStatusLabel.setVisible(false);
 			}    
 	    });
 		languageDropdownLogin = new ComboBox<String>();
@@ -122,9 +131,9 @@ public class GuiBuilder {
 		reloadTranslations();
 	}
 	
-	public void buildScreens(Map<String, Material> map) throws InvalidPropertiesFormatException, IOException {
+	public void buildScreens() throws InvalidPropertiesFormatException, IOException {
 		buildLoginScreen();
-		buildSearchScreen(map);
+		buildSearchScreen();
 	}
 	
 	public Pane getLoginScreen() {
@@ -171,18 +180,9 @@ public class GuiBuilder {
 		loginScreenRoot.getChildren().add(languageDropdownLogin);
 	}
 	
-	public Pane buildSearchScreen() {
-		return new Pane();
-	}
-	
-	public void buildSearchScreen(Map<String, Material> searchHistory) throws InvalidPropertiesFormatException, IOException {
+	public void buildSearchScreen() throws InvalidPropertiesFormatException, IOException {
 		searchScreenRoot = new VBox(10);		
-		Iterator<Entry<String, Material>> it = searchHistory.entrySet().iterator();
-	    while (it.hasNext()) {
-	        Map.Entry<String, Material> pair = (Map.Entry<String, Material>)it.next();
-	        this.searchHistory.getItems().add(pair.getKey());
-	        it.remove(); // avoids a ConcurrentModificationException
-	    }
+		updateSearchHistoryGui();
 		matNameLabel.setPrefWidth(400);
 		matNameLabel.setStyle("-fx-border-color: black;-fx-border-width: 0 0 1 0");
 		matDescLabel.setPadding(new Insets(10, 0, 0, 0));
@@ -258,6 +258,9 @@ public class GuiBuilder {
 			matType.setText(material.getType());
 			matWt.setText(material.getWeight() + " " + material.getUnitOfWeight());
 			matVol.setText(material.getVolume() + " " + material.getVolumeUnit());
+		} else {
+			//searchHistory.getSelectionModel().clearSelection();
+			//TODO: Figure out, how the prompt text can be shown again
 		}
 	}
 	
@@ -287,8 +290,14 @@ public class GuiBuilder {
 		Main.setTitle();
 	}
 	
-	public void updateSearchHistory() {
-		
+	public void updateSearchHistoryGui() {
+		searchHistory.getItems().clear();
+		Iterator<Entry<String, Material>> it = searchHistorySerializer.getAccumulatedMaterialList().entrySet().iterator();
+	    while (it.hasNext()) {
+	        Map.Entry<String, Material> pair = (Map.Entry<String, Material>)it.next();
+	        this.searchHistory.getItems().add(pair.getKey());
+	        it.remove(); // avoids a ConcurrentModificationException
+	    }
 	}
 	
 }

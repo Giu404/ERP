@@ -46,19 +46,16 @@ public class SearchHistorySerializer {
 			SearchHistory.sortByDateTime(searchHistory.getSearchHistory());
 			if(searchHistory.getSearchHistory().size() > searchHistoryMaxSize) {
 				searchHistory.getSearchHistory().subList(0, searchHistory.getSearchHistory().size() - searchHistoryMaxSize).clear();
-			}
-			
+			}			
 			try (Writer writer = new OutputStreamWriter(new FileOutputStream(filePath), StandardCharsets.UTF_8)) {
 			    Gson gson = new GsonBuilder().create();
 			    gson.toJson(searchHistory, writer);
-			}
-			
+			}			
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
 	}
 	
-	//TODO: Maybe the file is just too big to read. Consider handling this.
 	@SuppressWarnings("finally")
 	public SearchHistory loadOrCreateHistory() {
 		File file = new File(filePath);	
@@ -76,9 +73,6 @@ public class SearchHistorySerializer {
 			InputStream inputStream = new FileInputStream(file);
 			Reader reader = new InputStreamReader(inputStream, "UTF-8");
 			searchHistory = gson.fromJson(reader, SearchHistory.class);
-			
-			System.out.println("Successfully loaded the search history");
-			//Not sure if the if statement is actually necessary... The subList method might work with smaller lists than the indices you provide
 			if(searchHistory.getSearchHistory().size() > searchHistoryMaxSize) {
 				SearchHistory.sortByDateTime(searchHistory.getSearchHistory());
 				searchHistory.getSearchHistory().subList(0, searchHistory.getSearchHistory().size() - searchHistoryMaxSize).clear();

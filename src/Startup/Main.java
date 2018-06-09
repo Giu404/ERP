@@ -16,7 +16,6 @@ import javafx.scene.Scene;
 import javafx.scene.control.Label;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
-import javafx.scene.paint.Paint;
 import javafx.stage.Stage;
 
 public class Main extends Application {
@@ -41,7 +40,7 @@ public class Main extends Application {
 		if(useSearchHistory) {
 			searchHistorySerializer = new SearchHistorySerializer();
 		}
-		guiBuilder = new GuiBuilder(searchHistorySerializer.getAccumulatedMaterialList());
+		guiBuilder = new GuiBuilder(searchHistorySerializer);
 		launch(args);
 	}
 
@@ -89,6 +88,7 @@ public class Main extends Application {
 		} else {			
 			if(useSearchHistory) {				
 				searchHistorySerializer.addToHistory(material);
+				guiBuilder.updateSearchHistoryGui();
 			}
 			guiBuilder.setInfoVisible(guiBuilder.getSearchField().getText(), material, true);
 			statusLabel.setVisible(false);
