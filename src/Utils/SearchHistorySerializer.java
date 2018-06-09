@@ -1,16 +1,22 @@
 package Utils;
 
 import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
 import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.io.OutputStreamWriter;
+import java.io.Reader;
+import java.io.Writer;
+import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.util.HashMap;
 import java.util.Map;
 
-import javax.xml.bind.JAXBContext;
-import javax.xml.bind.JAXBException;
-import javax.xml.bind.Marshaller;
-import javax.xml.bind.Unmarshaller;
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
 
 import Models.Material;
 import Models.SearchHistory;
@@ -18,7 +24,7 @@ import Startup.AppSettings;
 
 public class SearchHistorySerializer {
 
-	private static final String SEARCH_HISTORY_FILE_NAME = "search_history.xml";
+	private static final String SEARCH_HISTORY_FILE_NAME = "search_history.json";
 	private static String filePath;
 	private static SearchHistory searchHistory;
 	private static int searchHistoryMaxSize = 30;
@@ -36,17 +42,18 @@ public class SearchHistorySerializer {
 	//Check how big the history already is
 	public void addToHistory(Material material) {
 		searchHistory.add(material);
-		try {
-			File file = new File(filePath);
-			JAXBContext jaxbContext = JAXBContext.newInstance(SearchHistory.class);
-			Marshaller jaxbMarshaller = jaxbContext.createMarshaller();
-			jaxbMarshaller.setProperty(Marshaller.JAXB_FORMATTED_OUTPUT, true);
+		try {			
 			SearchHistory.sortByDateTime(searchHistory.getSearchHistory());
 			if(searchHistory.getSearchHistory().size() > searchHistoryMaxSize) {
 				searchHistory.getSearchHistory().subList(0, searchHistory.getSearchHistory().size() - searchHistoryMaxSize).clear();
 			}
-			jaxbMarshaller.marshal(searchHistory, file);
-		} catch (JAXBException e) {
+			
+			try (Writer writer = new OutputStreamWriter(new FileOutputStream(filePath), StandardCharsets.UTF_8)) {
+			    Gson gson = new GsonBuilder().create();
+			    gson.toJson(searchHistory, writer);
+			}
+			
+		} catch (Exception e) {
 			e.printStackTrace();
 		}
 	}
@@ -64,10 +71,12 @@ public class SearchHistorySerializer {
 				return new SearchHistory();
 			}
 		}
-		try {			
-			JAXBContext jaxbContext = JAXBContext.newInstance(SearchHistory.class);
-			Unmarshaller jaxbUnmarshaller = jaxbContext.createUnmarshaller();
-			SearchHistory searchHistory = (SearchHistory) jaxbUnmarshaller.unmarshal(file);
+		try {		
+			Gson gson = new GsonBuilder().create();
+			InputStream inputStream = new FileInputStream(file);
+			Reader reader = new InputStreamReader(inputStream, "UTF-8");
+			searchHistory = gson.fromJson(reader, SearchHistory.class);
+			
 			System.out.println("Successfully loaded the search history");
 			//Not sure if the if statement is actually necessary... The subList method might work with smaller lists than the indices you provide
 			if(searchHistory.getSearchHistory().size() > searchHistoryMaxSize) {
@@ -76,7 +85,7 @@ public class SearchHistorySerializer {
 			}
 			return searchHistory;
 
-		  } catch (JAXBException e) {
+		  } catch (Exception e) {
 			return new SearchHistory();
 		  }
 	}
