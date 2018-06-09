@@ -6,7 +6,10 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.Reader;
 import java.nio.file.Paths;
+import java.util.ArrayList;
+import java.util.Collections;
 import java.util.InvalidPropertiesFormatException;
+import java.util.List;
 import java.util.Map;
 import java.util.Properties;
 
@@ -38,6 +41,12 @@ public class Language {
 	
 	public static Map<String, String> languagesAsMap() {
 		return SUPPORTED_LANGUAGES;
+	}
+	
+	public static List<String> languagesAsList() {
+		List<String> languages = new ArrayList<String>(SUPPORTED_LANGUAGES.keySet());
+		Collections.sort(languages);
+		return languages;
 	}
 
 	public static void loadResources() throws InvalidPropertiesFormatException, IOException {

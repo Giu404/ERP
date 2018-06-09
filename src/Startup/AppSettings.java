@@ -36,6 +36,7 @@ public class AppSettings {
 		if(Language.isLanguageSupported(language)) {
 			CLIENT_LANGUAGE = language;
 			Language.loadResources();
+			//TODO: Set lang in appsettings
 		}
 	}
 	

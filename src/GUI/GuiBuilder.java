@@ -9,7 +9,10 @@ import java.util.Map.Entry;
 import Exceptions.AppSettingsException;
 import Languages.Language;
 import Models.Material;
+import Startup.AppSettings;
 import Startup.Main;
+import javafx.beans.value.ChangeListener;
+import javafx.beans.value.ObservableValue;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.geometry.Insets;
@@ -23,6 +26,7 @@ import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
+import javafx.scene.paint.Paint;
 
 public class GuiBuilder {
 
@@ -40,18 +44,68 @@ public class GuiBuilder {
 	private Label matVol;
 	
 	private TextField nameField;
-	PasswordField passwordField;
-	Button loginButton;
-	Label statusLabel;
-	ComboBox<String> combo;
-	Label searchStatusLabel;
-	Button searchButton;
+	private PasswordField passwordField;
+	private Button loginButton;
+	private Label loginStatusLabel;
+	private ComboBox<String> searchHistory;
+	private ComboBox<String> languageDropdownLogin;
+	private ComboBox<String> languageDropdownSearch;
+	private Label searchStatusLabel;
+	private Button searchButton;
+	private Button logoutButton;
 	
-	public GuiBuilder() throws InvalidPropertiesFormatException, IOException {
+	private Pane loginScreenRoot;
+	private Pane searchScreenRoot;
+	
+	public GuiBuilder(Map<String, Material> map) throws InvalidPropertiesFormatException, IOException {
+		initializeAttributes();
+		buildScreens(map);
+	}
+	
+	public void initializeAttributes() throws InvalidPropertiesFormatException, IOException {
+		searchField = new TextField();
 		nameField = new TextField();
 		passwordField = new PasswordField();
 		loginButton = new Button();
-		combo = new ComboBox<String>();
+		searchHistory = new ComboBox<String>();
+		searchHistory.valueProperty().addListener(new ChangeListener<String>() {
+			@Override
+			public void changed(ObservableValue<? extends String> observable, String oldValue, String newValue) {
+				System.out.println(newValue);
+			}    
+	    });
+		languageDropdownLogin = new ComboBox<String>();
+		languageDropdownSearch = new ComboBox<String>();
+		List<String> supportedLanguages = Language.languagesAsList();
+		for(int i = 0; i < supportedLanguages.size(); i++) {
+		    languageDropdownLogin.getItems().add(supportedLanguages.get(i));
+		    languageDropdownSearch.getItems().add(supportedLanguages.get(i));
+		}
+		languageDropdownLogin.valueProperty().addListener(new ChangeListener<String>() {
+			@Override
+			public void changed(ObservableValue<? extends String> observable, String oldValue, String newValue) {
+				try {
+					AppSettings.setClientLanguage(newValue);
+					reloadTranslations();
+				} catch (IOException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+			}    
+	    });
+		languageDropdownSearch.valueProperty().addListener(new ChangeListener<String>() {
+			@Override
+			public void changed(ObservableValue<? extends String> observable, String oldValue, String newValue) {
+				try {
+					AppSettings.setClientLanguage(newValue);
+					reloadTranslations();
+				} catch (IOException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+			}    
+	    });
+	    loginStatusLabel = new Label();
 		searchStatusLabel = new Label();
 		matNameLabel = new Label();
 		matDescLabel = new Label();
@@ -59,90 +113,96 @@ public class GuiBuilder {
 		matWtLabel = new Label();
 		matVolLabel = new Label();
 		searchButton = new Button();
-		
 		matName = new Label();
 		matDesc = new Label();
 		matType = new Label();
 		matWt = new Label();
-		matVol = new Label();
-		
+		matVol = new Label();		
 		reloadTranslations();
 	}
 	
-	//TODO: Improve all the GUI Stuff. Split the labels into a material attribute label and a material value label
-	public Pane buildLoginScreen() throws InvalidPropertiesFormatException, IOException {		
-		VBox root = new VBox(10);
+	public void buildScreens(Map<String, Material> map) throws InvalidPropertiesFormatException, IOException {
+		buildLoginScreen();
+		buildSearchScreen(map);
+	}
+	
+	public Pane getLoginScreen() {
+		return loginScreenRoot;
+	}
+	
+	public Pane getSearchScreen() {
+		return searchScreenRoot;
+	}
+	
+	public void buildLoginScreen() throws InvalidPropertiesFormatException, IOException {		
+		loginScreenRoot = new VBox(10);
+		loginStatusLabel.setPadding(new Insets(10, 10, 10, 10));
+		loginStatusLabel.setTextFill(Paint.valueOf("red"));
+		loginStatusLabel.setVisible(false);
 		EventHandler<KeyEvent> keyboardHandler = new EventHandler<KeyEvent>() {
 			@Override
 			public void handle(KeyEvent event){
 				if (event.getCode() == KeyCode.ENTER) {
 					try {
-						Main.handleLogin(nameField, passwordField, statusLabel);
+						Main.handleLogin(nameField, passwordField, loginStatusLabel);
 					} catch (IOException e) {
 						e.printStackTrace();
 					}
 				}
 			}
-		};
-		
-		root.addEventHandler(KeyEvent.KEY_RELEASED, keyboardHandler);
-		
+		};		
+		loginScreenRoot.addEventHandler(KeyEvent.KEY_RELEASED, keyboardHandler);		
 		loginButton.setOnAction(new EventHandler<ActionEvent>() {
 			@Override
 			public void handle(ActionEvent event) {
 				try {
-					Main.handleLogin(nameField, passwordField, statusLabel);
+					Main.handleLogin(nameField, passwordField, loginStatusLabel);
 				} catch (IOException e) {
 					e.printStackTrace();
 				}
 			}
 		});
-		root.setPadding(new Insets(10, 10, 10, 10));
-		root.getChildren().add(nameField);
-		root.getChildren().add(passwordField);
-		root.getChildren().add(loginButton);
-		root.getChildren().add(statusLabel);
-		return root;
+		loginScreenRoot.setPadding(new Insets(10, 10, 10, 10));
+		loginScreenRoot.getChildren().add(nameField);
+		loginScreenRoot.getChildren().add(passwordField);
+		loginScreenRoot.getChildren().add(loginButton);
+		loginScreenRoot.getChildren().add(loginStatusLabel);
+		loginScreenRoot.getChildren().add(languageDropdownLogin);
 	}
 	
-	public Pane buildSearchScreen(Map<String, Material> searchHistory) throws InvalidPropertiesFormatException, IOException {
-		VBox root = new VBox(10);
-		
+	public Pane buildSearchScreen() {
+		return new Pane();
+	}
+	
+	public void buildSearchScreen(Map<String, Material> searchHistory) throws InvalidPropertiesFormatException, IOException {
+		searchScreenRoot = new VBox(10);		
 		Iterator<Entry<String, Material>> it = searchHistory.entrySet().iterator();
 	    while (it.hasNext()) {
 	        Map.Entry<String, Material> pair = (Map.Entry<String, Material>)it.next();
-	        combo.getItems().add(pair.getKey());
+	        this.searchHistory.getItems().add(pair.getKey());
 	        it.remove(); // avoids a ConcurrentModificationException
 	    }
-	    
-		this.searchField = new TextField();
-		
-		
-		this.matNameLabel.setPrefWidth(400);
-		this.matNameLabel.setStyle("-fx-border-color: black;-fx-border-width: 0 0 1 0");
-		this.matDescLabel.setPadding(new Insets(10, 0, 0, 0));
-		this.matDescLabel.setPrefWidth(400);
-		this.matTypeLabel.setPrefWidth(400);
-		this.matWtLabel.setPrefWidth(400);
-		this.matVolLabel.setPrefWidth(400);
-		this.matNameLabel.setStyle("-fx-border-color: black; -fx-border-width: 1px 0px 1px 0px");
-		this.matVolLabel.setStyle("-fx-border-color: black; -fx-border-width: 0px 0px 1px 0px");
-		this.searchField.setPrefWidth(332);
-		
-		this.matNameLabel.setVisible(false);
-		this.matDescLabel.setVisible(false);
-		this.matTypeLabel.setVisible(false);
-		this.matWtLabel.setVisible(false);
-		this.matVolLabel.setVisible(false);
-		
+		matNameLabel.setPrefWidth(400);
+		matNameLabel.setStyle("-fx-border-color: black;-fx-border-width: 0 0 1 0");
+		matDescLabel.setPadding(new Insets(10, 0, 0, 0));
+		matDescLabel.setPrefWidth(400);
+		matTypeLabel.setPrefWidth(400);
+		matWtLabel.setPrefWidth(400);
+		matVolLabel.setPrefWidth(400);
+		matNameLabel.setStyle("-fx-border-color: black; -fx-border-width: 1px 0px 1px 0px");
+		matVolLabel.setStyle("-fx-border-color: black; -fx-border-width: 0px 0px 1px 0px");
+		searchField.setPrefWidth(332);		
+		matNameLabel.setVisible(false);
+		matDescLabel.setVisible(false);
+		matTypeLabel.setVisible(false);
+		matWtLabel.setVisible(false);
+		matVolLabel.setVisible(false);		
 		EventHandler<KeyEvent> keyboardHandler = new EventHandler<KeyEvent>() {
-
 			@Override
 			public void handle(KeyEvent event) {
-				//TODO: Maybe input validation (compare with given set of characters)
 				if(event.getCode() == KeyCode.ENTER) {
 					try {
-						Main.handleSearch(statusLabel);
+						Main.handleSearch(searchStatusLabel);
 					} catch (IOException e) {
 						e.printStackTrace();
 					}
@@ -150,31 +210,29 @@ public class GuiBuilder {
 			}
 		};
 		this.searchField.addEventHandler(KeyEvent.KEY_RELEASED, keyboardHandler);
-		
-
 		searchButton.setOnAction(new EventHandler<ActionEvent>() {
 			@Override
 			public void handle(ActionEvent event) {
 				try {
-					Main.handleSearch(statusLabel);
+					Main.handleSearch(searchStatusLabel);
 				} catch (IOException e) {
 					e.printStackTrace();
 				}
 			}
-		});
-		
+		});		
 		HBox searchPane = new HBox(searchField, searchButton);
-		VBox materialPane = new VBox(this.matNameLabel, this.matDescLabel, 
-									this.matTypeLabel, this.matWtLabel, this.matVolLabel);
+		VBox materialPane = new VBox(this.matNameLabel, this.matName, this.matDescLabel, this.matDesc, 
+									this.matTypeLabel, this.matType, this.matWtLabel, this.matWt, this.matVolLabel, this.matVol);
 		searchPane.setPadding(new Insets(10, 10, 10, 10));
 		searchStatusLabel.setPadding(new Insets(0, 10, 0, 10));
+		searchStatusLabel.setTextFill(Paint.valueOf("red"));
+		searchStatusLabel.setVisible(false);
 		materialPane.setPadding(new Insets(0, 10, 0, 10));
-		
-		root.getChildren().add(searchPane);
-		root.getChildren().add(statusLabel);
-		root.getChildren().add(materialPane);
-		root.getChildren().add(combo);
-		return root;
+		searchScreenRoot.getChildren().add(searchPane);
+		searchScreenRoot.getChildren().add(searchStatusLabel);
+		searchScreenRoot.getChildren().add(materialPane);
+		searchScreenRoot.getChildren().add(this.searchHistory);
+		searchScreenRoot.getChildren().add(languageDropdownSearch);
 	}
 	
 	//TODO: Maybe use this to display the user that the app.config file is corrupted.
@@ -183,25 +241,22 @@ public class GuiBuilder {
 	}
 	
 	public void setInfoVisible(String materialName, Material material, boolean visible) throws InvalidPropertiesFormatException, IOException {
-		if(visible){
-
-			this.matNameLabel.setText(Language.get("material") + ":\t\t\t\t" + materialName.toUpperCase());
-			this.matDescLabel.setText(Language.get("material_description") + ":\t" + material.getDescription());
-			this.matTypeLabel.setText(Language.get("material_type") + ":\t\t\t" + material.getType());
-			this.matWtLabel.setText(Language.get("material_weight") + ":\t\t" + material.getWeight() + " " + material.getUnitOfWeight());
-			this.matVolLabel.setText(Language.get("material_volume") + ":\t\t" + material.getVolume() + " " + material.getVolumeUnit());
-			
-			this.matNameLabel.setVisible(true);
-			this.matDescLabel.setVisible(true);
-			this.matTypeLabel.setVisible(true);
-			this.matWtLabel.setVisible(true);
-			this.matVolLabel.setVisible(true);
-		} else {
-			this.matNameLabel.setVisible(false);
-			this.matDescLabel.setVisible(false);
-			this.matTypeLabel.setVisible(false);
-			this.matWtLabel.setVisible(false);
-			this.matVolLabel.setVisible(false);
+		matNameLabel.setVisible(visible);
+		matName.setVisible(visible);
+		matDescLabel.setVisible(visible);
+		matDesc.setVisible(visible);
+		matTypeLabel.setVisible(visible);
+		matType.setVisible(visible);
+		matWtLabel.setVisible(visible);
+		matWt.setVisible(visible);
+		matVolLabel.setVisible(visible);
+		matVol.setVisible(visible);
+		if(visible) {
+			matName.setText(materialName.toUpperCase());
+			matDesc.setText(material.getDescription());
+			matType.setText(material.getType());
+			matWt.setText(material.getWeight() + " " + material.getUnitOfWeight());
+			matVol.setText(material.getVolume() + " " + material.getVolumeUnit());
 		}
 	}
 	
@@ -209,14 +264,29 @@ public class GuiBuilder {
 		return this.searchField;
 	}
 	
+	//TODO: search history update, threading, ui reordering
+	
 	//TODO: Might also need a thread
 	public void reloadTranslations() throws InvalidPropertiesFormatException, IOException {
 		nameField.setPromptText(Language.get("user_name"));
 		passwordField.setPromptText(Language.get("user_password"));
 		loginButton.setText(Language.get("login"));
+		loginStatusLabel.setText(Language.get("login_fail"));
 		searchField.setPromptText(Language.get("article_name") + " / " + Language.get("article_id"));
-		combo.setPromptText("Search history");
+		searchHistory.setPromptText(Language.get("search_history"));
+		languageDropdownLogin.setPromptText(AppSettings.CLIENT_LANGUAGE);
+		languageDropdownSearch.setPromptText(AppSettings.CLIENT_LANGUAGE);
 		searchButton.setText(Language.get("search"));
+		matNameLabel.setText(Language.get("material"));
+		matDescLabel.setText(Language.get("material_description"));
+		matTypeLabel.setText(Language.get("material_type"));
+		matWtLabel.setText(Language.get("material_weight"));
+		matVolLabel.setText(Language.get("material_volume"));
+		searchStatusLabel.setText(Language.get("id_not_found"));
+	}
+	
+	public void updateSearchHistory() {
+		
 	}
 	
 }

@@ -38,7 +38,7 @@ public class Main extends Application {
 		if(useSearchHistory) {
 			searchHistorySerializer = new SearchHistorySerializer();
 		}
-		guiBuilder = new GuiBuilder();
+		guiBuilder = new GuiBuilder(searchHistorySerializer.getAccumulatedMaterialList());
 		launch(args);
 	}
 
@@ -54,12 +54,12 @@ public class Main extends Application {
 		if(quickLogin) {
 			connection = sapController.tryLogin(AppSettings.getProperty("username"), AppSettings.getProperty("password"));
 			if (connection != null) {
-				scene = new Scene(guiBuilder.buildSearchScreen(searchHistorySerializer.getAccumulatedMaterialList()), 400, 400);
+				scene = new Scene(guiBuilder.getSearchScreen(), 400, 400);
 			} else {
-				scene = new Scene(guiBuilder.buildLoginScreen(), 400, 400);
+				scene = new Scene(guiBuilder.getLoginScreen(), 400, 400);
 			}
 		} else {
-			scene = new Scene(guiBuilder.buildLoginScreen(), 400, 400);
+			scene = new Scene(guiBuilder.getLoginScreen(), 400, 400);
 		}
 		
 		stage.setTitle(Language.get("app_name"));
@@ -70,10 +70,10 @@ public class Main extends Application {
 	public static void handleLogin(TextField nameField, PasswordField passwordField, Label statusLabel) throws InvalidPropertiesFormatException, IOException {
 		connection = sapController.tryLogin(nameField.getText(), passwordField.getText());
 		if (connection != null) {
-			scene.setRoot(guiBuilder.buildSearchScreen(searchHistorySerializer.getAccumulatedMaterialList()));
+			scene.setRoot(guiBuilder.getSearchScreen());
+			statusLabel.setVisible(false);
 		} else {
-			statusLabel.setText(Language.get("login_fail"));
-			statusLabel.setTextFill(Paint.valueOf("red"));
+			statusLabel.setVisible(true);
 		}
 	}
 	
@@ -81,8 +81,6 @@ public class Main extends Application {
 		Material material = sapController.getMaterialData(connection, guiBuilder.getSearchField().getText());
 		if(material.hasUninitializedAttributes()) {
 			statusLabel.setVisible(true);
-			statusLabel.setText(Language.get("id_not_found"));
-			statusLabel.setTextFill(Paint.valueOf("red"));
 			guiBuilder.setInfoVisible("", material, false);
 		} else {			
 			if(useSearchHistory) {				

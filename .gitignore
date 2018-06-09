@@ -58,3 +58,4 @@ pom.xml.tag
 /bin/
 *.trc
 search_history.xml
+search_history.json
