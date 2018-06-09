@@ -31,7 +31,7 @@ public class CredentialController {
 	}
 
 	public void loadCredentials() {
-		Gson gson = new GsonBuilder().create();
+		Gson gson = new GsonBuilder().setPrettyPrinting().create();
 		File file = new File(absolutePath);	
 		if(!file.exists()) {
 			try {
@@ -78,7 +78,7 @@ public class CredentialController {
 			}
 		}
 		try (Writer writer = new OutputStreamWriter(new FileOutputStream(absolutePath), StandardCharsets.UTF_8)) {
-		    Gson gson = new GsonBuilder().create();
+		    Gson gson = new GsonBuilder().setPrettyPrinting().create();
 		    gson.toJson(credentials, writer);
 		}
 	}

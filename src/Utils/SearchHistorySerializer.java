@@ -48,7 +48,7 @@ public class SearchHistorySerializer {
 				searchHistory.getSearchHistory().subList(0, searchHistory.getSearchHistory().size() - searchHistoryMaxSize).clear();
 			}			
 			try (Writer writer = new OutputStreamWriter(new FileOutputStream(filePath), StandardCharsets.UTF_8)) {
-			    Gson gson = new GsonBuilder().create();
+			    Gson gson = new GsonBuilder().setPrettyPrinting().create();
 			    gson.toJson(searchHistory, writer);
 			}			
 		} catch (Exception e) {
@@ -69,7 +69,7 @@ public class SearchHistorySerializer {
 			}
 		}
 		try {		
-			Gson gson = new GsonBuilder().create();
+			Gson gson = new GsonBuilder().setPrettyPrinting().create();
 			InputStream inputStream = new FileInputStream(file);
 			Reader reader = new InputStreamReader(inputStream, "UTF-8");
 			searchHistory = gson.fromJson(reader, SearchHistory.class);

@@ -26,7 +26,7 @@ public class AppSettings {
 	public static String absolutePath;
 	
 	public static void loadAppSettings() {
-		Gson gson = new GsonBuilder().create();
+		Gson gson = new GsonBuilder().setPrettyPrinting().create();
 		absolutePath = (Paths.get("").toAbsolutePath().getParent().toAbsolutePath().toString() + "\\" + APP_SETTINGS_FILE_NAME);
 		try {
 			InputStream inputStream = new FileInputStream(absolutePath);
@@ -54,7 +54,7 @@ public class AppSettings {
 	
 	public static void updateAppSettingsFile() throws FileNotFoundException, IOException {
 		try (Writer writer = new OutputStreamWriter(new FileOutputStream(absolutePath), StandardCharsets.UTF_8)) {
-		    Gson gson = new GsonBuilder().create();
+		    Gson gson = new GsonBuilder().setPrettyPrinting().create();
 		    gson.toJson(appSettings, writer);
 		}
 	}

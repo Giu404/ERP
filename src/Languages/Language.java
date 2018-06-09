@@ -50,7 +50,7 @@ public class Language {
 	}
 
 	public static void loadResources() throws InvalidPropertiesFormatException, IOException {
-		Gson gson = new GsonBuilder().create();
+		Gson gson = new GsonBuilder().setPrettyPrinting().create();
 		String absolutePath = (Paths.get("").toAbsolutePath().toString() + "\\resources\\" + AppSettings.CLIENT_LANGUAGE.toLowerCase() + ".json");
 		InputStream inputStream = new FileInputStream(absolutePath);
 		Reader reader = new InputStreamReader(inputStream, "UTF-8");
