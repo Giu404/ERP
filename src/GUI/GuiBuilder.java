@@ -19,6 +19,7 @@ import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.geometry.Insets;
 import javafx.scene.control.Button;
+import javafx.scene.control.CheckBox;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.PasswordField;
@@ -49,6 +50,8 @@ public class GuiBuilder {
 	private PasswordField passwordField;
 	private Button loginButton;
 	private Label loginStatusLabel;
+	private CheckBox stayLoggedIn;
+	private Label stayLoggedInLabel;
 	private ComboBox<String> searchHistory;
 	private ComboBox<String> languageDropdownLogin;
 	private ComboBox<String> languageDropdownSearch;
@@ -72,6 +75,8 @@ public class GuiBuilder {
 		nameField = new TextField();
 		passwordField = new PasswordField();
 		loginButton = new Button();
+		stayLoggedIn = new CheckBox();
+		stayLoggedInLabel = new Label();
 		searchHistory = new ComboBox<String>();
 		searchHistory.valueProperty().addListener(new ChangeListener<String>() {
 			@Override
@@ -127,7 +132,16 @@ public class GuiBuilder {
 		matDesc = new Label();
 		matType = new Label();
 		matWt = new Label();
-		matVol = new Label();		
+		matVol = new Label();	
+		logoutButton = new Button();
+		//TODO: Add action to button
+		loginButton.setOnAction(new EventHandler<ActionEvent>() {
+			@Override
+			public void handle(ActionEvent event) {
+				// TODO Auto-generated method stub
+				System.out.println("log me out");
+			}
+		});
 		reloadTranslations();
 	}
 	
@@ -149,12 +163,15 @@ public class GuiBuilder {
 		loginStatusLabel.setPadding(new Insets(10, 10, 10, 10));
 		loginStatusLabel.setTextFill(Paint.valueOf("red"));
 		loginStatusLabel.setVisible(false);
+		stayLoggedInLabel = new Label();
+		stayLoggedIn = new CheckBox();
+		//TODO: Add event to checkbox
 		EventHandler<KeyEvent> keyboardHandler = new EventHandler<KeyEvent>() {
 			@Override
 			public void handle(KeyEvent event){
 				if (event.getCode() == KeyCode.ENTER) {
 					try {
-						Main.handleLogin(nameField, passwordField, loginStatusLabel);
+						Main.handleLogin(nameField.getText(), passwordField.getText(), loginStatusLabel, stayLoggedIn.isSelected());
 					} catch (IOException e) {
 						e.printStackTrace();
 					}
@@ -166,7 +183,7 @@ public class GuiBuilder {
 			@Override
 			public void handle(ActionEvent event) {
 				try {
-					Main.handleLogin(nameField, passwordField, loginStatusLabel);
+					Main.handleLogin(nameField.getText(), passwordField.getText(), loginStatusLabel, stayLoggedIn.isSelected());
 				} catch (IOException e) {
 					e.printStackTrace();
 				}
@@ -177,6 +194,8 @@ public class GuiBuilder {
 		loginScreenRoot.getChildren().add(passwordField);
 		loginScreenRoot.getChildren().add(loginButton);
 		loginScreenRoot.getChildren().add(loginStatusLabel);
+		loginScreenRoot.getChildren().add(stayLoggedIn);
+		loginScreenRoot.getChildren().add(stayLoggedInLabel);		
 		loginScreenRoot.getChildren().add(languageDropdownLogin);
 	}
 	
@@ -276,6 +295,7 @@ public class GuiBuilder {
 		passwordField.setPromptText(Language.get("user_password"));
 		loginButton.setText(Language.get("login"));
 		loginStatusLabel.setText(Language.get("login_fail"));
+		stayLoggedIn.setText(Language.get("stay_logged_in"));
 		searchField.setPromptText(Language.get("article_name") + " / " + Language.get("article_id"));
 		searchHistory.setPromptText(Language.get("search_history"));
 		languageDropdownLogin.setPromptText(AppSettings.CLIENT_LANGUAGE);

@@ -6,10 +6,12 @@ import java.util.concurrent.ExecutionException;
 import com.sap.conn.jco.JCoDestination;
 import com.sap.conn.jco.JCoException;
 
+import Controllers.CredentialController;
 import Controllers.SAPController;
 import GUI.GuiBuilder;
 import Languages.Language;
 import Models.Material;
+import Utils.EncryptionUtils;
 import Utils.SearchHistorySerializer;
 import javafx.application.Application;
 import javafx.scene.Scene;
@@ -23,6 +25,7 @@ public class Main extends Application {
 	public static boolean isReady = false;
 	
 	private static SAPController sapController;
+	private static CredentialController credentialController;
 	private static SearchHistorySerializer searchHistorySerializer;
 	private static GuiBuilder guiBuilder;
 	private static Scene scene;
@@ -40,21 +43,30 @@ public class Main extends Application {
 		if(useSearchHistory) {
 			searchHistorySerializer = new SearchHistorySerializer();
 		}
+		credentialController = new CredentialController();
+		credentialController.loadCredentials();
 		guiBuilder = new GuiBuilder(searchHistorySerializer);
+//		String pw = "mysecurepw";
+//		System.out.println("lululu");
+//		System.out.println(EncryptionUtils.decrypt(EncryptionUtils.encrypt(pw)));
+//		String encryptedpw = EncryptionUtils.encrypt(pw);
+//		System.out.println(encryptedpw);
+//		String decryptedpw = EncryptionUtils.decrypt(encryptedpw);
+//		System.out.println(decryptedpw);
 		launch(args);
 	}
 
 	@Override
 	public void start(Stage stage) throws Exception {
-		boolean quickLogin;
+		boolean stayLoggedIn;
 		try {
-			quickLogin = Boolean.parseBoolean(AppSettings.getProperty("quickLogin"));
+			stayLoggedIn = Boolean.parseBoolean(AppSettings.getProperty("stay_logged_in"));
 		} catch (Exception e) {
-			quickLogin = false;
+			stayLoggedIn = false;
 		}
 		
-		if(quickLogin) {
-			connection = sapController.tryLogin(AppSettings.getProperty("username"), AppSettings.getProperty("password"));
+		if(stayLoggedIn) {
+			connection = sapController.tryLogin(credentialController.getLoginName(), credentialController.getDecryptedPassword());
 			if (connection != null) {
 				scene = new Scene(guiBuilder.getSearchScreen(), 400, 400);
 			} else {
@@ -70,9 +82,13 @@ public class Main extends Application {
 		stage.show();
 	}
 	
-	public static void handleLogin(TextField nameField, PasswordField passwordField, Label statusLabel) throws InvalidPropertiesFormatException, IOException {
-		connection = sapController.tryLogin(nameField.getText(), passwordField.getText());
+	public static void handleLogin(String name, String plainPassword, Label statusLabel, boolean stayLoggedIn) throws InvalidPropertiesFormatException, IOException {
+		connection = sapController.tryLogin(name, plainPassword);
 		if (connection != null) {
+			if(stayLoggedIn) {
+				credentialController.setCredentials(name, plainPassword);
+				credentialController.storeCredentials();
+			}
 			scene.setRoot(guiBuilder.getSearchScreen());
 			statusLabel.setVisible(false);
 		} else {

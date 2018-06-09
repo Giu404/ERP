@@ -59,3 +59,4 @@ pom.xml.tag
 *.trc
 search_history.xml
 search_history.json
+credentials.json
