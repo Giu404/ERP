@@ -44,13 +44,6 @@ public class Main extends Application {
 		credentialController = new CredentialController();
 		credentialController.loadCredentials();
 		guiBuilder = new GuiBuilder(searchHistorySerializer);
-//		String pw = "mysecurepw";
-//		System.out.println("lululu");
-//		System.out.println(EncryptionUtils.decrypt(EncryptionUtils.encrypt(pw)));
-//		String encryptedpw = EncryptionUtils.encrypt(pw);
-//		System.out.println(encryptedpw);
-//		String decryptedpw = EncryptionUtils.decrypt(encryptedpw);
-//		System.out.println(decryptedpw);
 		launch(args);
 	}
 

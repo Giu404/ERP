@@ -55,7 +55,6 @@ public class Language {
 		InputStream inputStream = new FileInputStream(absolutePath);
 		Reader reader = new InputStreamReader(inputStream, "UTF-8");
 		translations = gson.fromJson(reader, Properties.class);
-		System.out.println(translations.toString());
 	}
 	
 	public static Properties getAllResources() throws InvalidPropertiesFormatException, IOException {

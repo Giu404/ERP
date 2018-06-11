@@ -94,7 +94,6 @@ public class SearchHistorySerializer {
 				materials.replace(material.getDescription(), z);
 			}
 		}
-		System.out.println(materials.toString());
 		return materials;
 	}
 

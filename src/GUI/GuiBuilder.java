@@ -64,6 +64,8 @@ public class GuiBuilder {
 	
 	private SearchHistorySerializer searchHistorySerializer;
 	
+	private ChangeListener<String> changeListener;
+	
 	public GuiBuilder(SearchHistorySerializer searchHistorySerializer) throws InvalidPropertiesFormatException, IOException {
 		this.searchHistorySerializer = searchHistorySerializer;
 		initializeAttributes();
@@ -71,6 +73,17 @@ public class GuiBuilder {
 	}
 	
 	public void initializeAttributes() throws InvalidPropertiesFormatException, IOException {
+		changeListener = new ChangeListener<String>() {
+			@Override
+			public void changed(ObservableValue<? extends String> observable, String oldValue, String newValue) {
+				try {
+					setInfoVisible(removeDate(newValue), searchHistorySerializer.getAccumulatedMaterialList().get(removeDate(newValue)), true);
+				} catch (IOException e) {
+					e.printStackTrace();
+				}
+				searchStatusLabel.setVisible(false);
+			}    
+	    };
 		searchField = new TextField();
 		nameField = new TextField();
 		passwordField = new PasswordField();
@@ -78,17 +91,7 @@ public class GuiBuilder {
 		stayLoggedIn = new CheckBox();
 		stayLoggedInLabel = new Label();
 		searchHistory = new ComboBox<String>();
-		searchHistory.valueProperty().addListener(new ChangeListener<String>() {
-			@Override
-			public void changed(ObservableValue<? extends String> observable, String oldValue, String newValue) {
-				try {
-					setInfoVisible(newValue, searchHistorySerializer.getAccumulatedMaterialList().get(newValue), true);
-				} catch (IOException e) {
-					e.printStackTrace();
-				}
-				searchStatusLabel.setVisible(false);
-			}    
-	    });
+		searchHistory.valueProperty().addListener(changeListener);
 		languageDropdownLogin = new ComboBox<String>();
 		languageDropdownSearch = new ComboBox<String>();
 		List<String> supportedLanguages = Language.languagesAsList();
@@ -102,6 +105,7 @@ public class GuiBuilder {
 				try {
 					AppSettings.setClientLanguage(newValue);
 					reloadTranslations();
+					updateSearchHistoryGui();
 				} catch (IOException e) {
 					// TODO Auto-generated catch block
 					e.printStackTrace();
@@ -114,6 +118,7 @@ public class GuiBuilder {
 				try {
 					AppSettings.setClientLanguage(newValue);
 					reloadTranslations();
+					updateSearchHistoryGui();
 				} catch (IOException e) {
 					// TODO Auto-generated catch block
 					e.printStackTrace();
@@ -282,6 +287,14 @@ public class GuiBuilder {
 		}
 	}
 	
+	public String appendDate(String materialName, String date) {
+		return materialName + ", " + date;
+	}
+	
+	public String removeDate(String searchHistoryEntry) {
+		return searchHistoryEntry.substring(0, searchHistoryEntry.indexOf(","));
+	}
+	
 	public TextField getSearchField(){
 		return this.searchField;
 	}
@@ -311,13 +324,19 @@ public class GuiBuilder {
 	}
 	
 	public void updateSearchHistoryGui() {
+		searchHistory.valueProperty().removeListener(changeListener);
+		String selectedItem = searchHistory.getValue();
+		String selectedEntry = removeDate(searchHistory.getValue());
+		System.out.println(selectedEntry);
 		searchHistory.getItems().clear();
 		Iterator<Entry<String, Material>> it = searchHistorySerializer.getAccumulatedMaterialList().entrySet().iterator();
 	    while (it.hasNext()) {
 	        Map.Entry<String, Material> pair = (Map.Entry<String, Material>)it.next();
-	        this.searchHistory.getItems().add(pair.getKey());
+	        this.searchHistory.getItems().add(appendDate(pair.getKey(), pair.getValue().getLookupDateTimeLocalizedString()));
 	        it.remove(); // avoids a ConcurrentModificationException
 	    }
+	    searchHistory.setValue(appendDate(selectedEntry, searchHistorySerializer.getAccumulatedMaterialList().get(selectedEntry).getLookupDateTimeLocalizedString()));
+	    searchHistory.valueProperty().addListener(changeListener);
 	}
 	
 	public void emptyUserInputFields(boolean emptyFields) {
