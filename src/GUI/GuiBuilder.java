@@ -62,9 +62,10 @@ public class GuiBuilder {
 	private Pane loginScreenRoot;
 	private Pane searchScreenRoot;
 	
-	private SearchHistorySerializer searchHistorySerializer;
-	
+	private SearchHistorySerializer searchHistorySerializer;	
 	private ChangeListener<String> changeListener;
+	
+	private String searchHistoryDisplayString = "";
 	
 	public GuiBuilder(SearchHistorySerializer searchHistorySerializer) throws InvalidPropertiesFormatException, IOException {
 		this.searchHistorySerializer = searchHistorySerializer;
@@ -103,6 +104,7 @@ public class GuiBuilder {
 			@Override
 			public void changed(ObservableValue<? extends String> observable, String oldValue, String newValue) {
 				try {
+					searchHistoryDisplayString = getSearchHistoryDisplayString();
 					AppSettings.setClientLanguage(newValue);
 					reloadTranslations();
 					updateSearchHistoryGui();
@@ -116,6 +118,7 @@ public class GuiBuilder {
 			@Override
 			public void changed(ObservableValue<? extends String> observable, String oldValue, String newValue) {
 				try {
+					searchHistoryDisplayString = getSearchHistoryDisplayString();
 					AppSettings.setClientLanguage(newValue);
 					reloadTranslations();
 					updateSearchHistoryGui();
@@ -323,11 +326,17 @@ public class GuiBuilder {
 		Main.setTitle();
 	}
 	
+	public String getSearchHistoryDisplayString() {
+		String s = searchHistory.getValue();
+		if(s == null) {
+			return "";
+		} else {
+			return removeDate(s);
+		}
+	}
+	
 	public void updateSearchHistoryGui() {
 		searchHistory.valueProperty().removeListener(changeListener);
-		String selectedItem = searchHistory.getValue();
-		String selectedEntry = removeDate(searchHistory.getValue());
-		System.out.println(selectedEntry);
 		searchHistory.getItems().clear();
 		Iterator<Entry<String, Material>> it = searchHistorySerializer.getAccumulatedMaterialList().entrySet().iterator();
 	    while (it.hasNext()) {
@@ -335,7 +344,9 @@ public class GuiBuilder {
 	        this.searchHistory.getItems().add(appendDate(pair.getKey(), pair.getValue().getLookupDateTimeLocalizedString()));
 	        it.remove(); // avoids a ConcurrentModificationException
 	    }
-	    searchHistory.setValue(appendDate(selectedEntry, searchHistorySerializer.getAccumulatedMaterialList().get(selectedEntry).getLookupDateTimeLocalizedString()));
+	    if(!searchHistoryDisplayString.equalsIgnoreCase("")) {
+	    	searchHistory.setValue(appendDate(searchHistoryDisplayString, searchHistorySerializer.getAccumulatedMaterialList().get(searchHistoryDisplayString).getLookupDateTimeLocalizedString()));
+	    }
 	    searchHistory.valueProperty().addListener(changeListener);
 	}
 	

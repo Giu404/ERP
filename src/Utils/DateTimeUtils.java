@@ -20,7 +20,7 @@ public class DateTimeUtils {
 	
 	public static String toLocal(LocalDateTime dateTime) {
 		try {
-			return dateTime.format(DateTimeFormatter.ofPattern(Language.getDatTimeFormatation()));
+			return dateTime.format(DateTimeFormatter.ofPattern(Language.getDateTimeFormatation()));
 		} catch (IOException e) {
 			e.printStackTrace();
 			return "";
@@ -29,7 +29,7 @@ public class DateTimeUtils {
 	
 	public static LocalDateTime stringToUtcDateTime(String dateTime) {
 		try {
-			return LocalDateTime.parse(dateTime, DateTimeFormatter.ofPattern(Language.getDatTimeFormatation()));
+			return LocalDateTime.parse(dateTime, DateTimeFormatter.ofPattern(Language.getDateTimeFormatation()));
 		} catch (IOException e) {
 			e.printStackTrace();
 			return null;

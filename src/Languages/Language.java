@@ -55,6 +55,7 @@ public class Language {
 		InputStream inputStream = new FileInputStream(absolutePath);
 		Reader reader = new InputStreamReader(inputStream, "UTF-8");
 		translations = gson.fromJson(reader, Properties.class);
+		setDateTimeFormatation();
 	}
 	
 	public static Properties getAllResources() throws InvalidPropertiesFormatException, IOException {
@@ -71,7 +72,7 @@ public class Language {
 		return translations.getProperty(translation);
 	}
 	
-	public static String getDatTimeFormatation() throws InvalidPropertiesFormatException, IOException {
+	public static String getDateTimeFormatation() throws InvalidPropertiesFormatException, IOException {
 		if(dateTimeFormatation == null) {
 			setDateTimeFormatation();
 		}
