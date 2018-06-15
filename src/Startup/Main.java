@@ -1,6 +1,7 @@
 package Startup;
 import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.io.UnsupportedEncodingException;
 import java.util.InvalidPropertiesFormatException;
 import java.util.concurrent.ExecutionException;
 
@@ -14,6 +15,8 @@ import Languages.Language;
 import Models.Material;
 import Utils.SearchHistorySerializer;
 import javafx.application.Application;
+import javafx.application.Platform;
+import javafx.concurrent.Task;
 import javafx.scene.Scene;
 import javafx.scene.control.Label;
 import javafx.stage.Stage;
@@ -74,54 +77,89 @@ public class Main extends Application {
 	}
 	
 	public static void handleLogin(String name, String plainPassword, Label statusLabel, boolean stayLoggedIn) throws InvalidPropertiesFormatException, IOException {
-		connection = sapController.tryLogin(name, plainPassword);
-		if (connection != null) {
-			if(stayLoggedIn) {
-				credentialController.setCredentials(name, plainPassword);
-				AppSettings.setStayLoggedIn(true);
-				credentialController.storeCredentials();
-			}
-			scene.setRoot(guiBuilder.getSearchScreen());
-			statusLabel.setVisible(false);
-		} else {
-			statusLabel.setVisible(true);
-		}
+		Task<Void> task = new Task<Void>() {
+			@Override
+			protected Void call() throws Exception {
+				connection = sapController.tryLogin(name, plainPassword);
+				Platform.runLater(new Runnable() {
+					@Override
+					public void run() {
+						if (connection != null) {
+							if(stayLoggedIn) {
+								try {
+									credentialController.setCredentials(name, plainPassword);
+									AppSettings.setStayLoggedIn(true);
+									credentialController.storeCredentials();
+								} catch (IOException e) {
+									e.printStackTrace();
+								}
+							}
+							scene.setRoot(guiBuilder.getSearchScreen());
+							statusLabel.setVisible(false);
+						} else {
+							statusLabel.setVisible(true);
+						}
+					}					
+				});
+				return null;
+			}			
+		};
+		new Thread(task).start();		
 	}
 	
 	public static void handleLogout() {
 		try {
 			credentialController.deleteCredentials();
 		} catch (FileNotFoundException e1) {
-			// TODO Auto-generated catch block
 			e1.printStackTrace();
 		} catch (IOException e1) {
-			// TODO Auto-generated catch block
 			e1.printStackTrace();
 		}
 		guiBuilder.emptyUserInputFields(true);
 		try {
 			AppSettings.setStayLoggedIn(false);
 		} catch (IOException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		scene.setRoot(guiBuilder.getLoginScreen());
 	}
 	
 	public static void handleSearch(Label statusLabel) throws InvalidPropertiesFormatException, IOException, InterruptedException, ExecutionException {
-		Material material = sapController.getMaterialData(connection, guiBuilder.getSearchField().getText());
-		if(material.hasUninitializedAttributes()) {
-			statusLabel.setVisible(true);
-			guiBuilder.setInfoVisible("", material, false);
-		} else {			
-			if(useSearchHistory) {				
-				searchHistorySerializer.addToHistory(material);
-				guiBuilder.updateSearchHistoryGui();
+		Task<Void> task = new Task<Void>() {
+			Material material;
+			@Override
+			public Void call() throws Exception {				
+				material = sapController.getMaterialData(connection, guiBuilder.getSearchField().getText());
+				Platform.runLater(new Runnable() {
+					@Override
+					public void run() {
+						if(material.hasUninitializedAttributes()) {
+							statusLabel.setVisible(true);
+							try {
+								guiBuilder.setInfoVisible("", material, false);
+							} catch (IOException e) {
+								e.printStackTrace();
+							}
+						} else {			
+							if(useSearchHistory) {				
+								searchHistorySerializer.addToHistory(material);
+								guiBuilder.updateSearchHistoryGui();
+							}
+							try {
+								guiBuilder.setInfoVisible(guiBuilder.getSearchField().getText(), material, true);
+							} catch (IOException e) {
+								e.printStackTrace();
+							}
+							statusLabel.setVisible(false);
+						}
+						guiBuilder.getSearchField().setText("");
+					}					
+				});
+				return null;
 			}
-			guiBuilder.setInfoVisible(guiBuilder.getSearchField().getText(), material, true);
-			statusLabel.setVisible(false);
-		}
-		guiBuilder.getSearchField().setText("");
+			
+		};
+		new Thread(task).start();
 	}
 	
 	public static void setTitle() throws InvalidPropertiesFormatException, IOException {
