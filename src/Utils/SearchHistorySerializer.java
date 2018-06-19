@@ -87,11 +87,11 @@ public class SearchHistorySerializer {
 	public Map<String, Material> getAccumulatedMaterialList() {
 		Map<String, Material> materials = new HashMap<String, Material>();
 		for(Material material : searchHistory.getSearchHistory()) {
-			if(!materials.containsKey(material.getDescription())) {
-				materials.put(material.getDescription(), material);
+			if(!materials.containsKey(material.getName())) {
+				materials.put(material.getName(), material);
 			} else {
-				Material z = material.mostCurrentDate(materials.get(material.getDescription()));
-				materials.replace(material.getDescription(), z);
+				Material z = material.mostCurrentDate(materials.get(material.getName()));
+				materials.replace(material.getName(), z);
 			}
 		}
 		return materials;

@@ -18,7 +18,7 @@ public class Material {
 	);
 
 	private boolean hasUninitializedAttributes;
-	
+	private String name;
 	private String lookupDateTime;
 	private String description;
 	private String type;
@@ -131,7 +131,15 @@ public class Material {
 	
 	@Override
 	public String toString() {
-		return description + " " + " " + type + " " + weight + " " + unitOfWeight + " " + volume + " " +volumeUnit + " " + lookupDateTime;
+		return name + " " + description + " " + " " + type + " " + weight + " " + unitOfWeight + " " + volume + " " +volumeUnit + " " + lookupDateTime;
+	}
+
+	public String getName() {
+		return name;
+	}
+
+	public void setName(String name) {
+		this.name = name;
 	}
 
 	public Material mostCurrentDate(Material material) {
