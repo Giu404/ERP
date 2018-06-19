@@ -104,10 +104,9 @@ public class GuiBuilder {
 			@Override
 			public void changed(ObservableValue<? extends String> observable, String oldValue, String newValue) {
 				try {
-					searchHistoryDisplayString = getSearchHistoryDisplayString();
 					AppSettings.setClientLanguage(newValue);
 					reloadTranslations();
-					updateSearchHistoryGui();
+					updateSearchHistoryGui(true);
 				} catch (IOException e) {
 					// TODO Auto-generated catch block
 					e.printStackTrace();
@@ -118,10 +117,9 @@ public class GuiBuilder {
 			@Override
 			public void changed(ObservableValue<? extends String> observable, String oldValue, String newValue) {
 				try {
-					searchHistoryDisplayString = getSearchHistoryDisplayString();
 					AppSettings.setClientLanguage(newValue);
 					reloadTranslations();
-					updateSearchHistoryGui();
+					updateSearchHistoryGui(true);
 				} catch (IOException e) {
 					// TODO Auto-generated catch block
 					e.printStackTrace();
@@ -207,7 +205,7 @@ public class GuiBuilder {
 	
 	public void buildSearchScreen() throws InvalidPropertiesFormatException, IOException {
 		searchScreenRoot = new VBox(10);		
-		updateSearchHistoryGui();
+		updateSearchHistoryGui(true);
 		matNameLabel.setPrefWidth(400);
 		matNameLabel.setStyle("-fx-border-color: black;-fx-border-width: 0 0 1 0");
 		matDescLabel.setPadding(new Insets(10, 0, 0, 0));
@@ -331,11 +329,20 @@ public class GuiBuilder {
 		if(s == null) {
 			return "";
 		} else {
-			return removeDate(s);
+			try {
+				return removeDate(s);
+			} catch(Exception e) {
+				return "";
+			}
 		}
 	}
 	
-	public void updateSearchHistoryGui() {
+	public void updateSearchHistoryGui(boolean calledFromSearchHistory) {
+		if(!calledFromSearchHistory) {			
+			searchHistoryDisplayString = searchField.getText().toUpperCase();
+		} else {
+			searchHistoryDisplayString = getSearchHistoryDisplayString();
+		}
 		searchHistory.valueProperty().removeListener(changeListener);
 		searchHistory.getItems().clear();
 		Iterator<Entry<String, Material>> it = searchHistorySerializer.getAccumulatedMaterialList().entrySet().iterator();
@@ -346,6 +353,7 @@ public class GuiBuilder {
 	    }
 	    if(!searchHistoryDisplayString.equalsIgnoreCase("")) {
 	    	searchHistory.setValue(appendDate(searchHistoryDisplayString, searchHistorySerializer.getAccumulatedMaterialList().get(searchHistoryDisplayString).getLookupDateTimeLocalizedString()));
+	    	searchHistoryDisplayString = "";
 	    }
 	    searchHistory.valueProperty().addListener(changeListener);
 	}

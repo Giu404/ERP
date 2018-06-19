@@ -142,7 +142,7 @@ public class Main extends Application {
 						} else {			
 							if(useSearchHistory) {				
 								searchHistorySerializer.addToHistory(material);
-								guiBuilder.updateSearchHistoryGui();
+								guiBuilder.updateSearchHistoryGui(false);
 							}
 							try {
 								guiBuilder.setInfoVisible(guiBuilder.getSearchField().getText(), material, true);
