@@ -28,6 +28,8 @@ import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
+import javafx.scene.layout.Priority;
+import javafx.scene.layout.Region;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.Paint;
 
@@ -165,10 +167,20 @@ public class GuiBuilder {
 	
 	public void buildLoginScreen() throws InvalidPropertiesFormatException, IOException {		
 		loginScreenRoot = new VBox(10);
-		loginStatusLabel.setPadding(new Insets(10, 10, 10, 10));
 		loginStatusLabel.setTextFill(Paint.valueOf("red"));
 		loginStatusLabel.setVisible(false);
 		stayLoggedIn = new CheckBox();
+		stayLoggedIn.setPadding(new Insets(0, 10, 0, 0));
+		HBox upperGrouping = new HBox();
+		HBox languageSelectionBox = new HBox();
+		Region hFiller = new Region();
+		HBox.setHgrow(hFiller, Priority.ALWAYS);
+		Region hFiller2 = new Region();
+		HBox.setHgrow(hFiller2, Priority.ALWAYS);
+		Region vFiller1 = new Region();
+		VBox.setVgrow(vFiller1, Priority.ALWAYS);
+		languageSelectionBox.getChildren().addAll(languageDropdownLogin, hFiller);
+		upperGrouping.getChildren().addAll(stayLoggedIn, stayLoggedInLabel, hFiller2, loginStatusLabel);
 		//TODO: Add event to checkbox
 		EventHandler<KeyEvent> keyboardHandler = new EventHandler<KeyEvent>() {
 			@Override
@@ -196,25 +208,20 @@ public class GuiBuilder {
 		loginScreenRoot.setPadding(new Insets(10, 10, 10, 10));
 		loginScreenRoot.getChildren().add(nameField);
 		loginScreenRoot.getChildren().add(passwordField);
+		loginScreenRoot.getChildren().add(upperGrouping);		
 		loginScreenRoot.getChildren().add(loginButton);
-		loginScreenRoot.getChildren().add(loginStatusLabel);
-		loginScreenRoot.getChildren().add(stayLoggedIn);
-		loginScreenRoot.getChildren().add(stayLoggedInLabel);		
-		loginScreenRoot.getChildren().add(languageDropdownLogin);
+		loginScreenRoot.getChildren().add(vFiller1);
+		loginScreenRoot.getChildren().add(languageSelectionBox);
 	}
 	
 	public void buildSearchScreen() throws InvalidPropertiesFormatException, IOException {
 		searchScreenRoot = new VBox(10);		
 		updateSearchHistoryGui(true);
-		matNameLabel.setPrefWidth(400);
-		matNameLabel.setStyle("-fx-border-color: black;-fx-border-width: 0 0 1 0");
-		matDescLabel.setPadding(new Insets(10, 0, 0, 0));
-		matDescLabel.setPrefWidth(400);
-		matTypeLabel.setPrefWidth(400);
-		matWtLabel.setPrefWidth(400);
-		matVolLabel.setPrefWidth(400);
-		matNameLabel.setStyle("-fx-border-color: black; -fx-border-width: 1px 0px 1px 0px");
-		matVolLabel.setStyle("-fx-border-color: black; -fx-border-width: 0px 0px 1px 0px");
+		matNameLabel.setPrefWidth(150);
+		matDescLabel.setPrefWidth(150);
+		matTypeLabel.setPrefWidth(150);
+		matWtLabel.setPrefWidth(150);
+		matVolLabel.setPrefWidth(150);
 		searchField.setPrefWidth(332);		
 		matNameLabel.setVisible(false);
 		matDescLabel.setVisible(false);
@@ -245,19 +252,39 @@ public class GuiBuilder {
 			}
 		});		
 		HBox searchPane = new HBox(searchField, searchButton);
-		VBox materialPane = new VBox(this.matNameLabel, this.matName, this.matDescLabel, this.matDesc, 
-									this.matTypeLabel, this.matType, this.matWtLabel, this.matWt, this.matVolLabel, this.matVol);
-		searchPane.setPadding(new Insets(10, 10, 10, 10));
+		VBox materialPane = new VBox(new HBox(this.matNameLabel, this.matName), new HBox(this.matDescLabel, this.matDesc), 
+				new HBox(this.matTypeLabel, this.matType), new HBox(this.matWtLabel, this.matWt), new HBox(this.matVolLabel, this.matVol));
+		matNameLabel.setPadding(new Insets(5, 0, 20, 0));
+		matName.setPadding(new Insets(5, 0, 20, 0));
+		matDescLabel.setPadding(new Insets(0, 0, 5, 0));
+		matDesc.setPadding(new Insets(0, 0, 5, 0));
+		matTypeLabel.setPadding(new Insets(0, 0, 5, 0));
+		matType.setPadding(new Insets(0, 0, 5, 0));
+		matWtLabel.setPadding(new Insets(0, 0, 5, 0));
+		matWt.setPadding(new Insets(0, 0, 5, 0));
+		matVolLabel.setPadding(new Insets(0, 0, 5, 0));
+		matVol.setPadding(new Insets(0, 0, 5, 0));
+		materialPane.setStyle("-fx-border-color: black;-fx-border-width: 1.1 0 1.1 0");
 		searchStatusLabel.setPadding(new Insets(0, 10, 0, 10));
 		searchStatusLabel.setTextFill(Paint.valueOf("red"));
 		searchStatusLabel.setVisible(false);
 		materialPane.setPadding(new Insets(0, 10, 0, 10));
+		
+		HBox bottomBox = new HBox();
+		Region hFiller = new Region();
+		HBox.setHgrow(hFiller, Priority.ALWAYS);
+		Region vFiller1 = new Region();
+		VBox.setVgrow(vFiller1, Priority.ALWAYS);
+		bottomBox.getChildren().addAll(languageDropdownSearch, hFiller, logoutButton);
+		searchPane.setPadding(new Insets(20, 0, 0, 0));
+		
+		searchScreenRoot.setPadding(new Insets(10, 10, 10 ,10));
 		searchScreenRoot.getChildren().add(searchPane);
 		searchScreenRoot.getChildren().add(searchStatusLabel);
 		searchScreenRoot.getChildren().add(materialPane);
 		searchScreenRoot.getChildren().add(this.searchHistory);
-		searchScreenRoot.getChildren().add(languageDropdownSearch);
-		searchScreenRoot.getChildren().add(logoutButton);
+		searchScreenRoot.getChildren().add(vFiller1);
+		searchScreenRoot.getChildren().add(bottomBox);
 	}
 	
 	//TODO: Maybe use this to display the user that the app.config file is corrupted.
