@@ -64,6 +64,7 @@ public class Main extends Application {
 				scene = new Scene(guiBuilder.getSearchScreen(), 400, 400);
 			} else {
 				scene = new Scene(guiBuilder.getLoginScreen(), 400, 400);
+				AppSettings.setStayLoggedIn(false);
 			}
 		} else {
 			scene = new Scene(guiBuilder.getLoginScreen(), 400, 400);

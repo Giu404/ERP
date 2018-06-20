@@ -28,6 +28,7 @@ public class CredentialController {
 	
 	public CredentialController() {
 		absolutePath = (Paths.get("").toAbsolutePath().toString() + "\\resources\\" + CREDENTIALS_FILE);
+		credentials = new Credentials();
 	}
 
 	public void loadCredentials() {
@@ -43,7 +44,10 @@ public class CredentialController {
 			try {
 				InputStream inputStream = new FileInputStream(absolutePath);
 				Reader reader = new InputStreamReader(inputStream, "UTF-8");
-				credentials = gson.fromJson(reader, Credentials.class);
+				Credentials fromCredentialFile = gson.fromJson(reader, Credentials.class);
+				if(fromCredentialFile != null) {
+					credentials = fromCredentialFile;
+				}
 			} catch (Exception e) {
 				e.printStackTrace();
 			}		
@@ -61,6 +65,9 @@ public class CredentialController {
 	}
 	
 	public String getDecryptedPassword() throws UnsupportedEncodingException {
+		if(credentials.getEncryptedPassword().equalsIgnoreCase("")) {
+			return "";
+		}
 		return EncryptionUtils.decrypt(credentials.getEncryptedPassword());
 	}
 	

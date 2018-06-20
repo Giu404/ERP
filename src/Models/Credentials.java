@@ -5,6 +5,11 @@ public class Credentials {
 	private String name;
 	private String encryptedPassword;
 	
+	public Credentials() {
+		name = "";
+		encryptedPassword = "";
+	}
+	
 	public void setName(String name) {
 		this.name = name;
 	}
