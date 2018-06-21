@@ -293,8 +293,8 @@ public class GuiBuilder {
 		searchScreenRoot.getChildren().add(searchPane);
 		searchScreenRoot.getChildren().add(searchStatusLabel);
 		searchScreenRoot.getChildren().add(materialPane);
-		searchScreenRoot.getChildren().add(this.searchHistory);
 		searchScreenRoot.getChildren().add(vFiller1);
+		searchScreenRoot.getChildren().add(this.searchHistory);
 		searchScreenRoot.getChildren().add(bottomBox);
 	}
 	
