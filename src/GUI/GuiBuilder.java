@@ -32,6 +32,8 @@ import javafx.scene.layout.Priority;
 import javafx.scene.layout.Region;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.Paint;
+import javafx.scene.text.Font;
+import javafx.scene.text.FontWeight;
 
 public class GuiBuilder {
 
@@ -254,21 +256,30 @@ public class GuiBuilder {
 		HBox searchPane = new HBox(searchField, searchButton);
 		VBox materialPane = new VBox(new HBox(this.matNameLabel, this.matName), new HBox(this.matDescLabel, this.matDesc), 
 				new HBox(this.matTypeLabel, this.matType), new HBox(this.matWtLabel, this.matWt), new HBox(this.matVolLabel, this.matVol));
-		matNameLabel.setPadding(new Insets(5, 0, 20, 0));
-		matName.setPadding(new Insets(5, 0, 20, 0));
+		matNameLabel.setPadding(new Insets(5, 0, 10, 0));
+		matNameLabel.setFont(Font.font("Arial", FontWeight.BOLD, 14));
+		matName.setPadding(new Insets(5, 0, 10, 0));
+		matName.setFont(Font.font("Arial", FontWeight.BOLD, 14));
 		matDescLabel.setPadding(new Insets(0, 0, 5, 0));
+		matDescLabel.setFont(Font.font("Arial", FontWeight.LIGHT, 13));
 		matDesc.setPadding(new Insets(0, 0, 5, 0));
+		matDesc.setFont(Font.font("Arial", FontWeight.LIGHT, 13));
 		matTypeLabel.setPadding(new Insets(0, 0, 5, 0));
+		matTypeLabel.setFont(Font.font("Arial", FontWeight.LIGHT, 13));
 		matType.setPadding(new Insets(0, 0, 5, 0));
+		matType.setFont(Font.font("Arial", FontWeight.LIGHT, 13));
 		matWtLabel.setPadding(new Insets(0, 0, 5, 0));
+		matWtLabel.setFont(Font.font("Arial", FontWeight.LIGHT, 13));
 		matWt.setPadding(new Insets(0, 0, 5, 0));
+		matWt.setFont(Font.font("Arial", FontWeight.LIGHT, 13));
 		matVolLabel.setPadding(new Insets(0, 0, 5, 0));
+		matVolLabel.setFont(Font.font("Arial", FontWeight.LIGHT, 13));
 		matVol.setPadding(new Insets(0, 0, 5, 0));
-		materialPane.setStyle("-fx-border-color: black;-fx-border-width: 1.1 0 1.1 0");
+		matVol.setFont(Font.font("Arial", FontWeight.LIGHT, 13));
 		searchStatusLabel.setPadding(new Insets(0, 10, 0, 10));
 		searchStatusLabel.setTextFill(Paint.valueOf("red"));
 		searchStatusLabel.setVisible(false);
-		materialPane.setPadding(new Insets(0, 10, 0, 10));
+		materialPane.setPadding(new Insets(0, 10, 30, 10));
 		
 		HBox bottomBox = new HBox();
 		Region hFiller = new Region();

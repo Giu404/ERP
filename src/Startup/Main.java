@@ -61,17 +61,18 @@ public class Main extends Application {
 		if(stayLoggedIn) {
 			connection = sapController.tryLogin(credentialController.getLoginName(), credentialController.getDecryptedPassword());
 			if (connection != null) {
-				scene = new Scene(guiBuilder.getSearchScreen(), 400, 400);
+				scene = new Scene(guiBuilder.getSearchScreen(), 404, 400);
 			} else {
-				scene = new Scene(guiBuilder.getLoginScreen(), 400, 400);
+				scene = new Scene(guiBuilder.getLoginScreen(), 404, 400);
 				AppSettings.setStayLoggedIn(false);
 			}
 		} else {
-			scene = new Scene(guiBuilder.getLoginScreen(), 400, 400);
+			scene = new Scene(guiBuilder.getLoginScreen(), 404, 400);
 		}
 		
 		stage.setTitle(Language.get("app_name"));
 		stage.setScene(scene);
+		stage.setResizable(false);
 		Main.isReady = true;
 		stage.show();
 	}
